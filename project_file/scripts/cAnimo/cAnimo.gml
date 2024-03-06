@@ -13,6 +13,10 @@ function cAnimo() constructor {
     self.animEndIndex = 0;
     self.animEndCallback = undefined;
 	
+	static AnimationHasEnded = function( result ) {
+		return result;
+	}
+	
 	#region Getters
 	/// @static
 	static GetSprite = function() {

@@ -69,7 +69,14 @@ function cGameConfig() constructor {
     }
     
     static SaveConfig = function( _filename = "config.cfg", _path = environment_get_variable( "APPDATA" ) + @"\.8xlib\" ) {
-        var _config_json = json_stringify( config );
+        var _configFile = {};
+        var _configNames = variable_struct_get_names( config );
+        
+        struct_foreach( config, function( i ) {
+            // _configFile = _configNames[i].Serialize();
+        } );
+        
+        var _configData = json_stringify( config );
         var _temp_buffer = buffer_create( 0, buffer_grow, 1 );
         
         print( self.config );
@@ -83,7 +90,7 @@ function cGameConfig() constructor {
         } );
         
         try {
-            buffer_write( _temp_buffer, buffer_string, _config_json );
+            buffer_write( _temp_buffer, buffer_string, _configData );
             buffer_save( _temp_buffer, _filename );
             buffer_delete( _temp_buffer );
             
@@ -112,4 +119,8 @@ function cConfigOption() constructor {
     value = 0;
     valueMin = 0;
     valueMax = 0;
+    
+    static Serialize = function() {
+        return json_stringify( value );
+    }
 }
