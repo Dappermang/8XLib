@@ -84,6 +84,7 @@
     {"id":{"name":"animo_animation_exists","path":"scripts/animo_animation_exists/animo_animation_exists.yy",},},
     {"id":{"name":"objCat","path":"objects/objCat/objCat.yy",},},
     {"id":{"name":"__cameraMacros","path":"scripts/__cameraMacros/__cameraMacros.yy",},},
+    {"id":{"name":"cAnimationPlayer","path":"scripts/cAnimationPlayer/cAnimationPlayer.yy",},"order":0,},
     {"id":{"name":"__animoMacros","path":"scripts/__animoMacros/__animoMacros.yy",},},
     {"id":{"name":"sprGuy","path":"sprites/sprGuy/sprGuy.yy",},},
     {"id":{"name":"animo_draw_sprite","path":"scripts/animo_draw_sprite/animo_draw_sprite.yy",},},

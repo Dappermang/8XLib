@@ -1,7 +1,8 @@
 /// @desc A Data Structure that contains Animation Keys and their respective data. Useful for compiling and organizing animations to exist within a single Entity/Instance.
 function cAnimationLibrary() constructor {
+    #region Private
     __animationList = {};
-    
+    #endregion
     static AddSection = function( setName ) {
         __animationList[$ setName] = {};
         return self;
@@ -29,7 +30,7 @@ function cAnimationLibrary() constructor {
         var _result = true;
         
         if ( SectionExists( sectionKey ) ) {
-            if ( !struct_exists( __animationList[$ section], animationKey ) ) {
+            if ( !struct_exists( __animationList[$ sectionKey], animationKey ) ) {
                 _result = false;
             }
         }
@@ -48,7 +49,7 @@ function cAnimationLibrary() constructor {
         
         if ( SectionExists( sectionKey ) ) {
             if ( AnimationExists( animationKey, sectionKey ) ) {
-                _animation = __animationList[$ section][$ animationKey];
+                _animation = __animationList[$ sectionKey][$ animationKey];
             }
         }
         else {

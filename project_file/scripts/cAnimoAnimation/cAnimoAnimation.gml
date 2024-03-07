@@ -1,5 +1,5 @@
 function cAnimoAnimation() constructor {
-    sprite = -1;
+    sprite = sprChicken;
     frames = [];
     animSpeed = 0;
     animType = ANIMO_TYPE.FINITE;
@@ -16,6 +16,8 @@ function cAnimoAnimation() constructor {
     repeats = 0;
     repeatsCompleted = 0;
     
+    Init();
+    
 	// Populating the frame array with all sprite frames
 	static Init = function() {
 		var _imageCount = sprite_get_number( sprite );
@@ -23,6 +25,10 @@ function cAnimoAnimation() constructor {
 		for( var i = 0; i < _imageCount; ++i ) {
 			frames[i] = [i];
 		}
+	}
+	
+	static GetFrameAmount = function() {
+		return array_length( frames );
 	}
 	
 	static AddEnterCondition = function( conditionFunc ) {
