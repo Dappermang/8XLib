@@ -42,7 +42,7 @@ function cSurface() constructor {
     }
     
     static Draw = function() {
-        draw_surface_stretched( surface, position.x, position.y, width, height );
+        draw_surface_part( surface, position.x - width, position.y - height, width, height, position.x, position.y );
     }
     
     return self;
