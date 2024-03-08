@@ -27,6 +27,9 @@ function cAnimoAnimation() constructor {
 		}
 	}
 	
+	static GetEnterConditions = function() {
+		return enterConditions;
+	}
 	static GetSprite = function() {
 		if ( !is_undefined( sprite ) ) {
 			return sprite;	

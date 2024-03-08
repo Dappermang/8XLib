@@ -7,18 +7,19 @@ function cAnimationPlayer() constructor {
     IsPlaying = false;
 
     #region Private
-    __animationQueue = ds_queue_create();
+    __animationQueue = ds_list_create();
     
     /// @param {cAnimoAnimation} animation
     static EvaluateEnterCondition = function( animation ) {
-        var _enterBoolsSize = array_length( animation.enterConditions );
+    	var _enterConditions = animation.GetEnterConditions();
+        var _enterBoolsSize = array_length( _enterConditions );
         var _passed = 0;
         var _result = true;
         
         // Checking if all the Enter conditions passed ...
         if ( _enterBoolsSize > 0 ) {
         	for( var i = 0; i < _enterBoolsSize; ++i ) {
-        		if ( animation.enterConditions[i]() ) {
+        		if ( _enterConditions[i]() ) {
         			++_passed;
         		}
         		
@@ -32,17 +33,10 @@ function cAnimationPlayer() constructor {
     }
     // Do not modify this.
     static Tick = function() {
-    	var _queueHead = ds_queue_head( __animationQueue );
-
-    	if ( EvaluateEnterCondition( _queueHead ) ) {
-    		currentAnimation = _queueHead;
-    	}
-    	else {
-    		return;
-    	}
+    	var _queueSize = ds_list_size( __animationQueue );
+    	var _nextAnimation = GetNextAnimation();
     	
         if ( !is_undefined( currentAnimation ) ) {
-            
             var _animationFrameCount = currentAnimation.GetFrameAmount();
             
             currentAnimationIndex = max( 0, currentAnimationIndex + currentAnimation.animSpeed );
@@ -51,16 +45,16 @@ function cAnimationPlayer() constructor {
                 switch( currentAnimation.animType ) {
                     case ANIMO_TYPE.FINITE :
                     	// Dequeue the current animation...
-                    	if ( ds_queue_size( __animationQueue ) > 1 ) {
-                    		ds_queue_dequeue( __animationQueue );
+                    	if ( _queueSize > 1 ) {
+                    		DequeueAnimation();
                     	}
                         break;
                     case ANIMO_TYPE.CHAINED :
                     	// If we have reached the amount of set repeats and there is a valid animation to change to, we will switch
                         if ( currentAnimation.repeatsCompleted >= currentAnimation.repeats ) {
                     		currentAnimation.ResetIterations();
-                    		if ( ds_queue_size( __animationQueue ) > 1 ) {
-                    			ds_queue_dequeue( __animationQueue );
+                    		if ( _queueSize > 1 ) {
+                    			DequeueAnimation();
                     		}
                         }
                         break;
@@ -70,7 +64,12 @@ function cAnimationPlayer() constructor {
                     ++currentAnimation.repeatsCompleted;
                 }
                 
-                OnAnimationChanged();
+                if ( !is_undefined( _nextAnimation ) 
+                && EvaluateEnterCondition( _nextAnimation ) ) {
+                	currentAnimation = _nextAnimation;
+                }
+    	         
+    	        OnAnimationChanged();
 	        }
         }
         else {
@@ -98,35 +97,43 @@ function cAnimationPlayer() constructor {
     #endregion
     
     /// @desc Queues an animation, if there are none present it will immediately start playing it, otherwise it will be queued and play after the current one is finished.
-    /// @param {struct} animation
+    /// @param {struct|array[struct]} animation
     /// @param {bool} overrideCurrent Overrides the current animation regardless of any enterConditions attached.
     static PlayAnimation = function( animation, overrideCurrent = false ) {
         if ( overrideCurrent ) {
-            ds_queue_dequeue( __animationQueue );
-            ds_queue_enqueue( __animationQueue, animation );
+            ds_list_delete( __animationQueue, 0 );
+            ds_list_add( __animationQueue, animation );
         }
         else {
-        	ds_queue_enqueue( __animationQueue, animation );
+        	ds_list_add( __animationQueue, animation );
         }
+        
+        currentAnimation = __animationQueue[| 0];
         
         print( $"Queued : {animation}" );
         
         return self;
     }
-    // static GetNextAnimation = function() {
-    //     if ( !ds_queue_empty( __animationQueue ) ) {
-    //         var _queueSize = ds_queue_size( __animationQueue );
-            
-    //         for( var i = 0; i < _queueSize; ++i ) {
-    //             if ( i <= _queueSize - 1 ) {
-    //                 return __animationQueue[| i];
-    //                 break;
-    //             }
-    //         }
-    //     }
-    // }
+    static GetNextAnimation = function() {
+        var _queueSize = ds_list_size( __animationQueue );
+        var _nextAnimation = undefined;
+    
+        if ( _queueSize > 0 ) {
+            for( var i = 0; i < _queueSize; ++i ) {
+                if ( i <= _queueSize - 1 ) {
+                    _nextAnimation = __animationQueue[| i + 1];
+                    break;
+                }
+            }
+        }
+        
+        return _nextAnimation;
+    }
     // User Defined.
     static OnAnimationChanged = function() {};
+    static DequeueAnimation = function() {
+    	ds_list_delete( __animationQueue, 0 );
+    }
     static GetAnimation = function() {
     	if ( !is_undefined( currentAnimation ) ) {
     		return currentAnimation;
@@ -148,8 +155,8 @@ function cAnimationPlayer() constructor {
         return self;
     }
     static Cleanup = function() {
-        ds_queue_clear( __animationQueue );
-        ds_queue_destroy( __animationQueue );
+        ds_list_clear( __animationQueue );
+        ds_list_destroy( __animationQueue );
     }
     
     return self;
