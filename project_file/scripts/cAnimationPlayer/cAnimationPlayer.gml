@@ -1,6 +1,11 @@
 /// @desc An Animation Player. Intended for use in individual instances/objects.
-function cAnimationPlayer() constructor {
+/// @param {bool} ?startPaused
+function cAnimationPlayer( _startPaused = false ) constructor {
     IsPlaying = false;
+    
+    if ( _startPaused ) {
+    	Pause();
+    }
 
     #region Private
     __animationQueue = ds_list_create();
@@ -96,7 +101,7 @@ function cAnimationPlayer() constructor {
     #endregion
     /// @desc Queues an animation or an array of animations. If there are none present it will immediately start playing it, otherwise it will be queued and play after the current one is finished.
     /// @param {struct|array[struct]} animation
-    /// @param {bool} overrideCurrent Overrides the current animation regardless of any enterConditions attached.
+    /// @param {bool} ?overrideCurrent Overrides the current animation regardless of any enterConditions attached.
     static PlayAnimation = function( animation, overrideCurrent = false ) {
         if ( overrideCurrent ) {
             ds_list_delete( __animationQueue, 0 );

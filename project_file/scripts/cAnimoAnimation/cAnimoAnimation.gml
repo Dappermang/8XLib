@@ -26,7 +26,20 @@ function cAnimoAnimation() constructor {
 			frames[i] = [i];
 		}
 	}
-	
+	/// @desc Used to insert a frame of the same animation, or another into the animation!
+	// static InsertFrame = function( _sprite = sprite, _frame = 0, _position = 0 ) {
+	// 	var _imageCount = sprite_get_number( _sprite );
+	// 	var _frameCount = array_length( frames );
+		
+	// 	for( var i = 0; i < _imageCount; ++i ) {
+	// 		if ( _position <= _frameCount ) {
+	// 			frames[i] = [_position];
+	// 		}
+	// 		else {
+	// 			array_push( frames, _ );
+	// 		}
+	// 	}
+	// }
 	static GetEnterConditions = function() {
 		return enterConditions;
 	}
