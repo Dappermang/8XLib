@@ -1,16 +1,14 @@
 /// @desc An Animation Player. Intended for use in individual instances/objects.
 function cAnimationPlayer() constructor {
-    currentAnimation = undefined;
-    currentAnimationIndex = 0;
-    currentAnimationLength = 0;
-    playbackSpeed = 0;
     IsPlaying = false;
 
     #region Private
     __animationQueue = ds_list_create();
+    __currentAnimation = undefined;
+    __currentAnimationIndex = 0;
+    __currentAnimationLength = 0;
     
-    /// @param {cAnimoAnimation} animation
-    static EvaluateEnterCondition = function( animation ) {
+    static __evaluateEnterCondition = function( animation ) {
     	var _enterConditions = animation.GetEnterConditions();
         var _enterBoolsSize = array_length( _enterConditions );
         var _passed = 0;
@@ -36,13 +34,14 @@ function cAnimationPlayer() constructor {
     	var _queueSize = ds_list_size( __animationQueue );
     	var _nextAnimation = GetNextAnimation();
     	
-        if ( !is_undefined( currentAnimation ) ) {
-            var _animationFrameCount = currentAnimation.GetFrameAmount();
+        if ( IsPlaying 
+        && !is_undefined( __currentAnimation ) ) {
+            var _animationFrameCount = __currentAnimation.GetFrameAmount();
             
-            currentAnimationIndex = max( 0, currentAnimationIndex + currentAnimation.animSpeed );
+            __currentAnimationIndex = max( 0, __currentAnimationIndex + __currentAnimation.animSpeed );
 
-            if ( floor( currentAnimationIndex ) >= _animationFrameCount ) {
-                switch( currentAnimation.animType ) {
+            if ( floor( __currentAnimationIndex ) >= _animationFrameCount ) {
+                switch( __currentAnimation.animType ) {
                     case ANIMO_TYPE.FINITE :
                     	// Dequeue the current animation...
                     	if ( _queueSize > 1 ) {
@@ -51,8 +50,8 @@ function cAnimationPlayer() constructor {
                         break;
                     case ANIMO_TYPE.CHAINED :
                     	// If we have reached the amount of set repeats and there is a valid animation to change to, we will switch
-                        if ( currentAnimation.repeatsCompleted >= currentAnimation.repeats ) {
-                    		currentAnimation.ResetIterations();
+                        if ( __currentAnimation.repeatsCompleted >= __currentAnimation.repeats ) {
+                    		__currentAnimation.ResetIterations();
                     		if ( _queueSize > 1 ) {
                     			DequeueAnimation();
                     		}
@@ -60,13 +59,13 @@ function cAnimationPlayer() constructor {
                         break;
                 }
                 
-                if ( currentAnimation.repeatsCompleted < currentAnimation.repeats ) {
-                    ++currentAnimation.repeatsCompleted;
+                if ( __currentAnimation.repeatsCompleted < __currentAnimation.repeats ) {
+                    ++__currentAnimation.repeatsCompleted;
                 }
                 
                 if ( !is_undefined( _nextAnimation ) 
-                && EvaluateEnterCondition( _nextAnimation ) ) {
-                	currentAnimation = _nextAnimation;
+                && __evaluateEnterCondition( _nextAnimation ) ) {
+                	__currentAnimation = _nextAnimation;
                 }
     	         
     	        OnAnimationChanged();
@@ -77,11 +76,11 @@ function cAnimationPlayer() constructor {
         }
     }
     static DrawAnimation = function( _x, _y, _xscale = 1, _yscale = 1, _angle = 0, _blend = c_white, _alpha = 1 ) {
-    	if ( !is_undefined( currentAnimation ) ) {
+    	if ( !is_undefined( __currentAnimation ) ) {
     		var _position = { x : _x, y : _y };
-    		var _sprite = currentAnimation.GetSprite();
+    		var _sprite = __currentAnimation.GetSprite();
     		
-    		draw_sprite_ext( _sprite, currentAnimationIndex, _position.x, _position.y, _xscale, _yscale, _angle, _blend, _alpha );
+    		draw_sprite_ext( _sprite, __currentAnimationIndex, _position.x, _position.y, _xscale, _yscale, _angle, _blend, _alpha );
     	}
     	else {
     		return;
@@ -95,8 +94,7 @@ function cAnimationPlayer() constructor {
     /// @desc User Defined. Invoked when ANY animation exits the queue.
     static OnAnimationExitQueue = function(){};
     #endregion
-    
-    /// @desc Queues an animation, if there are none present it will immediately start playing it, otherwise it will be queued and play after the current one is finished.
+    /// @desc Queues an animation or an array of animations. If there are none present it will immediately start playing it, otherwise it will be queued and play after the current one is finished.
     /// @param {struct|array[struct]} animation
     /// @param {bool} overrideCurrent Overrides the current animation regardless of any enterConditions attached.
     static PlayAnimation = function( animation, overrideCurrent = false ) {
@@ -108,7 +106,7 @@ function cAnimationPlayer() constructor {
         	ds_list_add( __animationQueue, animation );
         }
         
-        currentAnimation = __animationQueue[| 0];
+        __currentAnimation = __animationQueue[| 0];
         
         print( $"Queued : {animation}" );
         
@@ -135,8 +133,8 @@ function cAnimationPlayer() constructor {
     	ds_list_delete( __animationQueue, 0 );
     }
     static GetAnimation = function() {
-    	if ( !is_undefined( currentAnimation ) ) {
-    		return currentAnimation;
+    	if ( !is_undefined( __currentAnimation ) ) {
+    		return __currentAnimation;
     	}
     }
     static GetQueue = function() {
