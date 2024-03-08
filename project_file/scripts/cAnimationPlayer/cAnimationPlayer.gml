@@ -5,50 +5,62 @@ function cAnimationPlayer() constructor {
     currentAnimationLength = 0;
     playbackSpeed = 0;
     IsPlaying = false;
-    
+
     #region Private
     __animationQueue = ds_queue_create();
     
-    static __tick = function() {
+    // Do not modify this.
+    static Tick = function() {
+    	var _queueHead = ds_queue_head( __animationQueue );
+
+    	currentAnimation = _queueHead;
+    	
         if ( !is_undefined( currentAnimation ) ) {
-            currentAnimation = ds_queue_head( __animationQueue );
             
             var _animationFrameCount = currentAnimation.GetFrameAmount();
             
-            currentAnimationIndex = clamp( currentAnimationIndex, 0, _animationFrameCount );
-            
-            var index = scope[$ variable_name] + currentAnimation.animSpeed;
-            
-            if ( floor( index ) >= _animationFrameCount ) {
-                switch( scope[$ currentAnimation].animType ) {
+            currentAnimationIndex = max( 0, currentAnimationIndex + currentAnimation.animSpeed );
+
+            if ( floor( currentAnimationIndex ) >= _animationFrameCount ) {
+                switch( currentAnimation.animType ) {
                     case ANIMO_TYPE.FINITE :
-                    	// Switch back to the start index and stop animating
-                    	index = 0;
-                    	scope[$ currentAnimation].animSpeed = 0;
+                    	// Dequeue the current animation...
+                    	if ( ds_queue_size( __animationQueue ) > 1 ) {
+                    		ds_queue_dequeue( __animationQueue );
+                    	}
                         break;
                     case ANIMO_TYPE.CHAINED :
                     	// If we have reached the amount of set repeats and there is a valid animation to change to, we will switch
-                        if ( ( scope[$ currentAnimation].currentIterations >= scope[$ currentAnimation].animRepeats )
-                        && !is_undefined( scope[$ currentAnimation].animNext ) ) {
-                    		scope[$ currentAnimation].ResetIterations();
-                    		scope[$ currentAnimation] = scope[$ currentAnimation].animNext;
-                    		index = 0;
-                        }
-                        // If there is no animation to switch to, just start looping, but don't change type because we may want to set this later.
-                        else if ( is_undefined( scope[$ currentAnimation].animNext ) ) {
-                    		index = 0;
-                    		scope[$ currentAnimation].ResetIterations();
+                        if ( currentAnimation.repeatsCompleted >= currentAnimation.repeats ) {
+                    		currentAnimation.ResetIterations();
+                    		if ( ds_queue_size( __animationQueue ) > 1 ) {
+                    			ds_queue_dequeue( __animationQueue );
+                    		}
                         }
                         break;
                 }
                 
-                index = 0;
-             	
-                if ( scope[$ currentAnimation].currentIterations < scope[$ currentAnimation].animRepeats ) {
-                    ++scope[$ currentAnimation].currentIterations;
+                if ( currentAnimation.repeatsCompleted < currentAnimation.repeats ) {
+                    ++currentAnimation.repeatsCompleted;
                 }
+                
+                OnAnimationChanged();
 	        }
         }
+        else {
+        	return;
+        }
+    }
+    static DrawAnimation = function( _x, _y, _xscale = 1, _yscale = 1, _angle = 0, _blend = c_white, _alpha = 1 ) {
+    	if ( !is_undefined( currentAnimation ) ) {
+    		var _position = { x : _x, y : _y };
+    		var _sprite = currentAnimation.GetSprite();
+    		
+    		draw_sprite_ext( _sprite, currentAnimationIndex, _position.x, _position.y, _xscale, _yscale, _angle, _blend, _alpha );
+    	}
+    	else {
+    		return;
+    	}
     }
     #endregion
     
@@ -63,16 +75,16 @@ function cAnimationPlayer() constructor {
     /// @param {struct} animation
     /// @param {bool} overrideCurrent
     static PlayAnimation = function( animation, overrideCurrent = false ) {
-        if ( ds_queue_empty( __animationQueue ) ) {
-            currentAnimation = animation;
-        }
-        else if ( overrideCurrent ) {
+        if ( overrideCurrent ) {
             ds_queue_dequeue( __animationQueue );
             ds_queue_enqueue( __animationQueue, animation );
         }
         else {
             ds_queue_enqueue( __animationQueue, animation );
         }
+        
+        print( $"Queued : {animation.sprite}" );
+        
         return self;
     }
     // static GetNextAnimation = function() {
@@ -87,6 +99,13 @@ function cAnimationPlayer() constructor {
     //         }
     //     }
     // }
+    // User Defined.
+    static OnAnimationChanged = function() {};
+    static GetAnimation = function() {
+    	if ( !is_undefined( currentAnimation ) ) {
+    		return currentAnimation;
+    	}
+    }
     static GetQueue = function() {
         return __animationQueue;
     }

@@ -1,7 +1,7 @@
 function cAnimoAnimation() constructor {
-    sprite = sprChicken;
+    sprite = sprGuy;
     frames = [];
-    animSpeed = 0;
+    animSpeed = 0.1;
     animType = ANIMO_TYPE.FINITE;
     /* 
         These 2 variables are arrays of bool-evaluating functions. Whenever a sequence needs to 'enter' a new animation in the sequence, it will parse for
@@ -27,6 +27,14 @@ function cAnimoAnimation() constructor {
 		}
 	}
 	
+	static GetSprite = function() {
+		if ( !is_undefined( sprite ) ) {
+			return sprite;	
+		}
+		else {
+			return __animoFallbackSprite;
+		}
+	}
 	static GetFrameAmount = function() {
 		return array_length( frames );
 	}
@@ -44,6 +52,10 @@ function cAnimoAnimation() constructor {
 	    }
 	    
 	    array_push( exitConditions, conditionFunc );
+	}
+	static SetSprite = function( _sprite ) {
+		sprite = _sprite;
+		return self;
 	}
 	
 	return self;
