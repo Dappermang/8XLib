@@ -73,17 +73,33 @@ function cAnimationPlayer() constructor {
     
     /// @desc Queues an animation, if there are none present it will immediately start playing it, otherwise it will be queued and play after the current one is finished.
     /// @param {struct} animation
-    /// @param {bool} overrideCurrent
+    /// @param {bool} overrideCurrent Overrides the current animation regardless of any enterConditions attached.
     static PlayAnimation = function( animation, overrideCurrent = false ) {
         if ( overrideCurrent ) {
             ds_queue_dequeue( __animationQueue );
             ds_queue_enqueue( __animationQueue, animation );
         }
         else {
-            ds_queue_enqueue( __animationQueue, animation );
+        	var _enterBoolsSize = array_length( animation.enterConditions );
+        	var _passed = 0;
+        	
+        	if ( _enterBoolsSize > 0 ) {
+        		for( var i = 0; i < _enterBoolsSize; ++i ) {
+        			if ( animation.enterConditions[i]() ) {
+            			++_passed;
+        			}
+        		}
+        		
+        		if ( _passed >= _enterBoolsSize ) {
+        			ds_queue_enqueue( __animationQueue, animation );
+        		}
+        	}
+        	else {
+        		ds_queue_enqueue( __animationQueue, animation );
+        	}
         }
         
-        print( $"Queued : {animation.sprite}" );
+        print( $"Queued : {animation}" );
         
         return self;
     }

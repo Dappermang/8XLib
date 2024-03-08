@@ -45,6 +45,7 @@ function cAnimoAnimation() constructor {
 	    }
 	    
 	    array_push( enterConditions, conditionFunc );
+	    return self;
 	}	
 	static AddExitCondition = function( conditionFunc ) {
 	    if ( !is_callable( conditionFunc ) ) {
@@ -52,6 +53,7 @@ function cAnimoAnimation() constructor {
 	    }
 	    
 	    array_push( exitConditions, conditionFunc );
+	    return self;
 	}
 	static SetSprite = function( _sprite ) {
 		sprite = _sprite;
@@ -69,72 +71,11 @@ function cAnimoSequence() constructor {
     repeats = 0;
     repeatsCompleted = 0;
     
-    // ugh...
-    static Tick = function() {
-    	var _currentAnimation = animations[animationIndex];
-        
-        var index = scope[$ variable_name] + _currentAnimation.animSpeed;
-        var _frameCount = array_length( _currentAnimation.frames );
-        
-        // Frame callbacks
-        if ( index >= 0
-        && index < _frame_count ) {
-            if ( !is_undefined( scope[$ _currentAnimation].frames[index][1] ) ) {
-                // Only execute callback if it has not already been called.
-                if ( !scope[$ _currentAnimation].frames[index][2] ) {
-                    scope[$ _currentAnimation].frames[index][1]();
-                    scope[$ _currentAnimation].frames[index][2] = true;
-                }
-            }
-        }
-        
-        if ( floor( index ) >= array_length( scope[$ _currentAnimation].frames ) ) {
-            switch( scope[$ _currentAnimation].animType ) {
-                case ANIMO_TYPE.FINITE :
-                	// Switch back to the start index and stop animating
-                	index = 0;
-                	scope[$ _currentAnimation].animSpeed = 0;
-                    break;
-                case ANIMO_TYPE.CHAINED :
-                	// If we have reached the amount of set repeats and there is a valid animation to change to, we will switch
-                    if ( ( scope[$ _currentAnimation].currentIterations >= scope[$ _currentAnimation].animRepeats )
-                    && !is_undefined( scope[$ _currentAnimation].animNext ) ) {
-                		scope[$ _currentAnimation].ResetIterations();
-                		scope[$ _currentAnimation].OnAnimationSwitch();
-                		scope[$ _currentAnimation] = scope[$ _currentAnimation].animNext;
-                		index = 0;
-                    }
-                    // If there is no animation to switch to, just start looping, but don't change type because we may want to set this later.
-                    else if ( is_undefined( scope[$ _currentAnimation].animNext ) ) {
-                		index = 0;
-                		scope[$ _currentAnimation].ResetIterations();
-                		scope[$ _currentAnimation].OnAnimationSwitch();
-                    }
-                    break;
-            }
-            
-            // If there is no end index available, we will just execute the function now
-            if ( !is_undefined( scope[$ _currentAnimation].animEndCallback ) ) {
-                scope[$ _currentAnimation].animEndCallback();
-            }
-            
-            index = 0;
-         	
-            if ( scope[$ _currentAnimation].currentIterations < scope[$ _currentAnimation].animRepeats ) {
-                ++scope[$ _currentAnimation].currentIterations;
-            }
-            
-            // Reset all callbacks so they can be called again
-            scope[$ _currentAnimation].RefreshCallbacks();
-	    }
-	    
-	    scope[$ variable_name] = clamp( index, 0, _frame_count );
-    }
-    static OnSequenceEnd = function() {}
+    static OnSequenceEnd = function() {};
     static AnimationHasEnterCondition = function() {
         var _result = false;
         
-        if ( array_length( currentAnimation.enterConditions ) > 0 ) {
+        if ( array_length( enterConditions ) > 0 ) {
             _result = true;
         }
         
@@ -143,7 +84,7 @@ function cAnimoSequence() constructor {
     static AnimationHasExitCondition = function() {
         var _result = false;
         
-        if ( array_length( currentAnimation.exitConditions ) > 0 ) {
+        if ( array_length( exitConditions ) > 0 ) {
             _result = true;
         }
         
