@@ -9,11 +9,37 @@ function cAnimationPlayer() constructor {
     #region Private
     __animationQueue = ds_queue_create();
     
+    /// @param {cAnimoAnimation} animation
+    static EvaluateEnterCondition = function( animation ) {
+        var _enterBoolsSize = array_length( animation.enterConditions );
+        var _passed = 0;
+        var _result = true;
+        
+        // Checking if all the Enter conditions passed ...
+        if ( _enterBoolsSize > 0 ) {
+        	for( var i = 0; i < _enterBoolsSize; ++i ) {
+        		if ( animation.enterConditions[i]() ) {
+        			++_passed;
+        		}
+        		
+        		if ( _passed >= _enterBoolsSize ) {
+        			break;
+        		}
+        	}
+        }
+        
+        return _result;
+    }
     // Do not modify this.
     static Tick = function() {
     	var _queueHead = ds_queue_head( __animationQueue );
 
-    	currentAnimation = _queueHead;
+    	if ( EvaluateEnterCondition( _queueHead ) ) {
+    		currentAnimation = _queueHead;
+    	}
+    	else {
+    		return;
+    	}
     	
         if ( !is_undefined( currentAnimation ) ) {
             
@@ -80,23 +106,7 @@ function cAnimationPlayer() constructor {
             ds_queue_enqueue( __animationQueue, animation );
         }
         else {
-        	var _enterBoolsSize = array_length( animation.enterConditions );
-        	var _passed = 0;
-        	
-        	if ( _enterBoolsSize > 0 ) {
-        		for( var i = 0; i < _enterBoolsSize; ++i ) {
-        			if ( animation.enterConditions[i]() ) {
-            			++_passed;
-        			}
-        		}
-        		
-        		if ( _passed >= _enterBoolsSize ) {
-        			ds_queue_enqueue( __animationQueue, animation );
-        		}
-        	}
-        	else {
-        		ds_queue_enqueue( __animationQueue, animation );
-        	}
+        	ds_queue_enqueue( __animationQueue, animation );
         }
         
         print( $"Queued : {animation}" );
