@@ -86,16 +86,16 @@ function cCamera() constructor {
 				focusPosition = new Vector3( _x, _y, _z );
 				break;			
 			case CAM_ALIGN.LEFT :// Left
-				focusPosition = new Vector3( _x - ( camWidth / 4 ), _y, _z );
+				focusPosition = new Vector3( _x - ( camWidth / 2 ), _y, _z );
 				break;			
 			case CAM_ALIGN.RIGHT : // Right
-				focusPosition = new Vector3( _x + ( camWidth / 4 ), _y, _z );
+				focusPosition = new Vector3( _x + ( camWidth / 2 ), _y, _z );
 				break;			
 			case CAM_ALIGN.TOP : // Top
-				focusPosition = new Vector3( _x, _y - ( camHeight / 4 ), _z );
+				focusPosition = new Vector3( _x, _y - ( camHeight / 2 ), _z );
 				break;			
 			case CAM_ALIGN.BOTTOM : // Bottom
-				focusPosition = new Vector3( _x, _y + ( camHeight / 4 ), _z );
+				focusPosition = new Vector3( _x, _y + ( camHeight / 2 ), _z );
 				break;
 		}
 	}
@@ -146,7 +146,7 @@ function cCamera() constructor {
 			position.y = median( _height / 2, position.y, camBBox.y - _height / 2 );
 		}
 		
-		camApproachFactor = 0.075 * ( camScale ) ;
+		camApproachFactor *= camScale;
 		
 		if ( __CAM_DEBUG ) {
 			if ( keyboard_check( vk_shift )

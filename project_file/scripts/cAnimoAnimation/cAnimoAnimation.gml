@@ -1,7 +1,7 @@
 function cAnimoAnimation() constructor {
     sprite = sprGuy;
     frames = [];
-    animSpeed = 0.1;
+    animSpeed = 0;
     animType = ANIMO_TYPE.FINITE;
     /* 
         These 2 variables are arrays of bool-evaluating functions. Whenever a sequence needs to 'enter' a new animation in the sequence, it will parse for

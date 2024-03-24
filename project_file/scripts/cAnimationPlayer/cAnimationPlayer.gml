@@ -1,7 +1,7 @@
 /// @desc An Animation Player. Intended for use in individual instances/objects.
 /// @param {bool} ?startPaused
 function cAnimationPlayer( _startPaused = false ) constructor {
-    IsPlaying = false;
+    IsPlaying = true;
     
     if ( _startPaused ) {
     	Pause();
@@ -134,6 +134,15 @@ function cAnimationPlayer( _startPaused = false ) constructor {
     }
     // User Defined.
     static OnAnimationChanged = function() {};
+    static AnimationIsPlaying = function( animation ) {
+    	var _result = false;
+    	
+    	if ( __currentAnimation == animation ) {
+    		_result = true;
+    	}
+    	
+    	return _result;
+    }
     static DequeueAnimation = function() {
     	ds_list_delete( __animationQueue, 0 );
     }
