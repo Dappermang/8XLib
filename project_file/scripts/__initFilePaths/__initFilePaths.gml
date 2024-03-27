@@ -29,3 +29,7 @@ directory_create( DATA_PATH + "\\logs\\" );
 directory_create( CONFIG_PATH + "\\lang\\" );
 directory_create( RESOURCE_PATH + "\\sfx\\" );
 directory_create( RESOURCE_PATH + "\\music\\" );
+
+// Writing readme in bulb folder
+var _readme = file_text_open_write( BULB_PATH + "DONT_TOUCH.txt" );
+file_text_close( _readme );

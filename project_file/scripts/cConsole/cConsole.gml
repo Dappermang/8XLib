@@ -35,7 +35,7 @@ function cConsole() constructor {
     consoleSuggestions = [];
     
     cursorCharacter = "_";
-    cursorBlinkTimer = new cTimer( 60 * 3, true );
+    cursorBlinkTimer = 60 * 3;
     
     typingFieldHoveredChar = 0;
     typingFieldWidth = consoleWidth;
@@ -148,11 +148,11 @@ function cConsole() constructor {
         playsound.label = "playsound";
         playsound.usageTip = "playsound     Plays a sound at a specified volume and pitch.";
         playsound.SetArguments( "[sound]", "<volume>", "<pitch>" );
-        playsound.Execute = function( audio, _volume = 1, _pitch = 1 ) {
+        playsound.Execute = function( audio, _volume = "1", _pitch = "1" ) {
             audio_play_sound_ext( {
-                sound : audio,
-                gain : _volume,
-                pitch : _pitch
+                sound : asset_get_index( audio ),
+                gain : real( _volume ),
+                pitch : real( _pitch )
             } );
         };
         
@@ -176,9 +176,9 @@ function cConsole() constructor {
         var _result = false;
         
         for( var i = 0; i < array_length( _command_list ); ++i ) {
-            var _struct = struct_get( registeredCommands, _command_list[i] );
+            var _currentCommand = _command_list[i];
             
-            if ( struct_exists( registeredCommands, command_key ) ) {
+            if ( string_lower( _currentCommand ) == _command_key ) {
                 _result = true;
             }
         }
@@ -187,6 +187,12 @@ function cConsole() constructor {
     }
     
     static ExecuteCommand = function( command_key ) {
+        var _commandArgumentStrings = string_split( command_key, "" );
+        var _commandParameters = struct_get_names( registeredCommands );
+        
+        for( var i = 0; i < array_length( _commandArgumentStrings ); ++i ) {
+            var _currentCommand = _commandArgumentStrings[i];
+        }
         // Parse through the commands arguments.
         // Pass the converted arguments into the execution function.
         var command = registeredCommands[$ command_key];
@@ -233,6 +239,7 @@ function cConsole() constructor {
             }
         }
         
+        // If Command exists, execute.
         if ( VerifyCommand( _filtered_msg ) ) {
             ExecuteCommand( _filtered_msg );
         }
@@ -254,10 +261,10 @@ function cConsole() constructor {
     }
     
     static Tick = function() {
-        cursorBlinkTimer.Tick();
+        cursorBlinkTimer = max( 0, cursorBlinkTimer - 1 );
         
         // Replace with appropriate binding stuff for a project
-        if ( keyboard_check_pressed( vk_tab ) ) {
+        if ( keyboard_check_pressed( vk_alt ) ) {
             enabled = !enabled;
             typingField = "";
         }
@@ -265,8 +272,9 @@ function cConsole() constructor {
         
         if ( enabled ) {
             //
-            if ( cursorBlinkTimer.GetTime() <= 0 ) { 
+            if ( cursorBlinkTimer <= 0 ) { 
                 cursorCharacter = "";
+                cursorBlinkTimer = 60 * 3;
             }
             else {
                 cursorCharacter = "_";
@@ -388,4 +396,6 @@ function cConsole() constructor {
         draw_set_font( -1 );
         draw_set_color( c_white );
     }
+    
+    return self;
 }
