@@ -16,6 +16,10 @@ function c3dModelRenderer() constructor {
         }
         
         array_push( __models, model );
+        
+        var _modelTransform = model.GetTransform().origin;
+        console().Print( $"Added New Model at : {_modelTransform.x},{_modelTransform.y},{_modelTransform.z}" );
+        
         return self;
     }
     static GetModel = function( modelName ) {
@@ -47,6 +51,10 @@ function c3dModelRenderer() constructor {
         if ( !is_undefined( _modelToDraw ) ) {
             // Begin
             matrix_set( matrix_world, _modelToDraw.GetTransformMatrix() );
+            
+            _modelToDraw.transform.scale.x = 10;
+            _modelToDraw.transform.scale.y = 10;
+            _modelToDraw.transform.scale.z = 10;            
             
             vertex_submit( _modelToDraw.GetVertexBuffer(), pr_trianglelist, _modelToDraw.GetTexture() );
             
