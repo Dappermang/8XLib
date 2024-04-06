@@ -49,16 +49,10 @@ function c3dModelRenderer() constructor {
         var _modelToDraw = GetModel( _modelName );
         
         if ( !is_undefined( _modelToDraw ) ) {
-            // Begin
             matrix_set( matrix_world, _modelToDraw.GetTransformMatrix() );
-            
-            _modelToDraw.transform.scale.x = 10;
-            _modelToDraw.transform.scale.y = 10;
-            _modelToDraw.transform.scale.z = 10;            
             
             vertex_submit( _modelToDraw.GetVertexBuffer(), pr_trianglelist, _modelToDraw.GetTexture() );
             
-            // End
             matrix_set( matrix_world, matrix_build_identity() );
             
         }
