@@ -45,6 +45,13 @@ function cCamera() constructor {
 	projMatrix = matrix_build_projection_ortho( __GAME_WIDTH, __GAME_HEIGHT, 0, 2048 );
 	viewMatrix = matrix_build_lookat( position.x, position.y, position.z, position.x, position.y, 0, -dsin( camAngle ), dcos( camAngle ), 0 );
 	
+	static GetProjectionMatrix = function() {
+		return projMatrix;
+	}	
+	static GetViewMatrix = function() {
+		return viewMatrix;
+	}
+	
 	// The direction the __camera will go based on velocity and other factors
 	camDir = 0;
 	
