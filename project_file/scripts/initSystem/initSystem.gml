@@ -3,3 +3,4 @@ event_handler();
 settings();
 gui();
 console();
+modelRenderer();

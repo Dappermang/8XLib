@@ -13,6 +13,16 @@ function c3dModel() constructor {
     
     transformMatrix = matrix_multiply( __transformMatrix, __rotationScaleMatrix );
     
+    static SetName = function( nameString ) {
+        name = nameString;
+        return self;
+    }
+    static SetModel = function( modelPath ) {
+        vertexBuffer = importObjModel( modelPath + ".obj", vertexDefaultFormat() );
+        
+        return self;
+    }
+    
     static GetTexture = function() {
         return modelTexture;
     }
@@ -25,4 +35,6 @@ function c3dModel() constructor {
     static GetTransformMatrix = function() {
         return transformMatrix;
     }
+    
+    return self;
 }
