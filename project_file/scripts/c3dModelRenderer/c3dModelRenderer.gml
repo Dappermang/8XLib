@@ -9,7 +9,7 @@ function c3dModelRenderer() constructor {
     __renderSurfaceProperties = {
         width : __GAME_WIDTH,
         height : __GAME_HEIGHT,
-        resolution : 16,
+        resolution : 1.5,
         position : new Vector2( 0, 0 ),
         format : surface_rgba8unorm
     };
@@ -21,7 +21,6 @@ function c3dModelRenderer() constructor {
     static GetRenderSurface = function() {
         if ( !surface_exists( __renderSurface ) ) {
             __renderSurface = surface_create( __renderSurfaceProperties.width * __renderSurfaceProperties.resolution, __renderSurfaceProperties.height * __renderSurfaceProperties.resolution );
-            // __renderSurface = surface_create( __renderSurfaceProperties.width * __renderSurfaceProperties.scale, __renderSurfaceProperties.height * __renderSurfaceProperties.scale, __renderSurfaceProperties.format );
         }
         
         return __renderSurface;
