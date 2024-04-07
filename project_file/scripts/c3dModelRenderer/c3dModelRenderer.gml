@@ -9,7 +9,7 @@ function c3dModelRenderer() constructor {
     __renderSurfaceProperties = {
         width : __GAME_WIDTH,
         height : __GAME_HEIGHT,
-        resolution : 2,
+        resolution : 16,
         position : new Vector2( 0, 0 ),
         format : surface_rgba8unorm
     };
@@ -77,23 +77,27 @@ function c3dModelRenderer() constructor {
             camera_apply( global.camera.GetCamera() );
 		    gpu_set_zwriteenable( true );
 		    gpu_set_ztestenable( true );
+		    
+		    draw_text( 0, 0, $"Hallo !" );
+		    
 		    shader_set( shdDiffuse );
 		    
             var _viewMatrix = global.camera.GetViewMatrix();
             var _projMatrix = global.camera.GetProjectionMatrix();
 		    
             if ( !is_undefined( _modelToDraw ) ) {
+            	_modelToDraw.SetRotation( 15, 0, 0 + ( current_time * 0.05 ) );
+            	_modelToDraw.SetScale( 32, -32, -32 );
             	_modelToDraw.SetPosition( 0, 0, 0 );
-            	_modelToDraw.SetRotation( current_time * 0.01, current_time * 0.05, current_time * 0.05 );
                 matrix_set( matrix_world, _modelToDraw.GetTransformMatrix() );
-                // matrix_set( matrix_view, _viewMatrix );
-                // matrix_set( matrix_projection, _projMatrix );
+                matrix_set( matrix_view, _viewMatrix );
+                matrix_set( matrix_projection, _projMatrix );
                 
                 vertex_submit( _modelToDraw.GetVertexBuffer(), pr_trianglelist, _modelToDraw.GetTexture() );
                 
                 matrix_set( matrix_world, matrix_build_identity() );
-                // matrix_set( matrix_view, matrix_build_identity() );
-                // matrix_set( matrix_projection, matrix_build_identity() );
+                matrix_set( matrix_view, matrix_build_identity() );
+                matrix_set( matrix_projection, matrix_build_identity() );
             }
             surface_reset_target();
             draw_reset();

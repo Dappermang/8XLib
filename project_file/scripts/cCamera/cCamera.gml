@@ -38,13 +38,14 @@ function cCamera() constructor {
 	
 	// TODO: camera "nudge" variable so that the camera can always pull to a certain direction / focus
 	
-	var camX = camera_get_view_x( __camera ) + camera_get_view_width( __camera ) / 2;
-	var camY = camera_get_view_y( __camera ) + camera_get_view_height( __camera ) / 2;
+	var _camX = camera_get_view_x( __camera ) + camera_get_view_width( __camera ) / 2;
+	var _camY = camera_get_view_y( __camera ) + camera_get_view_height( __camera ) / 2;
+	var _clippingDist = 3072;
 	
 	// TODO: Add options for different projection types.
 	projMatrix = matrix_build_projection_ortho( 
 		__GAME_WIDTH, __GAME_HEIGHT, 
-		0, 2048 
+		-_clippingDist, _clippingDist 
 	);
 	var _targetX = position.x + dsin( camAngle );
 	var _targetY = position.y + dcos( camAngle );

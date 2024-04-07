@@ -46,7 +46,6 @@
   ],
   "IncludedFiles": [
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"testAmmo.mtl","CopyToMask":-1,"filePath":"datafiles",},
-    {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"testAmmo.obj","CopyToMask":-1,"filePath":"datafiles",},
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"testCube.mtl","CopyToMask":-1,"filePath":"datafiles",},
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"testCube.obj","CopyToMask":-1,"filePath":"datafiles",},
   ],
@@ -140,6 +139,7 @@
     {"id":{"name":"cVector","path":"scripts/cVector/cVector.yy",},},
     {"id":{"name":"cResolutionManager","path":"scripts/cResolutionManager/cResolutionManager.yy",},},
     {"id":{"name":"animo_get_animation","path":"scripts/animo_get_animation/animo_get_animation.yy",},},
+    {"id":{"name":"texAmmo","path":"sprites/texAmmo/texAmmo.yy",},},
     {"id":{"name":"objGame","path":"objects/objGame/objGame.yy",},},
     {"id":{"name":"objLight","path":"objects/objLight/objLight.yy",},},
     {"id":{"name":"__spr_animo_fallback","path":"sprites/__spr_animo_fallback/__spr_animo_fallback.yy",},},

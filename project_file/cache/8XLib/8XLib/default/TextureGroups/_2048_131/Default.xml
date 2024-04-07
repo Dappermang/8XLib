@@ -1,9 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TextureGroup>
   <texture scale="1" mipsToGenerate="0" texwidth="1024" texheight="2048">Default_0.bz2</texture>
-  <texture scale="1" mipsToGenerate="0" texwidth="64" texheight="64">Default_1.bz2</texture>
-  <texture scale="1" mipsToGenerate="0" texwidth="16" texheight="16">Default_2.bz2</texture>
+  <texture scale="1" mipsToGenerate="0" texwidth="128" texheight="128">Default_1.bz2</texture>
+  <texture scale="1" mipsToGenerate="0" texwidth="64" texheight="64">Default_2.bz2</texture>
   <texture scale="1" mipsToGenerate="0" texwidth="16" texheight="16">Default_3.bz2</texture>
+  <texture scale="1" mipsToGenerate="0" texwidth="16" texheight="16">Default_4.bz2</texture>
   <tpe x="0" y="2" tpage="Default_0">fntConsole_fntConsole.tpe</tpe>
   <tpe x="2" y="518" tpage="Default_0">Sprite12_7bf86048-b2d7-42e2-8f28-a82ee6222965.tpe</tpe>
   <tpe x="2" y="1070" tpage="Default_0">sprLight3_04631475-a838-4126-b3c2-11cef5c84954.tpe</tpe>
@@ -11,8 +12,9 @@
   <tpe x="2" y="1444" tpage="Default_0">sprChicken_a8c20bba-f585-4e43-bfbf-3fd2af4f78a0.tpe</tpe>
   <tpe x="2" y="1704" tpage="Default_0">sprLight_a6f40c87-cd98-4ceb-9c7e-0a7465d3ed9c.tpe</tpe>
   <tpe x="262" y="1444" tpage="Default_0">spr_bob_awesome_8ccf3f58-e389-4c6f-bc4a-2224990d163e.tpe</tpe>
+  <tpe x="0" y="0" tpage="Default_1">texAmmo_c5ac1836-f697-413e-8d6c-34d4c3535cae.tpe</tpe>
   <tpe x="373" y="1259" tpage="Default_0">tileTile_output_tileset.tpe</tpe>
-  <tpe x="0" y="0" tpage="Default_1">texChicken64_29001249-69c5-4ff9-a8fa-18e1f7c42934.tpe</tpe>
+  <tpe x="0" y="0" tpage="Default_2">texChicken64_29001249-69c5-4ff9-a8fa-18e1f7c42934.tpe</tpe>
   <tpe x="416" y="1345" tpage="Default_0">__spr_animo_fallback_37c00262-845b-4b6d-9d09-974fee0926f8.tpe</tpe>
   <tpe x="416" y="1345" tpage="Default_0">spr_guy_is_sprite_71fb747a-21ed-4db0-b20a-a80fa1fec9c1.tpe</tpe>
   <tpe x="416" y="1381" tpage="Default_0">sprGuy_a1fa337d-fa81-4cee-ac0a-11bb1899d578.tpe</tpe>
@@ -24,8 +26,8 @@
   <tpe x="416" y="1458" tpage="Default_0">sprGuy_e7c436dd-8370-47d4-8c0f-ca67cae3171e.tpe</tpe>
   <tpe x="394" y="1396" tpage="Default_0">sprSharkSegments_177c8f3f-71f3-4d96-87f0-d4205a1734b6.tpe</tpe>
   <tpe x="416" y="1482" tpage="Default_0">sprWall_270fdc21-0a81-4f8e-b95f-5bb211c4e549.tpe</tpe>
-  <tpe x="0" y="0" tpage="Default_2">texChicken_6d697c37-543d-4dd5-9cde-1ff3b51304d7.tpe</tpe>
-  <tpe x="0" y="0" tpage="Default_3">texMissing_ec42b79d-426f-402d-8bf9-d9c995b579c1.tpe</tpe>
+  <tpe x="0" y="0" tpage="Default_3">texChicken_6d697c37-543d-4dd5-9cde-1ff3b51304d7.tpe</tpe>
+  <tpe x="0" y="0" tpage="Default_4">texMissing_ec42b79d-426f-402d-8bf9-d9c995b579c1.tpe</tpe>
   <tpe x="371" y="1420" tpage="Default_0">spr_guy_doingstuff_e0e33ac7-da25-488c-a4a8-aafa9056eb14.tpe</tpe>
   <tpe x="416" y="1494" tpage="Default_0">sprSharkSegments_7e20b7e2-8c57-4b2d-ae8f-103f65d8a10c.tpe</tpe>
   <tpe x="441" y="1434" tpage="Default_0">sprSharkSegments_ddcf3e83-2b38-4a90-bab8-67a05c68f566.tpe</tpe>

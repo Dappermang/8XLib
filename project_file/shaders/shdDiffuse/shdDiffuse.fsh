@@ -1,14 +1,35 @@
+// varying vec2 v_uv;
+// varying vec3 v_normal;
+
+// void main() {
+//     vec4 starting_color = texture2D(gm_BaseTexture, v_uv);
+//     vec3 ambient_color = vec3(0.1, 0.1, 0.1);
+//     vec3 light_color = vec3(1);
+    
+//     vec3 L = normalize(vec3(-0.5));
+//     float NdotL = max(0.0, -dot(v_normal, L));
+//     vec3 diffuse_color = NdotL * light_color;
+    
+//     vec3 final_color = starting_color.rgb * (ambient_color + diffuse_color);
+//     gl_FragColor = vec4(final_color, starting_color.a);
+// }
+
 varying vec2 v_uv;
 varying vec3 v_normal;
+varying vec3 v_frag_to_cam;
 
 void main() {
     vec4 starting_color = texture2D(gm_BaseTexture, v_uv);
-    vec3 ambient_color = vec3(0.1, 0.1, 0.1);
+    vec3 ambient_color = vec3(0.3, 0.3, 0.3);
     vec3 light_color = vec3(1);
     
-    vec3 L = normalize(vec3(-0.5));
-    float NdotL = max(0.0, -dot(v_normal, L));
-    vec3 diffuse_color = NdotL * light_color;
+    // Compute light direction as the fragment-to-camera direction
+    vec3 L = normalize(v_frag_to_cam);
+    // Use the same normal for all fragments to achieve flat shading
+    vec3 flat_normal = normalize(v_normal);
+    // Compute the dot product between the flat normal and light direction
+    float NdotL = max(0.0, dot(flat_normal, L));
+    vec3 diffuse_color = vec3(NdotL) * light_color * 0.7;
     
     vec3 final_color = starting_color.rgb * (ambient_color + diffuse_color);
     gl_FragColor = vec4(final_color, starting_color.a);
