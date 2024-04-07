@@ -5,11 +5,13 @@ function modelRenderer() {
 function c3dModelRenderer() constructor {
     #region Private
     __models = [];
+    __currentModel = 0;
     __renderSurface = -1;
     __renderProperties = {
         width : __GAME_WIDTH,
         height : __GAME_HEIGHT,
-        resolution : 1.5,
+        resolution : 1,
+        modelScale : 32,
         position : new Vector2( 0, 0 ),
         fullBright : false,
         format : surface_rgba8unorm
@@ -63,9 +65,23 @@ function c3dModelRenderer() constructor {
         __renderSurface = GetRenderSurface();
         __renderProperties.position.x = global.camera.position.x;
         __renderProperties.position.y = global.camera.position.y;
-        // __renderSurfaceProperties.width *= global.camera.camScale;
-        // __renderSurfaceProperties.height *= global.camera.camScale;
-        // __renderSurfaceProperties.scale = global.camera.camScale;
+        
+        var _inputLeftRight = ( keyboard_check( ord( "A" ) ) - keyboard_check( ord( "D" ) ) );
+        var _inputUpDown = ( keyboard_check( ord( "S" ) ) - keyboard_check( ord( "W" ) ) );
+        var _inputMagnitude = point_distance( 0, 0, _inputLeftRight, _inputUpDown );
+        
+        var _pitchSpeed = _inputUpDown * 2;
+        var _yawSpeed = _inputLeftRight * 2;
+        var _rollSpeed = _inputLeftRight * 2;
+        
+        if ( !is_undefined( __models[__currentModel] ) ) {
+            // __models[__currentModel].transform.origin.x += _pitchSpeed;
+            // __models[__currentModel].transform.origin.y += _yawSpeed;
+            // __models[__currentModel].transform.origin.z += _rollSpeed;
+            
+            __models[__currentModel].transform.rotation.x += _pitchSpeed;
+            __models[__currentModel].transform.rotation.z += _rollSpeed;
+        }
     }
     
     static DrawModel = function( modelName ) {
@@ -78,8 +94,6 @@ function c3dModelRenderer() constructor {
 		    gpu_set_zwriteenable( true );
 		    gpu_set_ztestenable( true );
 		    
-		    draw_text( 0, 0, $"Hallo !" );
-		    
 		    if ( !__renderProperties.fullBright ) {
 		    	shader_set( shdDiffuse );
 		    }
@@ -88,9 +102,14 @@ function c3dModelRenderer() constructor {
             var _projMatrix = global.camera.GetProjectionMatrix();
 		    
             if ( !is_undefined( _modelToDraw ) ) {
-            	_modelToDraw.SetRotation( 15, 0, 0 + ( current_time * 0.05 ) );
-            	_modelToDraw.SetScale( 0.1, -0.1, -0.1 );
-            	_modelToDraw.SetPosition( 0, 0, 0 );
+            	var _modelTransform = _modelToDraw.GetTransform();
+            	var _modelOrigin = _modelToDraw.GetTransform().origin;
+            	var _modelRotation = _modelToDraw.GetTransform().rotation;
+            	var _modelScale = _modelToDraw.GetTransform().scale;
+            	
+            	_modelToDraw.SetScale( __renderProperties.modelScale, -__renderProperties.modelScale, -__renderProperties.modelScale );
+            	_modelToDraw.SetRotation( _modelRotation.x, _modelRotation.y, _modelRotation.z );
+            	_modelToDraw.SetPosition( _modelOrigin.x, _modelOrigin.y, _modelOrigin.z );
             	
             	var _finalTransformMatrix = matrix_multiply(
             		matrix_multiply( 

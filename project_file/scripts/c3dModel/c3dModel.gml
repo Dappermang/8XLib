@@ -6,10 +6,6 @@ function c3dModel() constructor {
     
     transform = new cTransform3D();
     
-    transform.scale.x = 16 * 8;
-    transform.scale.y = 16 * 8;
-    transform.scale.z = 16 * 8;
-    
     __transformMatrix = matrix_build( 
         transform.origin.x, transform.origin.y, transform.origin.z, 
         0, 0, 0, 
