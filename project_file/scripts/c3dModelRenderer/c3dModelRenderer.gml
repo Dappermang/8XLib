@@ -4,13 +4,18 @@ function modelRenderer() {
 }
 function c3dModelRenderer() constructor {
     #region Private
+    enum RENDER_TYPE {
+    	WORLD,
+    	VIEWPORT
+    }
     __models = [];
     __currentModel = 0;
     __renderSurface = -1;
     __renderProperties = {
         width : __GAME_WIDTH,
         height : __GAME_HEIGHT,
-        resolution : 1,
+        renderType : RENDER_TYPE.VIEWPORT,
+        resolution : 1.5,
         modelScale : 32,
         position : new Vector2( 0, 0 ),
         fullBright : false,
@@ -27,6 +32,24 @@ function c3dModelRenderer() constructor {
         }
         
         return __renderSurface;
+    }
+    static GetRenderProperties = function() {
+    	return __renderProperties;
+    }
+    
+    static SetRenderProperty = function( propertyKey, propertyValue ) {
+    	var _propertyKey = string_lower( propertyKey );
+    	var _propertyValueType = typeof( struct_get( GetRenderProperties(), _propertyKey ) );
+    	
+    	if ( struct_get( __renderProperties, _propertyKey ) ) {
+    		var _heldPropertyType = typeof( __renderProperties[$ _propertyKey] );
+    		
+    		if ( _propertyValueType == _heldPropertyType ) {
+    			__renderProperties[$ _propertyKey] = propertyValue;
+    		}
+    	}
+    	
+    	return self;
     }
     
     static AddModel = function( model ) {
@@ -73,13 +96,22 @@ function c3dModelRenderer() constructor {
         var _pitchSpeed = _inputUpDown * 2;
         var _yawSpeed = _inputLeftRight * 2;
         var _rollSpeed = _inputLeftRight * 2;
+        var _scale = 0.85;
         
         if ( !is_undefined( __models[__currentModel] ) ) {
-            // __models[__currentModel].transform.origin.x += _pitchSpeed;
-            // __models[__currentModel].transform.origin.y += _yawSpeed;
-            // __models[__currentModel].transform.origin.z += _rollSpeed;
+        	if ( mouse_wheel_up() ) {
+        		__renderProperties.modelScale += _scale;
+        		__renderProperties.modelScale += _scale;
+        		__renderProperties.modelScale += _scale;
+        	}        	
+        	if ( mouse_wheel_down() ) {
+        		__renderProperties.modelScale -= _scale;
+        		__renderProperties.modelScale -= _scale;
+        		__renderProperties.modelScale -= _scale;
+        	}
             
             __models[__currentModel].transform.rotation.x += _pitchSpeed;
+            // __models[__currentModel].transform.rotation.y += _yawSpeed;
             __models[__currentModel].transform.rotation.z += _rollSpeed;
         }
     }
@@ -118,8 +150,11 @@ function c3dModelRenderer() constructor {
             		);
             	
                 matrix_set( matrix_world, _finalTransformMatrix );
-                matrix_set( matrix_view, _viewMatrix );
-                matrix_set( matrix_projection, _projMatrix );
+                
+                if ( __renderProperties.renderType == RENDER_TYPE.VIEWPORT ) {
+                    matrix_set( matrix_view, _viewMatrix );
+                    matrix_set( matrix_projection, _projMatrix );
+                }
                 
                 vertex_submit( _modelToDraw.GetVertexBuffer(), pr_trianglelist, _modelToDraw.GetTexture() );
                 
@@ -135,6 +170,12 @@ function c3dModelRenderer() constructor {
         draw_surface_stretched( GetRenderSurface(), __renderProperties.position.x, __renderProperties.position.y, __renderProperties.width, __renderProperties.height );
     }
     static DrawModels = function() {
+        var _modelListSize = array_length( __models );
         
+        for( var i = 0; i < _modelListSize; ++i ) {
+        	var _currentModel = __models[i].name;
+        	
+        	DrawModel( _currentModel );
+        }
     }
 }

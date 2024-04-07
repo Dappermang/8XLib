@@ -8,10 +8,10 @@ void main() {
     vec3 ambientColour = vec3( 0.4, 0.4, 0.4 );
     vec3 lightColour = vec3( 1 );
     
-    vec3 L = normalize( vec3( -0.5 ) );
-    float NdotL = max( 0.0, -dot( v_normal, L ) );
+    vec3 light = normalize( vec3( -0.5 ) );
+    float normalDotLight = max( 0.0, -dot( v_normal, light ) );
 
-    vec3 diffuseColour = NdotL * lightColour;
+    vec3 diffuseColour = normalDotLight * lightColour;
     
     vec3 shadowColour = texColour.rgb * ( ambientColour + diffuseColour );
     gl_FragColor = vec4( shadowColour, texColour.a );

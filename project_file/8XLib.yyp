@@ -177,6 +177,7 @@
     {"id":{"name":"__BulbRectInRect","path":"scripts/__BulbRectInRect/__BulbRectInRect.yy",},},
     {"id":{"name":"__BulbTraceBufferToEdgeArray","path":"scripts/__BulbTraceBufferToEdgeArray/__BulbTraceBufferToEdgeArray.yy",},},
     {"id":{"name":"__initGlobalFlags","path":"scripts/__initGlobalFlags/__initGlobalFlags.yy",},},
+    {"id":{"name":"texKey","path":"sprites/texKey/texKey.yy",},"order":0,},
     {"id":{"name":"event_handler_publish","path":"scripts/event_handler_publish/event_handler_publish.yy",},},
     {"id":{"name":"cTimer","path":"scripts/cTimer/cTimer.yy",},},
     {"id":{"name":"spr_bob_awesome","path":"sprites/spr_bob_awesome/spr_bob_awesome.yy",},},

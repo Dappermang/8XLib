@@ -1,7 +1,7 @@
 function c3dModel() constructor {
     name = "";
     filePath = "";
-    modelTexture = sprite_get_texture( texAmmo, 0 );
+    modelTexture = texMissing;
     vertexBuffer = vertex_create_buffer();
     
     transform = new cTransform3D();
@@ -52,7 +52,6 @@ function c3dModel() constructor {
 
         return self;
     }
-    
     static SetScale = function( x, y, z = y ) {
         transform.scale.x = x;
         transform.scale.y = y;
@@ -76,6 +75,10 @@ function c3dModel() constructor {
     static SetModel = function( modelPath ) {
         vertexBuffer = importObjModel( modelPath + ".obj", vertexDefaultFormat() );
         
+        return self;
+    }
+    static SetTexture = function( spriteIndex, _imageIndex = 0 ) {
+        modelTexture = sprite_get_texture( spriteIndex, _imageIndex );
         return self;
     }
     
