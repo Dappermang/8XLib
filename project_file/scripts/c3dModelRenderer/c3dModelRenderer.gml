@@ -6,11 +6,12 @@ function c3dModelRenderer() constructor {
     #region Private
     __models = [];
     __renderSurface = -1;
-    __renderSurfaceProperties = {
+    __renderProperties = {
         width : __GAME_WIDTH,
         height : __GAME_HEIGHT,
         resolution : 1.5,
         position : new Vector2( 0, 0 ),
+        fullBright : false,
         format : surface_rgba8unorm
     };
     #endregion
@@ -20,7 +21,7 @@ function c3dModelRenderer() constructor {
     
     static GetRenderSurface = function() {
         if ( !surface_exists( __renderSurface ) ) {
-            __renderSurface = surface_create( __renderSurfaceProperties.width * __renderSurfaceProperties.resolution, __renderSurfaceProperties.height * __renderSurfaceProperties.resolution );
+            __renderSurface = surface_create( __renderProperties.width * __renderProperties.resolution, __renderProperties.height * __renderProperties.resolution );
         }
         
         return __renderSurface;
@@ -60,8 +61,8 @@ function c3dModelRenderer() constructor {
     static Tick = function() {
         // Rebuilding the render surface if it suddenly doesn't exist.s
         __renderSurface = GetRenderSurface();
-        __renderSurfaceProperties.position.x = global.camera.position.x;
-        __renderSurfaceProperties.position.y = global.camera.position.y;
+        __renderProperties.position.x = global.camera.position.x;
+        __renderProperties.position.y = global.camera.position.y;
         // __renderSurfaceProperties.width *= global.camera.camScale;
         // __renderSurfaceProperties.height *= global.camera.camScale;
         // __renderSurfaceProperties.scale = global.camera.camScale;
@@ -79,16 +80,25 @@ function c3dModelRenderer() constructor {
 		    
 		    draw_text( 0, 0, $"Hallo !" );
 		    
-		    shader_set( shdDiffuse );
+		    if ( !__renderProperties.fullBright ) {
+		    	shader_set( shdDiffuse );
+		    }
 		    
             var _viewMatrix = global.camera.GetViewMatrix();
             var _projMatrix = global.camera.GetProjectionMatrix();
 		    
             if ( !is_undefined( _modelToDraw ) ) {
             	_modelToDraw.SetRotation( 15, 0, 0 + ( current_time * 0.05 ) );
-            	_modelToDraw.SetScale( 32, -32, -32 );
+            	_modelToDraw.SetScale( 0.1, -0.1, -0.1 );
             	_modelToDraw.SetPosition( 0, 0, 0 );
-                matrix_set( matrix_world, _modelToDraw.GetTransformMatrix() );
+            	
+            	var _finalTransformMatrix = matrix_multiply(
+            		matrix_multiply( 
+            			_modelToDraw.GetScaleMatrix(), _modelToDraw.GetRotationMatrix() ),
+            			_modelToDraw.GetTransformMatrix() 
+            		);
+            	
+                matrix_set( matrix_world, _finalTransformMatrix );
                 matrix_set( matrix_view, _viewMatrix );
                 matrix_set( matrix_projection, _projMatrix );
                 
@@ -102,8 +112,8 @@ function c3dModelRenderer() constructor {
             draw_reset();
         };
 
-        draw_rectangle( __renderSurfaceProperties.position.x - 1, __renderSurfaceProperties.position.y - 1, __renderSurfaceProperties.position.x + surface_get_width( __renderSurface ), __renderSurfaceProperties.position.y + surface_get_height( __renderSurface ), true );
-        draw_surface_stretched( GetRenderSurface(), __renderSurfaceProperties.position.x, __renderSurfaceProperties.position.y, __renderSurfaceProperties.width, __renderSurfaceProperties.height );
+        draw_rectangle( __renderProperties.position.x - 1, __renderProperties.position.y - 1, __renderProperties.position.x + surface_get_width( __renderSurface ), __renderProperties.position.y + surface_get_height( __renderSurface ), true );
+        draw_surface_stretched( GetRenderSurface(), __renderProperties.position.x, __renderProperties.position.y, __renderProperties.width, __renderProperties.height );
     }
     static DrawModels = function() {
         
