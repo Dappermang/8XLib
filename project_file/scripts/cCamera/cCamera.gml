@@ -42,8 +42,18 @@ function cCamera() constructor {
 	var camY = camera_get_view_y( __camera ) + camera_get_view_height( __camera ) / 2;
 	
 	// TODO: Add options for different projection types.
-	projMatrix = matrix_build_projection_ortho( __GAME_WIDTH, __GAME_HEIGHT, 0, 2048 );
-	viewMatrix = matrix_build_lookat( position.x, position.y, position.z, position.x, position.y, 0, -dsin( camAngle ), dcos( camAngle ), 0 );
+	projMatrix = matrix_build_projection_ortho( 
+		__GAME_WIDTH, __GAME_HEIGHT, 
+		0, 2048 
+	);
+	var _targetX = position.x + dsin( camAngle );
+	var _targetY = position.y + dcos( camAngle );
+
+	viewMatrix = matrix_build_lookat( 
+		position.x, position.y, position.z, 
+		_targetX, _targetY, 0, 
+		0, 0, -1 
+	);
 	
 	static GetProjectionMatrix = function() {
 		return projMatrix;

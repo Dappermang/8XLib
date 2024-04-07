@@ -1,11 +1,10 @@
 {
-  "resourceType": "GMScript",
+  "resourceType": "GMShader",
   "resourceVersion": "1.0",
-  "name": "c3dModelRenderer",
-  "isCompatibility": false,
-  "isDnD": false,
+  "name": "shdDiffuse",
   "parent": {
     "name": "3D",
     "path": "folders/Libraries/3D.yy",
   },
+  "type": 1,
 }

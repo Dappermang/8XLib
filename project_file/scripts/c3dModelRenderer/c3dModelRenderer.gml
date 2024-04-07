@@ -9,7 +9,7 @@ function c3dModelRenderer() constructor {
     __renderSurfaceProperties = {
         width : __GAME_WIDTH,
         height : __GAME_HEIGHT,
-        scale : 1,
+        resolution : 2,
         position : new Vector2( 0, 0 ),
         format : surface_rgba8unorm
     };
@@ -20,7 +20,7 @@ function c3dModelRenderer() constructor {
     
     static GetRenderSurface = function() {
         if ( !surface_exists( __renderSurface ) ) {
-            __renderSurface = surface_create( __renderSurfaceProperties.width * __renderSurfaceProperties.scale, __renderSurfaceProperties.height * __renderSurfaceProperties.scale );
+            __renderSurface = surface_create( __renderSurfaceProperties.width * __renderSurfaceProperties.resolution, __renderSurfaceProperties.height * __renderSurfaceProperties.resolution );
             // __renderSurface = surface_create( __renderSurfaceProperties.width * __renderSurfaceProperties.scale, __renderSurfaceProperties.height * __renderSurfaceProperties.scale, __renderSurfaceProperties.format );
         }
         
@@ -73,26 +73,32 @@ function c3dModelRenderer() constructor {
         var _modelToDraw = GetModel( _modelName );
         
         surface_set_target( GetRenderSurface() ); {
-            draw_clear_alpha( c_white, 0 );
+            draw_clear_alpha( c_black, 0 );
             camera_apply( global.camera.GetCamera() );
 		    gpu_set_zwriteenable( true );
-		    gpu_set_ztestenable( false );
+		    gpu_set_ztestenable( true );
+		    shader_set( shdDiffuse );
+		    
+            var _viewMatrix = global.camera.GetViewMatrix();
+            var _projMatrix = global.camera.GetProjectionMatrix();
 		    
             if ( !is_undefined( _modelToDraw ) ) {
-		        draw_text( 0, 0, $"words." );
-                
-                matrix_set( matrix_view, _modelToDraw.GetTransformMatrix() );
+            	_modelToDraw.SetPosition( 0, 0, 0 );
+            	_modelToDraw.SetRotation( current_time * 0.01, current_time * 0.05, current_time * 0.05 );
+                matrix_set( matrix_world, _modelToDraw.GetTransformMatrix() );
+                // matrix_set( matrix_view, _viewMatrix );
+                // matrix_set( matrix_projection, _projMatrix );
                 
                 vertex_submit( _modelToDraw.GetVertexBuffer(), pr_trianglelist, _modelToDraw.GetTexture() );
                 
-                matrix_set( matrix_view, matrix_build_identity() );
-                
+                matrix_set( matrix_world, matrix_build_identity() );
+                // matrix_set( matrix_view, matrix_build_identity() );
+                // matrix_set( matrix_projection, matrix_build_identity() );
             }
+            surface_reset_target();
+            draw_reset();
         };
-        
-        surface_reset_target();
-        draw_reset();
-        
+
         draw_rectangle( __renderSurfaceProperties.position.x - 1, __renderSurfaceProperties.position.y - 1, __renderSurfaceProperties.position.x + surface_get_width( __renderSurface ), __renderSurfaceProperties.position.y + surface_get_height( __renderSurface ), true );
         draw_surface_stretched( GetRenderSurface(), __renderSurfaceProperties.position.x, __renderSurfaceProperties.position.y, __renderSurfaceProperties.width, __renderSurfaceProperties.height );
     }
