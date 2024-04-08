@@ -1,7 +1,7 @@
 function cAnimoAnimation() constructor {
     sprite = sprGuy;
     frames = [];
-    animSpeed = 0;
+    animSpeed = 0.2;
     animType = ANIMO_TYPE.FINITE;
     /* 
         These 2 variables are arrays of bool-evaluating functions. Whenever a sequence needs to 'enter' a new animation in the sequence, it will parse for
@@ -55,6 +55,13 @@ function cAnimoAnimation() constructor {
 		return array_length( frames );
 	}
 	
+	static SetRepeats = function( _amount = 0 ) {
+		repeats = _amount;
+		return self;
+	}
+	static ResetRepeats = function() {
+		repeatsCompleted = 0;
+	}
 	static AddEnterCondition = function( conditionFunc ) {
 	    if ( !is_callable( conditionFunc ) ) {
 	        return;
@@ -159,11 +166,17 @@ function cAnimoSequence() constructor {
 function testSequence() {
 	testCondition = function() {
 		return true;
+	}	
+	testCondition2 = function() {
+		return false;
 	}
 	
     animation = new cAnimoAnimation();
     
     animationSequence = new cAnimoSequence()
     .AddAnim( animation, [testCondition] )
-    .AddLoop( animation, 0, [testCondition] );
+    .AddLoop( animation, 4, [testCondition] )
+    .AddAnim( animation, [testCondition] );
+    
+    return animationSequence;
 }

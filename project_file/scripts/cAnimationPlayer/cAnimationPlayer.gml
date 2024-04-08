@@ -34,6 +34,16 @@ function cAnimationPlayer( _startPaused = false ) constructor {
         
         return _result;
     }
+	static FinishedRepeats = function() {
+		var _result = false;
+		
+        if ( __currentAnimation.repeatsCompleted >= __currentAnimation.repeats ) {
+            _result = true;
+        }
+		
+		return _result;
+	}
+    
     // Do not modify this.
     static Tick = function() {
     	var _queueSize = ds_list_size( __animationQueue );
@@ -43,34 +53,25 @@ function cAnimationPlayer( _startPaused = false ) constructor {
         && !is_undefined( __currentAnimation ) ) {
             var _animationFrameCount = __currentAnimation.GetFrameAmount();
             
-            __currentAnimationIndex = max( 0, __currentAnimationIndex + __currentAnimation.animSpeed );
+            __currentAnimationIndex += __currentAnimation.animSpeed;
 
-            if ( floor( __currentAnimationIndex ) >= _animationFrameCount ) {
-                switch( __currentAnimation.animType ) {
-                    case ANIMO_TYPE.FINITE :
-                    	// Dequeue the current animation...
-                    	if ( _queueSize > 1 ) {
-                    		DequeueAnimation();
-                    	}
-                        break;
-                    case ANIMO_TYPE.CHAINED :
-                    	// If we have reached the amount of set repeats and there is a valid animation to change to, we will switch
-                        if ( __currentAnimation.repeatsCompleted >= __currentAnimation.repeats ) {
-                    		__currentAnimation.ResetIterations();
-                    		if ( _queueSize > 1 ) {
-                    			DequeueAnimation();
-                    		}
-                        }
-                        break;
-                }
-                
+            if ( floor( __currentAnimationIndex ) >= ( _animationFrameCount - 1 ) ) {
                 if ( __currentAnimation.repeatsCompleted < __currentAnimation.repeats ) {
                     ++__currentAnimation.repeatsCompleted;
                 }
                 
-                if ( !is_undefined( _nextAnimation ) 
-                && __evaluateEnterCondition( _nextAnimation ) ) {
-                	__currentAnimation = _nextAnimation;
+                __currentAnimationIndex = 0;
+            	
+                // Dequeue the current animation...
+                if ( FinishedRepeats() ) {
+                    if ( !is_undefined( _nextAnimation ) 
+                    && __evaluateEnterCondition( _nextAnimation ) ) {
+                		if ( _queueSize > 1 ) {
+                    		__currentAnimation.ResetRepeats();
+                			DequeueAnimation();
+                			__currentAnimation = _nextAnimation;
+                		}
+                    }
                 }
     	         
     	        OnAnimationChanged();
