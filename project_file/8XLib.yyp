@@ -153,6 +153,7 @@
     {"id":{"name":"sprWall","path":"sprites/sprWall/sprWall.yy",},},
     {"id":{"name":"objSystem","path":"objects/objSystem/objSystem.yy",},},
     {"id":{"name":"__BulbClassTile","path":"scripts/__BulbClassTile/__BulbClassTile.yy",},},
+    {"id":{"name":"texBandage","path":"sprites/texBandage/texBandage.yy",},"order":0,},
     {"id":{"name":"Sprite12","path":"sprites/Sprite12/Sprite12.yy",},},
     {"id":{"name":"__BulbAddOcclusionSoft","path":"scripts/__BulbAddOcclusionSoft/__BulbAddOcclusionSoft.yy",},},
     {"id":{"name":"animo_tick_animation","path":"scripts/animo_tick_animation/animo_tick_animation.yy",},},
