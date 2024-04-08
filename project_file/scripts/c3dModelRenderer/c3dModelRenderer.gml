@@ -15,7 +15,7 @@ function c3dModelRenderer() constructor {
         width : __GAME_WIDTH,
         height : __GAME_HEIGHT,
         renderType : RENDER_TYPE.VIEWPORT,
-        resolution : 1.5,
+        resolution : 1.8,
         modelScale : 32,
         position : new Vector2( 0, 0 ),
         fullBright : false,
@@ -125,6 +125,7 @@ function c3dModelRenderer() constructor {
             camera_apply( global.camera.GetCamera() );
 		    gpu_set_zwriteenable( true );
 		    gpu_set_ztestenable( true );
+		    gpu_set_tex_repeat( true );
 		    
 		    if ( !__renderProperties.fullBright ) {
 		    	shader_set( shdDiffuse );
@@ -162,8 +163,11 @@ function c3dModelRenderer() constructor {
                 matrix_set( matrix_view, matrix_build_identity() );
                 matrix_set( matrix_projection, matrix_build_identity() );
             }
+            gpu_set_tex_repeat( false );
+            shader_reset();
             surface_reset_target();
             draw_reset();
+            draw_text( 0, 0, $"{_modelRotation.x},{_modelRotation.y},{_modelRotation.z}" );
         };
 
         draw_rectangle( __renderProperties.position.x - 1, __renderProperties.position.y - 1, __renderProperties.position.x + surface_get_width( __renderSurface ), __renderProperties.position.y + surface_get_height( __renderSurface ), true );

@@ -269,7 +269,6 @@ function cGUIPanel() constructor {
 function draw_reset() {
     draw_set_color( c_white );
     draw_set_alpha( 1 );
-    shader_reset();
 }
 
 function cTransform2D() constructor {
