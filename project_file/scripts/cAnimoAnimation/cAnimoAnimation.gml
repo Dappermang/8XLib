@@ -1,47 +1,32 @@
-function cAnimoAnimation() constructor {
-    sprite = sprGuy;
-    frames = [];
-    animSpeed = 0.2;
-    animType = ANIMO_TYPE.FINITE;
-    /* 
-        These 2 variables are arrays of bool-evaluating functions. Whenever a sequence needs to 'enter' a new animation in the sequence, it will parse for
-        an enter condition. If the result is false, it will not advance the sequence and will instead animate 
-        depending on whatever the animation type is until the expression evaluates to true. Same logic applies for EXIT conditions
-        
-        enterConditions
-        exitConditions
-    */
-    enterConditions = [];
-    exitConditions = [];
+function cAnimoData() constructor {
+    sprite = -2;
+    animSpeed = 0.1;
     repeats = 0;
     repeatsCompleted = 0;
     
-    Init();
+    OnAnimationEnd = -1;
+    OnRepeat = -1;
+    
+    #region Private
+    __frames = [];
+    __enterConditions = [];
+    __exitConditions = [];
     
 	// Populating the frame array with all sprite frames
-	static Init = function() {
+	static __init = function() {
 		var _imageCount = sprite_get_number( sprite );
 		
 		for( var i = 0; i < _imageCount; ++i ) {
-			frames[i] = [i];
+			__frames[i] = [i];
 		}
 	}
-	/// @desc Used to insert a frame of the same animation, or another into the animation!
-	// static InsertFrame = function( _sprite = sprite, _frame = 0, _position = 0 ) {
-	// 	var _imageCount = sprite_get_number( _sprite );
-	// 	var _frameCount = array_length( frames );
-		
-	// 	for( var i = 0; i < _imageCount; ++i ) {
-	// 		if ( _position <= _frameCount ) {
-	// 			frames[i] = [_position];
-	// 		}
-	// 		else {
-	// 			array_push( frames, _ );
-	// 		}
-	// 	}
-	// }
+	#endregion
+	#region Get
 	static GetEnterConditions = function() {
-		return enterConditions;
+		return __enterConditions;
+	}	
+	static GetExitConditions = function() {
+		return __exitConditions;
 	}
 	static GetSprite = function() {
 		if ( !is_undefined( sprite ) ) {
@@ -51,13 +36,30 @@ function cAnimoAnimation() constructor {
 			return __animoFallbackSprite;
 		}
 	}
-	static OnAnimationEnd = function() {}
-	static GetFrameAmount = function() {
-		return array_length( frames );
+	static GetFrames = function() {
+		return array_length( __frames );
 	}
-	
+	#endregion
+	#region Set
+	static SetSprite = function( _sprite ) {
+		sprite = _sprite;
+		__init();
+		return self;
+	}	
+	static SetSpeed = function( _speed ) {
+		animSpeed = _speed;
+		return self;
+	}
 	static SetRepeats = function( _amount = 0 ) {
 		repeats = _amount;
+		return self;
+	}
+	static SetAnimationEnd = function( _animationEnd ) {
+		OnAnimationEnd = _animationEnd;
+		return self;
+	}	
+	static SetOnRepeat = function( _animationEnd ) {
+		OnRepeat = _animationEnd;
 		return self;
 	}
 	static ResetRepeats = function() {
@@ -68,7 +70,7 @@ function cAnimoAnimation() constructor {
 	        return;
 	    }
 	    
-	    array_push( enterConditions, conditionFunc );
+	    array_push( __enterConditions, conditionFunc );
 	    return self;
 	}	
 	static AddExitCondition = function( conditionFunc ) {
@@ -76,13 +78,10 @@ function cAnimoAnimation() constructor {
 	        return;
 	    }
 	    
-	    array_push( exitConditions, conditionFunc );
+	    array_push( __exitConditions, conditionFunc );
 	    return self;
 	}
-	static SetSprite = function( _sprite ) {
-		sprite = _sprite;
-		return self;
-	}
+	#endregion
 	
 	return self;
 }
@@ -99,7 +98,7 @@ function cAnimoSequence() constructor {
     static AnimationHasEnterCondition = function() {
         var _result = false;
         
-        if ( array_length( enterConditions ) > 0 ) {
+        if ( array_length( __enterConditions ) > 0 ) {
             _result = true;
         }
         
@@ -108,7 +107,7 @@ function cAnimoSequence() constructor {
     static AnimationHasExitCondition = function() {
         var _result = false;
         
-        if ( array_length( exitConditions ) > 0 ) {
+        if ( array_length( __exitConditions ) > 0 ) {
             _result = true;
         }
         
@@ -172,7 +171,7 @@ function testSequence() {
 		return false;
 	}
 	
-    animation = new cAnimoAnimation();
+    animation = new cAnimoData();
     
     animationSequence = new cAnimoSequence()
     .AddAnim( animation, [testCondition] )
