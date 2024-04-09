@@ -20,6 +20,7 @@
   <tpe x="0" y="0" tpage="Default_3">texChicken64_29001249-69c5-4ff9-a8fa-18e1f7c42934.tpe</tpe>
   <tpe x="416" y="1345" tpage="Default_0">__spr_animo_fallback_37c00262-845b-4b6d-9d09-974fee0926f8.tpe</tpe>
   <tpe x="416" y="1345" tpage="Default_0">spr_guy_is_sprite_71fb747a-21ed-4db0-b20a-a80fa1fec9c1.tpe</tpe>
+  <tpe x="416" y="1381" tpage="Default_0">sprColtIdle_b077ee2b-b0e4-4f4a-9e37-e71f650888af.tpe</tpe>
   <tpe x="416" y="1381" tpage="Default_0">sprReloadEnter_b077ee2b-b0e4-4f4a-9e37-e71f650888af.tpe</tpe>
   <tpe x="416" y="1381" tpage="Default_0">sprReloadExit_4471ae4b-4d70-4f5e-bb4a-d726f1d160f6.tpe</tpe>
   <tpe x="371" y="1345" tpage="Default_0">sprGuy_a1fa337d-fa81-4cee-ac0a-11bb1899d578.tpe</tpe>
@@ -37,6 +38,7 @@
   <tpe x="416" y="1477" tpage="Default_0">sprReloadEnter_9d56ec9d-88a0-4d81-83be-89581fdad706.tpe</tpe>
   <tpe x="416" y="1499" tpage="Default_0">sprReloadExit_67788097-cf4a-4dd7-be86-94c2c2e2c3a2.tpe</tpe>
   <tpe x="416" y="1521" tpage="Default_0">sprReloadExit_cd2b765d-9b74-4f47-b8e3-995062fe410d.tpe</tpe>
+  <tpe x="416" y="1521" tpage="Default_0">sprReloadHold_2874b3d7-96ce-4ff6-b164-4e908865264a.tpe</tpe>
   <tpe x="416" y="1543" tpage="Default_0">sprReloadSingle_32d289a5-0330-4537-9c00-33e97e19f74a.tpe</tpe>
   <tpe x="416" y="1565" tpage="Default_0">sprReloadSingle_4b79f5a1-086c-46fa-b0ae-d6e57342e7d8.tpe</tpe>
   <tpe x="262" y="1586" tpage="Default_0">sprReloadSingle_82170c5e-f479-47b5-90e5-ab12d808ca26.tpe</tpe>

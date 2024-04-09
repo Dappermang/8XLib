@@ -51,6 +51,7 @@ function cAnimoAnimation() constructor {
 			return __animoFallbackSprite;
 		}
 	}
+	static OnAnimationEnd = function() {}
 	static GetFrameAmount = function() {
 		return array_length( frames );
 	}

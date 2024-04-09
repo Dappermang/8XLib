@@ -89,8 +89,8 @@ function c3dModelRenderer() constructor {
         __renderProperties.position.x = global.camera.position.x;
         __renderProperties.position.y = global.camera.position.y;
         
-        var _inputLeftRight = ( keyboard_check( ord( "A" ) ) - keyboard_check( ord( "D" ) ) );
-        var _inputUpDown = ( keyboard_check( ord( "S" ) ) - keyboard_check( ord( "W" ) ) );
+        var _inputLeftRight = ( keyboard_check( ord( "D" ) ) - keyboard_check( ord( "A" ) ) );
+        var _inputUpDown = ( keyboard_check( ord( "W" ) ) - keyboard_check( ord( "S" ) ) );
         var _inputMagnitude = point_distance( 0, 0, _inputLeftRight, _inputUpDown );
         
         var _pitchSpeed = _inputUpDown * 2;
@@ -140,7 +140,7 @@ function c3dModelRenderer() constructor {
             	var _modelRotation = _modelToDraw.GetTransform().rotation;
             	var _modelScale = _modelToDraw.GetTransform().scale;
             	
-            	_modelToDraw.SetScale( __renderProperties.modelScale, -__renderProperties.modelScale, -__renderProperties.modelScale );
+            	_modelToDraw.SetScale( __renderProperties.modelScale, __renderProperties.modelScale, __renderProperties.modelScale );
             	_modelToDraw.SetRotation( _modelRotation.x, _modelRotation.y, _modelRotation.z );
             	_modelToDraw.SetPosition( _modelOrigin.x, _modelOrigin.y, _modelOrigin.z );
             	
