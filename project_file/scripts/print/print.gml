@@ -11,5 +11,6 @@ function print() {
 			}
 		}
 		show_debug_message( _console_message );
+		console().Print( _console_message );
 	}
 } 

@@ -5,6 +5,7 @@ function cStateMachine() class {
     __currentState = undefined;
     __instanceRef = undefined;
     __maxStateHistory = 1; // Only one other state can stay within the stack.
+    __forceExit = false;
     #endregion
     
     /// @desc Adds a new state to the state machine
@@ -26,9 +27,25 @@ function cStateMachine() class {
         return self;
     }
     static PopState = function() {
-        __currentState.onExit();
-        ds_stack_pop( __stateStack );
+        if ( !__forceExit ) {
+            __currentState.onExit();
+        }
+        else {
+            __forceExit = false;
+        }
+        
+        if ( ds_stack_size( __stateStack ) > 1 ) {
+            ds_stack_pop( __stateStack );
+        }
+        
         __currentState = GetStateHead();
+        __currentState.onEnter();
+        return self;
+    }
+    /// @desc Forces the onExit() to be invoked. If a state pop occurs after this, it will not invoke the onExit();
+    static Exit = function() {
+        __currentState.onExit();
+        __forceExit = true;
         return self;
     }
     static GetStateHead = function() {
@@ -50,12 +67,13 @@ function cStateMachine() class {
         var _targetState = __states[$ stateName];
         
         if ( _stateCount > 0 ) {
-            if ( !is_undefined( __states[$ stateName] ) ) {
-                __currentState.onEnter();
-                __currentState = _targetState;
+            if ( struct_get( __states, stateName ) ) {
                 __currentState.onExit();
+                __currentState = _targetState;
+                __currentState.onEnter();
             }
         }
+        return self;
     }
     static GetActiveState = function() {
         return __currentState;
@@ -94,15 +112,15 @@ function cState( _name = "state" ) class {
         }
         return self;
     }
-    static OnEnter = function( func ) {
-        if ( is_callable( func ) ) {
-            onEnter = func;
+    static OnEnter = function( _func = function(){} ) {
+        if ( is_callable( _func ) ) {
+            onEnter = _func;
         }
         return self;
     }
-    static OnExit = function( func ) {
-        if ( is_callable( func ) ) {
-            onExit = func;
+    static OnExit = function( _func = function(){} ) {
+        if ( is_callable( _func ) ) {
+            onExit = _func;
         }
         return self;
     }

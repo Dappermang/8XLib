@@ -97,22 +97,24 @@ function cAnimationPlayer( _startPaused = false ) constructor {
                 __animationFinished();
                 __currentAnimationIndex = 0;
                 
-                // Dequeue the current animation...
-                if ( __finishedRepeats() ) {
-                	// If we have a next animation, can Enter it, and can Exit the current one...
-                    if ( !is_undefined( _nextAnimation ) 
-                    && __evaluateEnterCondition( _nextAnimation )
-                    && __evaluateExitCondition( __currentAnimation ) ) {
-                		if ( _queueSize > 1 ) {
-                			// Rest Repeats
-                    		__currentAnimation.ResetRepeats();
-                    		// Dequeue
-                			DequeueAnimation();
-                			// Set the current to the next!
-                			__currentAnimation = _nextAnimation;
-                		}
-                    }
-	            }
+                if ( __currentAnimation.repeats != -1 ) {
+                    // Dequeue the current animation...
+                    if ( __finishedRepeats() ) {
+                    	// If we have a next animation, can Enter it, and can Exit the current one...
+                        if ( !is_undefined( _nextAnimation ) 
+                        && __evaluateEnterCondition( _nextAnimation )
+                        && __evaluateExitCondition( __currentAnimation ) ) {
+                    		if ( _queueSize > 1 ) {
+                    			// Rest Repeats
+                        		__currentAnimation.ResetRepeats();
+                        		// Dequeue
+                    			DequeueAnimation();
+                    			// Set the current to the next!
+                    			__currentAnimation = _nextAnimation;
+                    		}
+                        }
+	                }
+                }
             }
         }
     }
@@ -158,10 +160,10 @@ function cAnimationPlayer( _startPaused = false ) constructor {
     static GetQueue = function() {
         return __animationQueue;
     }
-    static AnimationIsPlaying = function( animation ) {
+    static AnimationIsPlaying = function( animationName ) {
     	var _result = false;
     	
-    	if ( __currentAnimation == animation ) {
+    	if ( __currentAnimation == animationName ) {
     		_result = true;
     	}
     	
@@ -187,7 +189,7 @@ function cAnimationPlayer( _startPaused = false ) constructor {
     /// @desc Queues an animation or an array of animations. If there are none present it will immediately start playing it, otherwise it will be queued and play after the current one is finished.
     /// @param {struct|array[struct]} animation
     /// @param {bool} ?overrideCurrent Overrides the current animation regardless of any enterConditions attached.
-    static PlayAnimation = function( animation, overrideCurrent = false ) {
+    static QueueAnimation = function( animation, overrideCurrent = false ) {
     	if ( is_array( animation ) ) {
     		var _argCount = array_length( animation );
     		
