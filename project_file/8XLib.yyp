@@ -44,6 +44,7 @@
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"Rooms","folderPath":"folders/Rooms.yy",},
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"Sprites","folderPath":"folders/Sprites.yy",},
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"reload","folderPath":"folders/Sprites/reload.yy",},
+    {"resourceVersion":"1.0","name":"State Machine","tags":[],"resourceType":"GMFolder","folderPath":"folders/Libraries/State Machine.yy","order":0,},
   ],
   "IncludedFiles": [
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"testAmmo.mtl","CopyToMask":-1,"filePath":"datafiles",},
@@ -88,6 +89,7 @@
     {"id":{"name":"initWindow","path":"scripts/initWindow/initWindow.yy",},},
     {"id":{"name":"spr_guy_is_sprite","path":"sprites/spr_guy_is_sprite/spr_guy_is_sprite.yy",},},
     {"id":{"name":"animo_init_looped","path":"scripts/animo_init_looped/animo_init_looped.yy",},},
+    {"id":{"name":"cStateMachine","path":"scripts/cStateMachine/cStateMachine.yy",},"order":0,},
     {"id":{"name":"c3dModel","path":"scripts/c3dModel/c3dModel.yy",},},
     {"id":{"name":"BulbShadowOverlay","path":"scripts/BulbShadowOverlay/BulbShadowOverlay.yy",},},
     {"id":{"name":"cTimerController","path":"scripts/cTimerController/cTimerController.yy",},},
@@ -170,6 +172,7 @@
     {"id":{"name":"cEventHandler","path":"scripts/cEventHandler/cEventHandler.yy",},},
     {"id":{"name":"__globalFlags","path":"scripts/__globalFlags/__globalFlags.yy",},},
     {"id":{"name":"event_handler_subscribe","path":"scripts/event_handler_subscribe/event_handler_subscribe.yy",},},
+    {"id":{"name":"macros","path":"scripts/macros/macros.yy",},"order":0,},
     {"id":{"name":"sprLight2","path":"sprites/sprLight2/sprLight2.yy",},},
     {"id":{"name":"__BulbAddSpriteToOccluder","path":"scripts/__BulbAddSpriteToOccluder/__BulbAddSpriteToOccluder.yy",},},
     {"id":{"name":"cAnimationTree","path":"scripts/cAnimationTree/cAnimationTree.yy",},},
