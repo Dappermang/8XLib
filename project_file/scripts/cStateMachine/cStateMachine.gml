@@ -34,6 +34,7 @@ function cStateMachine() class {
             __forceExit = false;
         }
         
+        // Only pop the state if there is enough room in the stack to do so !
         if ( ds_stack_size( __stateStack ) > 1 ) {
             ds_stack_pop( __stateStack );
         }

@@ -160,11 +160,25 @@ function cAnimationPlayer( _startPaused = false ) constructor {
     static GetQueue = function() {
         return __animationQueue;
     }
-    static AnimationIsPlaying = function( animationName ) {
+    static IsPlaying = function( animationName ) {
     	var _result = false;
     	
     	if ( __currentAnimation == animationName ) {
     		_result = true;
+    	}
+    	
+    	return _result;
+    }
+    static IsQueued = function( animationName ) {
+    	var _queueSize = ds_list_size( __animationQueue );
+    	var _result = false;
+    	
+    	for ( var i = 1; i < _queueSize; ++i ) {
+            var _queuedAnimation = ds_list_find_value( __animationQueue, i );
+            
+            if ( _queuedAnimation == animationName ) {
+            	_result = true;
+            }
     	}
     	
     	return _result;
@@ -197,12 +211,12 @@ function cAnimationPlayer( _startPaused = false ) constructor {
     			var _argument = animation[i];
 
         		ds_list_add( __animationQueue, _argument );
-        		print( $"Queued : {_argument}" );
+        		// print( $"Queued : {_argument}" );
     		}
     	}
         else {
         	ds_list_add( __animationQueue, animation );
-        	print( $"Queued : {animation}" );
+        	// print( $"Queued : {animation}" );
     	}
     	
     	if ( overrideCurrent ) {

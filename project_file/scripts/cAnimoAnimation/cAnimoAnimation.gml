@@ -3,6 +3,7 @@ function cAnimoData() constructor {
     animSpeed = 0.1;
     repeats = 0;
     repeatsCompleted = 0;
+    stopOnEnd = false;
     
     OnAnimationEnd = -1;
     OnRepeat = -1;
@@ -60,6 +61,10 @@ function cAnimoData() constructor {
 	}	
 	static SetOnRepeat = function( _animationEnd ) {
 		OnRepeat = _animationEnd;
+		return self;
+	}
+	static StopOnEnd = function( _stop = false ) {
+		stopOnEnd = _stop;
 		return self;
 	}
 	static ResetRepeats = function() {
