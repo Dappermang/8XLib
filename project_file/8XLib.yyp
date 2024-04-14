@@ -45,6 +45,7 @@
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"Rooms","folderPath":"folders/Rooms.yy",},
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"Sprites","folderPath":"folders/Sprites.yy",},
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"reload","folderPath":"folders/Sprites/reload.yy",},
+    {"resourceVersion":"1.0","name":"Prompts","tags":[],"resourceType":"GMFolder","folderPath":"folders/Libraries/Prompts.yy","order":0,},
   ],
   "IncludedFiles": [
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"testAmmo.mtl","CopyToMask":-1,"filePath":"datafiles",},
@@ -153,6 +154,7 @@
     {"id":{"name":"animo_get_animation","path":"scripts/animo_get_animation/animo_get_animation.yy",},},
     {"id":{"name":"texAmmo","path":"sprites/texAmmo/texAmmo.yy",},},
     {"id":{"name":"objGame","path":"objects/objGame/objGame.yy",},},
+    {"id":{"name":"cPromptManager","path":"scripts/cPromptManager/cPromptManager.yy",},"order":0,},
     {"id":{"name":"objLight","path":"objects/objLight/objLight.yy",},},
     {"id":{"name":"__spr_animo_fallback","path":"sprites/__spr_animo_fallback/__spr_animo_fallback.yy",},},
     {"id":{"name":"__BulbGetSpriteImage","path":"scripts/__BulbGetSpriteImage/__BulbGetSpriteImage.yy",},},
@@ -172,6 +174,7 @@
     {"id":{"name":"animo_tick_animation","path":"scripts/animo_tick_animation/animo_tick_animation.yy",},},
     {"id":{"name":"__BulbDiskCacheLoad","path":"scripts/__BulbDiskCacheLoad/__BulbDiskCacheLoad.yy",},},
     {"id":{"name":"BulbPointLight","path":"scripts/BulbPointLight/BulbPointLight.yy",},},
+    {"id":{"name":"cPrompt","path":"scripts/cPrompt/cPrompt.yy",},"order":0,},
     {"id":{"name":"objLighting","path":"objects/objLighting/objLighting.yy",},},
     {"id":{"name":"importObjModel","path":"scripts/importObjModel/importObjModel.yy",},},
     {"id":{"name":"cEventHandler","path":"scripts/cEventHandler/cEventHandler.yy",},},
