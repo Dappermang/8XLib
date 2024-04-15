@@ -1,5 +1,5 @@
 /// @author Sage64, Elysia
-/// @desc Creates an camera to use for drawing GUI, USE IN DRAW END.
+/// @desc Creates a camera to use for drawing GUI, USE IN DRAW END.
 function guiCamera( width = 1920.0, height = 1080.0 ) {
 	var xx = width / 2.0;
 	var yy = height / 2.0;

@@ -17,24 +17,25 @@ function cPrompt() class {
     __lines = [];
     
     /// @param {string}
-    static AddLine = function( text, _config = {} ) {
-        _config[$ "hasOption"] = false;
-        _config[$ "callbackOnConfirm"] = function(){};
-        _config[$ "callbackOnDeny"] = function(){};
+    static AddLine = function( _config = {} ) {
+        _config[$ "text"] ??= "";
+        _config[$ "confirmText"] ??= "";
+        _config[$ "denyText"] ??= "";
+        _config[$ "hasOption"] ??= false;
+        _config[$ "callbackOnConfirm"] ??= -1;
+        _config[$ "callbackOnDeny"] ??= -1;
         
-        var _promptData = {
-            text : text,
-            hasOption : _config.hasOption,
-            callbackOnConfirm : _config.callbackOnConfirm,
-            callbackOnDeny : _config.callbackOnDeny,
-        };
-        
-        array_push( __lines, _promptData );
+        print( $"Added New Line With {_config}" );
+        array_push( __lines, _config );
         
         return self;
     }
+    
     static GetLines = function() {
         return __lines;
+    }    
+    static GetLineCount = function() {
+        return array_length( __lines );
     }
     
     return self;

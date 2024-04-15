@@ -89,6 +89,7 @@
     {"id":{"name":"__shdBulbFinalFixAlpha","path":"shaders/__shdBulbFinalFixAlpha/__shdBulbFinalFixAlpha.yy",},},
     {"id":{"name":"__shdBulbClipHSV","path":"shaders/__shdBulbClipHSV/__shdBulbClipHSV.yy",},},
     {"id":{"name":"initWindow","path":"scripts/initWindow/initWindow.yy",},},
+    {"id":{"name":"objPrompter","path":"objects/objPrompter/objPrompter.yy",},"order":0,},
     {"id":{"name":"spr_guy_is_sprite","path":"sprites/spr_guy_is_sprite/spr_guy_is_sprite.yy",},},
     {"id":{"name":"animo_init_looped","path":"scripts/animo_init_looped/animo_init_looped.yy",},},
     {"id":{"name":"sprColtAimEnd","path":"sprites/sprColtAimEnd/sprColtAimEnd.yy",},},

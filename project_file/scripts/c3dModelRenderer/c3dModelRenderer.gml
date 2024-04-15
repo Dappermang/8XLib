@@ -15,7 +15,7 @@ function c3dModelRenderer() constructor {
         width : __GAME_WIDTH,
         height : __GAME_HEIGHT,
         renderType : RENDER_TYPE.VIEWPORT,
-        resolution : 1.8,
+        resolution : 1,
         modelScale : 32,
         position : new Vector2( 0, 0 ),
         fullBright : false,
@@ -50,6 +50,15 @@ function c3dModelRenderer() constructor {
     	}
     	
     	return self;
+    }
+    /// @desc Render Surface is set to a new target. If target doesn't exist, then we fallback to the default one.
+    static SetRenderSurface = function( surface ) {
+    	if ( surface_exists( surface ) ) {
+    		__renderSurface = surface;
+    	}
+    	else {
+    		__renderSurface = GetRenderSurface();
+    	}
     }
     
     static AddModel = function( model ) {
@@ -160,8 +169,8 @@ function c3dModelRenderer() constructor {
                 vertex_submit( _modelToDraw.GetVertexBuffer(), pr_trianglelist, _modelToDraw.GetTexture() );
                 
                 matrix_set( matrix_world, matrix_build_identity() );
-                matrix_set( matrix_view, matrix_build_identity() );
-                matrix_set( matrix_projection, matrix_build_identity() );
+                matrix_set( matrix_view, _viewMatrix );
+                matrix_set( matrix_projection, _projMatrix );
             }
             gpu_set_tex_repeat( false );
             shader_reset();
