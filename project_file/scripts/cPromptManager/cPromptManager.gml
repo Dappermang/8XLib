@@ -8,7 +8,7 @@ function cPromptManager() class {
     targetString = "";
     typedString = "";
     typedPosition = 1;
-    typeInterval = 60 / 1000;
+    typeInterval = ( 60 / 1000 ) * 2;
     typeTimer = new cTimer( typeInterval );
     typeWaiting = true;
     
@@ -51,6 +51,31 @@ function cPromptManager() class {
             else {
                 typeTimer.Unpause();
                 typeWaiting = false;
+            }
+        }
+        
+        var _promptHasOption = struct_get( prompts[currentPrompt].__lines[currentLine], "hasOption" );
+        
+        if ( _promptHasOption ) {
+            if ( keyboard_check_pressed( vk_left ) ) {
+                selectedOption += 1 % 1;
+            }            
+            if ( keyboard_check_pressed( vk_right ) ) {
+                selectedOption -= 1 % 1;
+            }
+            
+            if ( keyboard_check_pressed( vk_enter ) ) {
+                if ( selectedOption == 0 ) {
+                    if ( is_callable( struct_get( prompts[currentPrompt].__lines[currentLine], "callbackOnConfirm" ) ) ) {
+                        struct_get( prompts[currentPrompt].__lines[currentLine], "callbackOnConfirm" )();
+                        AdvanceLine();
+                    }
+                }                
+                if ( selectedOption == 1 ) {
+                    if ( is_callable( struct_get( prompts[currentPrompt].__lines[currentLine], "callbackOnDeny" ) ) ) {
+                        struct_get( prompts[currentPrompt].__lines[currentLine], "callbackOnDeny" )();
+                    }
+                }
             }
         }
         
