@@ -175,7 +175,7 @@
     {"id":{"name":"animo_tick_animation","path":"scripts/animo_tick_animation/animo_tick_animation.yy",},},
     {"id":{"name":"__BulbDiskCacheLoad","path":"scripts/__BulbDiskCacheLoad/__BulbDiskCacheLoad.yy",},},
     {"id":{"name":"BulbPointLight","path":"scripts/BulbPointLight/BulbPointLight.yy",},},
-    {"id":{"name":"cPrompt","path":"scripts/cPrompt/cPrompt.yy",},"order":0,},
+    {"id":{"name":"cPromptData","path":"scripts/cPromptData/cPromptData.yy",},"order":0,},
     {"id":{"name":"objLighting","path":"objects/objLighting/objLighting.yy",},},
     {"id":{"name":"importObjModel","path":"scripts/importObjModel/importObjModel.yy",},},
     {"id":{"name":"cEventHandler","path":"scripts/cEventHandler/cEventHandler.yy",},},

@@ -8,7 +8,7 @@ function cPromptManager() class {
     targetString = "";
     typedString = "";
     typedPosition = 1;
-    typeInterval = ( 60 / 1000 ) * 2;
+    typeInterval = ( 60 / 10000 );
     typeTimer = new cTimer( typeInterval );
     typeWaiting = true;
     
@@ -16,6 +16,16 @@ function cPromptManager() class {
     alpha = 1;
     visible = true;
     #endregion
+    
+    /*
+        TODO : 
+        - callbacks on line end
+        - timeouts with callbacks on line end + a timer
+        - Prompts that can have lines jumped to just in case.
+        - exmaple;;;; when callback denied -> jumpTo( denyIndex ) -> text="You have Denied the prompt..."
+    
+     
+    */
     
     static AddPrompt = function( data ) {
         print( $"Added {data}" );
@@ -68,7 +78,6 @@ function cPromptManager() class {
                 if ( selectedOption == 0 ) {
                     if ( is_callable( struct_get( prompts[currentPrompt].__lines[currentLine], "callbackOnConfirm" ) ) ) {
                         struct_get( prompts[currentPrompt].__lines[currentLine], "callbackOnConfirm" )();
-                        AdvanceLine();
                     }
                 }                
                 if ( selectedOption == 1 ) {
@@ -76,6 +85,7 @@ function cPromptManager() class {
                         struct_get( prompts[currentPrompt].__lines[currentLine], "callbackOnDeny" )();
                     }
                 }
+                AdvanceLine();
             }
         }
         
@@ -111,7 +121,21 @@ function cPromptManager() class {
         typeWaiting = false;
     }
     static UpdatePrompt = function() {
-        targetString = struct_get( prompts[currentPrompt].__lines[currentLine], "text" ) ?? "error";
+        var _index = 0;
+        
+        for( var i = 0; i < array_length( prompts[currentPrompt].__lines ); ++i ) {
+            var _lineCanBeEntered = struct_get( prompts[currentPrompt].__lines[i], "enterCondition" )();
+            
+            if ( !is_undefined( _lineCanBeEntered ) ) {
+                if ( _lineCanBeEntered ) {
+                    _index = i;
+                    break;
+                }
+            }
+        }
+        
+        currentLine = _index;
+        targetString = struct_get( prompts[currentPrompt].__lines[_index], "text" ) ?? "error";
     }
     
     static OnConfirm = function() {}

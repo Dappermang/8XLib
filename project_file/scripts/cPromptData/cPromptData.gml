@@ -1,7 +1,7 @@
 /* 
     Prompt Data Class.
 */
-function cPrompt() class {
+function cPromptData() class {
     /* 
         lines <- The dialogue for the prompt.
         
@@ -18,10 +18,22 @@ function cPrompt() class {
     
     /// @param {string}
     static AddLine = function( _config = {} ) {
+        /*
+            enterCondition <- [function|variable|boolexpression] Function or Variable that must be true in order for this line to be called.
+            text <- [string] The text for this line that will be displayed.
+            hasOption <- [bool] Whether or not this line is optionable.
+            
+            confirmText <- [string] The text for this lines 'Confirm' option.
+            denyText <- [string] The text for this lines 'Deny' option.
+            
+            callbackOnConfirm <- [function] Function called on 'Confirm'.
+            callbackOnDeny <- [function] Function called on 'Deny'.
+        */
+        _config[$ "enterCondition"] ??= undefined;
         _config[$ "text"] ??= "";
+        _config[$ "hasOption"] ??= false;
         _config[$ "confirmText"] ??= "";
         _config[$ "denyText"] ??= "";
-        _config[$ "hasOption"] ??= false;
         _config[$ "callbackOnConfirm"] ??= -1;
         _config[$ "callbackOnDeny"] ??= -1;
         
