@@ -68,10 +68,10 @@ function cPromptManager() class {
         
         if ( _promptHasOption ) {
             if ( keyboard_check_pressed( vk_left ) ) {
-                selectedOption += 1 % 1;
+                selectedOption += 1;
             }            
             if ( keyboard_check_pressed( vk_right ) ) {
-                selectedOption -= 1 % 1;
+                selectedOption -= 1;
             }
             
             if ( keyboard_check_pressed( vk_enter ) ) {
@@ -103,8 +103,21 @@ function cPromptManager() class {
         if ( currentPrompt < array_length( prompts ) ) {
             var promptLines = prompts[currentPrompt].GetLines();
             var promptLineCount = prompts[currentPrompt].GetLineCount();
+            /* 
+               INSTEAD MAKE : Branch system
+               - figure out branch data
+               - goto( branchName )
+               - branch.GetData()
             
-            if ( currentLine < array_length( promptLines ) - 1 ) {
+            */
+            /* 
+                 Need To;
+                 - Get A new line
+                 - Check if it can be entered
+                 - if not, go to the next and check again.
+            */
+            
+            if ( currentLine < promptLineCount - 1 ) {
                 currentLine = min( currentLine + 1, promptLineCount - 1 );
             } else {
                 currentPrompt = min( currentPrompt + 1, array_length( prompts ) - 1 );
@@ -121,21 +134,7 @@ function cPromptManager() class {
         typeWaiting = false;
     }
     static UpdatePrompt = function() {
-        var _index = 0;
-        
-        for( var i = 0; i < array_length( prompts[currentPrompt].__lines ); ++i ) {
-            var _lineCanBeEntered = struct_get( prompts[currentPrompt].__lines[i], "enterCondition" )();
-            
-            if ( !is_undefined( _lineCanBeEntered ) ) {
-                if ( _lineCanBeEntered ) {
-                    _index = i;
-                    break;
-                }
-            }
-        }
-        
-        currentLine = _index;
-        targetString = struct_get( prompts[currentPrompt].__lines[_index], "text" ) ?? "error";
+        targetString = struct_get( prompts[currentPrompt].__lines[currentLine], "text" ) ?? "error";
     }
     
     static OnConfirm = function() {}
@@ -153,9 +152,9 @@ function cPromptManager() class {
         
         if ( _promptOption 
         && typeWaiting ) {
-            draw_set_colour( c_lime );
+            draw_set_colour( selectedOption==1 ? c_lime : c_white );
             draw_text_transformed( 240, 275, struct_get( prompts[currentPrompt].__lines[currentLine], "confirmText" ), 2, 2, 0 );
-            draw_set_colour( c_red );
+            draw_set_colour( selectedOption==0 ? c_lime : c_white );
             draw_text_transformed( 240, 295, struct_get( prompts[currentPrompt].__lines[currentLine], "denyText" ), 2, 2, 0 );
             draw_set_colour( c_white );
         }
