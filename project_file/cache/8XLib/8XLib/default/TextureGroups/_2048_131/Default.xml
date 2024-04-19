@@ -2,11 +2,12 @@
 <TextureGroup>
   <texture scale="1" mipsToGenerate="0" texwidth="1024" texheight="2048">Default_0.bz2</texture>
   <texture scale="1" mipsToGenerate="0" texwidth="256" texheight="256">Default_1.bz2</texture>
-  <texture scale="1" mipsToGenerate="0" texwidth="128" texheight="128">Default_2.bz2</texture>
-  <texture scale="1" mipsToGenerate="0" texwidth="64" texheight="64">Default_3.bz2</texture>
-  <texture scale="1" mipsToGenerate="0" texwidth="16" texheight="32">Default_4.bz2</texture>
-  <texture scale="1" mipsToGenerate="0" texwidth="16" texheight="16">Default_5.bz2</texture>
+  <texture scale="1" mipsToGenerate="0" texwidth="256" texheight="256">Default_2.bz2</texture>
+  <texture scale="1" mipsToGenerate="0" texwidth="128" texheight="128">Default_3.bz2</texture>
+  <texture scale="1" mipsToGenerate="0" texwidth="64" texheight="64">Default_4.bz2</texture>
+  <texture scale="1" mipsToGenerate="0" texwidth="16" texheight="32">Default_5.bz2</texture>
   <texture scale="1" mipsToGenerate="0" texwidth="16" texheight="16">Default_6.bz2</texture>
+  <texture scale="1" mipsToGenerate="0" texwidth="16" texheight="16">Default_7.bz2</texture>
   <tpe x="0" y="2" tpage="Default_0">fntConsole_fntConsole.tpe</tpe>
   <tpe x="2" y="518" tpage="Default_0">Sprite12_7bf86048-b2d7-42e2-8f28-a82ee6222965.tpe</tpe>
   <tpe x="2" y="1070" tpage="Default_0">sprLight3_04631475-a838-4126-b3c2-11cef5c84954.tpe</tpe>
@@ -14,10 +15,11 @@
   <tpe x="2" y="1444" tpage="Default_0">sprChicken_a8c20bba-f585-4e43-bfbf-3fd2af4f78a0.tpe</tpe>
   <tpe x="2" y="1704" tpage="Default_0">sprLight_a6f40c87-cd98-4ceb-9c7e-0a7465d3ed9c.tpe</tpe>
   <tpe x="0" y="0" tpage="Default_1">texBandage_513095c4-c6f9-4483-b597-32469a449a9e.tpe</tpe>
+  <tpe x="0" y="0" tpage="Default_2">texMap_713b05ae-edfc-4b5c-9a8d-767952ca9f00.tpe</tpe>
   <tpe x="262" y="1444" tpage="Default_0">spr_bob_awesome_8ccf3f58-e389-4c6f-bc4a-2224990d163e.tpe</tpe>
-  <tpe x="0" y="0" tpage="Default_2">texAmmo_c5ac1836-f697-413e-8d6c-34d4c3535cae.tpe</tpe>
+  <tpe x="0" y="0" tpage="Default_3">texAmmo_c5ac1836-f697-413e-8d6c-34d4c3535cae.tpe</tpe>
   <tpe x="373" y="1259" tpage="Default_0">tileTile_output_tileset.tpe</tpe>
-  <tpe x="0" y="0" tpage="Default_3">texChicken64_29001249-69c5-4ff9-a8fa-18e1f7c42934.tpe</tpe>
+  <tpe x="0" y="0" tpage="Default_4">texChicken64_29001249-69c5-4ff9-a8fa-18e1f7c42934.tpe</tpe>
   <tpe x="416" y="1345" tpage="Default_0">__spr_animo_fallback_37c00262-845b-4b6d-9d09-974fee0926f8.tpe</tpe>
   <tpe x="416" y="1345" tpage="Default_0">spr_guy_is_sprite_71fb747a-21ed-4db0-b20a-a80fa1fec9c1.tpe</tpe>
   <tpe x="416" y="1381" tpage="Default_0">sprColtIdle_b077ee2b-b0e4-4f4a-9e37-e71f650888af.tpe</tpe>
@@ -62,7 +64,7 @@
   <tpe x="406" y="1608" tpage="Default_0">sprColtUnholster_9ffe7fd7-6115-4df9-8877-87d771018980.tpe</tpe>
   <tpe x="330" y="1630" tpage="Default_0">sprColtHolster_cdfbdd74-6a70-429b-bc58-38fa53d3cb15.tpe</tpe>
   <tpe x="330" y="1630" tpage="Default_0">sprColtUnholster_cdfbdd74-6a70-429b-bc58-38fa53d3cb15.tpe</tpe>
-  <tpe x="0" y="0" tpage="Default_4">texKey_975d204b-c66c-4c8a-b371-6a798151dac6.tpe</tpe>
+  <tpe x="0" y="0" tpage="Default_5">texKey_975d204b-c66c-4c8a-b371-6a798151dac6.tpe</tpe>
   <tpe x="262" y="1675" tpage="Default_0">sprGuy_4dbdd202-3a78-48fa-987e-b76d30b31093.tpe</tpe>
   <tpe x="295" y="1655" tpage="Default_0">sprColtHolster_e64ef346-08e6-42aa-80fb-320423d59bb8.tpe</tpe>
   <tpe x="295" y="1655" tpage="Default_0">sprColtUnholster_e64ef346-08e6-42aa-80fb-320423d59bb8.tpe</tpe>
@@ -90,8 +92,8 @@
   <tpe x="429" y="1633" tpage="Default_0">sprColtAimEnd_bda342cb-dd43-42e9-a217-844311222f0c.tpe</tpe>
   <tpe x="429" y="1633" tpage="Default_0">sprColtAimStart_ac8ea47f-bc07-41a4-a6df-88ae47371d66.tpe</tpe>
   <tpe x="262" y="1749" tpage="Default_0">sprWall_270fdc21-0a81-4f8e-b95f-5bb211c4e549.tpe</tpe>
-  <tpe x="0" y="0" tpage="Default_5">texChicken_6d697c37-543d-4dd5-9cde-1ff3b51304d7.tpe</tpe>
-  <tpe x="0" y="0" tpage="Default_6">texMissing_ec42b79d-426f-402d-8bf9-d9c995b579c1.tpe</tpe>
+  <tpe x="0" y="0" tpage="Default_6">texChicken_6d697c37-543d-4dd5-9cde-1ff3b51304d7.tpe</tpe>
+  <tpe x="0" y="0" tpage="Default_7">texMissing_ec42b79d-426f-402d-8bf9-d9c995b579c1.tpe</tpe>
   <tpe x="286" y="1704" tpage="Default_0">spr_guy_doingstuff_e0e33ac7-da25-488c-a4a8-aafa9056eb14.tpe</tpe>
   <tpe x="304" y="1709" tpage="Default_0">sprSharkSegments_7e20b7e2-8c57-4b2d-ae8f-103f65d8a10c.tpe</tpe>
   <tpe x="387" y="1656" tpage="Default_0">sprSharkSegments_ddcf3e83-2b38-4a90-bab8-67a05c68f566.tpe</tpe>

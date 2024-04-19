@@ -93,7 +93,7 @@ function c3dModelRenderer() constructor {
     }
     
     static Tick = function() {
-        // Rebuilding the render surface if it suddenly doesn't exist.s
+        // Rebuilding the render surface if it suddenly doesn't exist.
         __renderSurface = GetRenderSurface();
         __renderProperties.position.x = global.camera.position.x;
         __renderProperties.position.y = global.camera.position.y;
