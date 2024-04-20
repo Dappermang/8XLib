@@ -57,7 +57,7 @@ function cMapDraw() class {
             //         __brushProperties : brushProperties
             //     }
             // );
-            isDrawing = true;
+            // isDrawing = true;
         }
         else {
             isDrawing = false;
