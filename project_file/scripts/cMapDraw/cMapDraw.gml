@@ -66,18 +66,24 @@ function cMapDraw() class {
     static DrawMap = function() {
         __renderer.DrawModels();
         
-                
+        var _mouseX = mouse_x - camera_get_view_x( global.camera.GetCamera() );
+        var _mouseY = mouse_y - camera_get_view_y( global.camera.GetCamera() );
         var _scaleX = ( __renderProperties.width / 2 ) / ( sprite_get_width( brushProperties.sprite ) );
         var _scaleY = ( __renderProperties.height / 2 ) / ( sprite_get_height( brushProperties.sprite ) );
-        var _drawX = mouse_x - ( sprite_get_width( brushProperties.sprite ) * _scaleX / 2 );
-        var _drawY = mouse_y - ( sprite_get_height( brushProperties.sprite ) * _scaleY / 2 );
         
-        draw_sprite( brushProperties.sprite, -1, mouse_x, mouse_y );
+        draw_sprite( brushProperties.sprite, -1, _mouseX, _mouseY );
         draw_text( 
-            mouse_x, 
-            mouse_y, 
-            $"{mouse_x},{mouse_y}" 
+            _mouseX, 
+            _mouseY, 
+            $"{_mouseX},{_mouseY}" 
         );
+        
+        /*
+            Map Painting Idea;
+            - 'Paint' directly on a Draw Surface
+            - Get texture of surface
+            - Map that texture to the model using a shader
+        */
         
         if ( isDrawing ) {
             surface_set_target( __renderer.GetRenderSurface() ); {
@@ -87,8 +93,8 @@ function cMapDraw() class {
                 draw_sprite_stretched_ext( 
                     brushProperties.sprite, 
                     -1, 
-                    _drawX, 
-                    _drawY,
+                    _mouseX, 
+                    _mouseY,
                     _scaleX,
                     _scaleY,
                     brushProperties.colour,
@@ -96,14 +102,15 @@ function cMapDraw() class {
                 );
                 draw_set_colour( c_black );
                 gpu_set_blendmode( bm_subtract );
-                draw_text( _drawX, _drawY, $"{_drawX},{_drawY}" );
+                draw_text( _mouseX, _mouseY, $"{_mouseX},{_mouseY}" );
+                draw_circle( _mouseX, _mouseY, 16, false );
             }
             draw_reset();
             surface_reset_target();
             
             var _surfaceSprite = sprite_create_from_surface( __renderer.GetRenderSurface(), 0, 0, __renderProperties.width * __renderProperties.resolution, __renderProperties.height * __renderProperties.resolution, false, false, 0, 0 );
             
-            __mapModel.SetTexture( _surfaceSprite );
+            __renderer.GetCurrentModel().SetTexture( _surfaceSprite );
         }
     }
 }

@@ -24,6 +24,7 @@ function c3dModelRenderer() constructor {
     #endregion
     #region Class Properties
     drawEnabled = true;
+    resetTransforms = false;
     #endregion
     
     static GetRenderSurface = function() {
@@ -91,7 +92,20 @@ function c3dModelRenderer() constructor {
         
         return _desiredModel;
     }
-    
+    static GetCurrentModel = function() {
+    	var _result = undefined;
+    	
+    	if ( array_length( __models ) > 0 ) {
+    		_result = __models[__currentModel];
+    	}
+    	
+    	return _result;
+    }
+    static ResetModelTransforms = function() {
+    	GetCurrentModel().transform.rotation.x = lerp( GetCurrentModel().transform.rotation.x, 0, 0.1 );
+    	GetCurrentModel().transform.rotation.y = lerp( GetCurrentModel().transform.rotation.y, 0, 0.1 );
+    	GetCurrentModel().transform.rotation.z = lerp( GetCurrentModel().transform.rotation.z, 0, 0.1 );
+    }
     static Tick = function() {
         // Rebuilding the render surface if it suddenly doesn't exist.
         __renderSurface = GetRenderSurface();
@@ -99,15 +113,22 @@ function c3dModelRenderer() constructor {
         __renderProperties.position.y = global.camera.position.y;
         
         var _inputLeftRight = ( keyboard_check( ord( "D" ) ) - keyboard_check( ord( "A" ) ) );
+        var _inputYaw = ( keyboard_check( ord( "E" ) ) - keyboard_check( ord( "Q" ) ) );
         var _inputUpDown = ( keyboard_check( ord( "W" ) ) - keyboard_check( ord( "S" ) ) );
         var _inputMagnitude = point_distance( 0, 0, _inputLeftRight, _inputUpDown );
         
         var _pitchSpeed = _inputUpDown * 2;
-        var _yawSpeed = _inputLeftRight * 2;
+        var _yawSpeed = _inputYaw * 2;
         var _rollSpeed = _inputLeftRight * 2;
         var _scale = 0.85;
         
         if ( !is_undefined( __models[__currentModel] ) ) {
+        	if ( keyboard_check_pressed( ord( "R" ) ) ) {
+        		resetTransforms = !resetTransforms;
+        	}
+        	if ( resetTransforms ) {
+        		ResetModelTransforms();
+        	}
         	if ( mouse_wheel_up() ) {
         		__renderProperties.modelScale += _scale;
         		__renderProperties.modelScale += _scale;
@@ -120,7 +141,7 @@ function c3dModelRenderer() constructor {
         	}
             
             __models[__currentModel].transform.rotation.x += _pitchSpeed;
-            // __models[__currentModel].transform.rotation.y += _yawSpeed;
+            __models[__currentModel].transform.rotation.y += _yawSpeed;
             __models[__currentModel].transform.rotation.z += _rollSpeed;
         }
     }
