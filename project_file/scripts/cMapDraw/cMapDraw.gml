@@ -87,9 +87,10 @@ function cMapDraw() class {
         
         if ( isDrawing ) {
             surface_set_target( __renderer.GetRenderSurface() ); {
-                draw_clear_alpha( c_white, 1 );
+                draw_clear_alpha( c_black, 1 );
                 camera_apply( global.camera.GetCamera() );
                 
+                draw_circle( _mouseX, _mouseY, 4, false );
                 draw_sprite_stretched_ext( 
                     brushProperties.sprite, 
                     -1, 
@@ -100,17 +101,15 @@ function cMapDraw() class {
                     brushProperties.colour,
                     1
                 );
-                draw_set_colour( c_black );
-                gpu_set_blendmode( bm_subtract );
-                draw_text( _mouseX, _mouseY, $"{_mouseX},{_mouseY}" );
-                draw_circle( _mouseX, _mouseY, 16, false );
             }
             draw_reset();
             surface_reset_target();
             
-            var _surfaceSprite = sprite_create_from_surface( __renderer.GetRenderSurface(), 0, 0, __renderProperties.width * __renderProperties.resolution, __renderProperties.height * __renderProperties.resolution, false, false, 0, 0 );
+            // var _surfaceSprite = sprite_create_from_surface( __renderer.GetRenderSurface(), 0, 0, __renderProperties.width * __renderProperties.resolution, __renderProperties.height * __renderProperties.resolution, false, false, 0, 0 );
             
-            __renderer.GetCurrentModel().SetTexture( _surfaceSprite );
+            // __renderer.GetCurrentModel().SetTexture( _surfaceSprite );
+            isDrawing = false;
         }
+        // draw_surface_stretched( GetDrawSurface(), __renderProperties.position.x, __renderProperties.position.y, __renderProperties.width, __renderProperties.height );
     }
 }

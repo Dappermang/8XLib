@@ -146,70 +146,73 @@ function c3dModelRenderer() constructor {
         }
     }
     
-    static DrawModel = function( modelName ) {
+    static __renderModel = function( modelName ) {
         var _modelName = string_lower( modelName );
         var _modelToDraw = GetModel( _modelName );
+           
+        if ( is_undefined( _modelToDraw ) ) {
+        	return;
+        }
+		
+        var _viewMatrix = global.camera.GetViewMatrix();
+        var _projMatrix = global.camera.GetProjectionMatrix();
+		
+        var _modelTransform = _modelToDraw.GetTransform();
+        var _modelOrigin = _modelToDraw.GetTransform().origin;
+        var _modelRotation = _modelToDraw.GetTransform().rotation;
+        var _modelScale = _modelToDraw.GetTransform().scale;
         
-        surface_set_target( GetRenderSurface() ); {
-            draw_clear_alpha( c_black, 0 );
-            camera_apply( global.camera.GetCamera() );
-		    gpu_set_zwriteenable( true );
-		    gpu_set_ztestenable( true );
-		    gpu_set_tex_repeat( true );
-		    
-		    if ( !__renderProperties.fullBright ) {
-		    	shader_set( shdDiffuse );
-		    }
-		    
-            var _viewMatrix = global.camera.GetViewMatrix();
-            var _projMatrix = global.camera.GetProjectionMatrix();
-		    
-            if ( !is_undefined( _modelToDraw ) ) {
-            	var _modelTransform = _modelToDraw.GetTransform();
-            	var _modelOrigin = _modelToDraw.GetTransform().origin;
-            	var _modelRotation = _modelToDraw.GetTransform().rotation;
-            	var _modelScale = _modelToDraw.GetTransform().scale;
-            	
-            	_modelToDraw.SetScale( __renderProperties.modelScale, __renderProperties.modelScale, __renderProperties.modelScale );
-            	_modelToDraw.SetRotation( _modelRotation.x, _modelRotation.y, _modelRotation.z );
-            	_modelToDraw.SetPosition( _modelOrigin.x, _modelOrigin.y, _modelOrigin.z );
-            	
-            	var _finalTransformMatrix = matrix_multiply(
-            		matrix_multiply( 
-            			_modelToDraw.GetScaleMatrix(), _modelToDraw.GetRotationMatrix() ),
-            			_modelToDraw.GetTransformMatrix() 
-            		);
-            	
-                matrix_set( matrix_world, _finalTransformMatrix );
-                
-                if ( __renderProperties.renderType == RENDER_TYPE.VIEWPORT ) {
-                    matrix_set( matrix_view, _viewMatrix );
-                    matrix_set( matrix_projection, _projMatrix );
-                }
-                
-                vertex_submit( _modelToDraw.GetVertexBuffer(), pr_trianglelist, _modelToDraw.GetTexture() );
-                
-                matrix_set( matrix_world, matrix_build_identity() );
-                matrix_set( matrix_view, _viewMatrix );
-                matrix_set( matrix_projection, _projMatrix );
-            }
-            gpu_set_tex_repeat( false );
-            shader_reset();
-            surface_reset_target();
-            draw_reset();
-            draw_text( 0, 0, $"{_modelRotation.x},{_modelRotation.y},{_modelRotation.z}" );
-        };
-
-        draw_rectangle( __renderProperties.position.x - 1, __renderProperties.position.y - 1, __renderProperties.position.x + surface_get_width( __renderSurface ), __renderProperties.position.y + surface_get_height( __renderSurface ), true );
-        draw_surface_stretched( GetRenderSurface(), __renderProperties.position.x, __renderProperties.position.y, __renderProperties.width, __renderProperties.height );
+        _modelToDraw.SetScale( __renderProperties.modelScale, __renderProperties.modelScale, __renderProperties.modelScale );
+        _modelToDraw.SetRotation( _modelRotation.x, _modelRotation.y, _modelRotation.z );
+        _modelToDraw.SetPosition( _modelOrigin.x, _modelOrigin.y, _modelOrigin.z );
+        
+        var _finalTransformMatrix = matrix_multiply(
+        	matrix_multiply( 
+        		_modelToDraw.GetScaleMatrix(), _modelToDraw.GetRotationMatrix() ),
+        		_modelToDraw.GetTransformMatrix() 
+        	);
+        
+        matrix_set( matrix_world, _finalTransformMatrix );
+        
+        if ( __renderProperties.renderType == RENDER_TYPE.VIEWPORT ) {
+            matrix_set( matrix_view, _viewMatrix );
+            matrix_set( matrix_projection, _projMatrix );
+        }
+        
+        vertex_submit( _modelToDraw.GetVertexBuffer(), pr_trianglelist, _modelToDraw.GetTexture() );
+        
+        matrix_set( matrix_world, MATRIX_IDENTITY );
     }
     static DrawModels = function() {
         var _modelListSize = array_length( __models );
         
-        for( var i = 0; i < _modelListSize; ++i ) {
-        	var _currentModel = __models[i].name;
-        	
-        	DrawModel( _currentModel );
+		if ( !__renderProperties.fullBright ) {
+			shader_set( shdDiffuse );
+		}
+        
+        surface_set_target( GetRenderSurface() ); {
+            draw_clear_alpha( c_black, 0 );
+            
+		    gpu_set_zwriteenable( true );
+		    gpu_set_ztestenable( true );
+		    gpu_set_tex_repeat( true );
+            
+            for( var i = 0; i < _modelListSize; ++i ) {
+            	var _currentModel = __models[i].name;
+            	
+            	__renderModel( _currentModel );
+            }
         }
+        
+		gpu_set_zwriteenable( false );
+		gpu_set_ztestenable( false );
+		gpu_set_tex_repeat( false );
+		
+        shader_reset();
+        surface_reset_target();
+        draw_reset();
+        
+        draw_rectangle( __renderProperties.position.x - 1, __renderProperties.position.y - 1, __renderProperties.position.x + surface_get_width( __renderSurface ), __renderProperties.position.y + surface_get_height( __renderSurface ), true );
+        draw_surface_stretched( GetRenderSurface(), __renderProperties.position.x, __renderProperties.position.y, __renderProperties.width, __renderProperties.height );
     }
 }
