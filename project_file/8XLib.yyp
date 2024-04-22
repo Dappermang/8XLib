@@ -47,6 +47,7 @@
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"reload","folderPath":"folders/Sprites/reload.yy",},
     {"resourceVersion":"1.0","name":"Prompts","tags":[],"resourceType":"GMFolder","folderPath":"folders/Libraries/Prompts.yy","order":0,},
     {"resourceVersion":"1.0","name":"MapDrawTest","tags":[],"resourceType":"GMFolder","folderPath":"folders/Libraries/MapDrawTest.yy","order":0,},
+    {"resourceVersion":"1.0","name":"Shaders","tags":[],"resourceType":"GMFolder","folderPath":"folders/Libraries/3D/Shaders.yy","order":0,},
   ],
   "IncludedFiles": [
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"testAmmo.mtl","CopyToMask":-1,"filePath":"datafiles",},
@@ -142,6 +143,7 @@
     {"id":{"name":"c3dModelRenderer","path":"scripts/c3dModelRenderer/c3dModelRenderer.yy",},},
     {"id":{"name":"sprColtHolster","path":"sprites/sprColtHolster/sprColtHolster.yy",},},
     {"id":{"name":"texChicken","path":"sprites/texChicken/texChicken.yy",},},
+    {"id":{"name":"shdOverlay","path":"shaders/shdOverlay/shdOverlay.yy",},"order":0,},
     {"id":{"name":"vertexDefaultFormat","path":"scripts/vertexDefaultFormat/vertexDefaultFormat.yy",},},
     {"id":{"name":"cAnimationPlayer","path":"scripts/cAnimationPlayer/cAnimationPlayer.yy",},},
     {"id":{"name":"__BulbGetTileset","path":"scripts/__BulbGetTileset/__BulbGetTileset.yy",},},

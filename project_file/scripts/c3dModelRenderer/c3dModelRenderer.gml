@@ -19,6 +19,7 @@ function c3dModelRenderer() constructor {
         modelScale : 32,
         position : new Vector2( 0, 0 ),
         fullBright : false,
+        drawOverlays : true,
         format : surface_rgba8unorm
     };
     #endregion
@@ -180,6 +181,20 @@ function c3dModelRenderer() constructor {
         if ( __renderProperties.renderType == RENDER_TYPE.VIEWPORT ) {
             matrix_set( matrix_view, _viewMatrix );
             matrix_set( matrix_projection, _projMatrix );
+        }
+        
+        /* 
+            This can probably be done better.
+            For the future consider ; 
+                - A list of available textures for overlay ?
+        */
+        if ( _modelToDraw.overlayTexture != -1 ) {
+        	shader_set( shdOverlay );
+        	var _baseSample = shader_get_sampler_index( shdOverlay, "baseTexture" );
+        	var _overlaySample = shader_get_sampler_index( shdOverlay, "overlayTexture" );
+        	
+        	texture_set_stage( _baseSample, _modelToDraw.GetTexture() );
+        	texture_set_stage( _overlaySample, _modelToDraw.overlayTexture );
         }
         
         vertex_submit( _modelToDraw.GetVertexBuffer(), pr_trianglelist, _modelToDraw.GetTexture() );

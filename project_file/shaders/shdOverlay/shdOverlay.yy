@@ -4,7 +4,7 @@
     "path": "folders/Libraries/3D/Shaders.yy",
   },
   "resourceVersion": "1.0",
-  "name": "shdSampler",
+  "name": "shdOverlay",
   "tags": [],
   "resourceType": "GMShader",
   "type": 1,

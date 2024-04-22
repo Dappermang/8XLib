@@ -29,6 +29,7 @@ function cMapDraw() class {
     */
     brushProperties = {
         sprite : __animoFallbackSprite,
+        size : 4,
         colour : c_black,
         color : c_black
     }
@@ -61,15 +62,16 @@ function cMapDraw() class {
         var _scaleX = ( __renderProperties.width / 2 ) / ( sprite_get_width( brushProperties.sprite ) );
         var _scaleY = ( __renderProperties.height / 2 ) / ( sprite_get_height( brushProperties.sprite ) );
         
-        if ( mouse_check_button( mb_left ) ) {
-            isDrawing = true;
-            surface_set_target( GetDrawSurface() ); {
+        surface_set_target( GetDrawSurface() ); {
+            if ( mouse_check_button( mb_left ) ) {
+                isDrawing = true;
+                
                 draw_line_width_color(
                     _mousePosition.x,
                     _mousePosition.y,
                     _mousePositionPrevious.x,
                     _mousePositionPrevious.y,
-                    2,
+                    brushProperties.size,
                     brushProperties.colour,
                     brushProperties.colour
                 );
@@ -84,28 +86,39 @@ function cMapDraw() class {
                 //     1
                 // );
             }
-            draw_reset();
-            surface_reset_target();
-            
+                
             if ( isDrawing ) {
-                __renderer.GetCurrentModel().SetTextureFromSurface( GetDrawSurface() );
+                __renderer.GetCurrentModel().SetOverlayTextureFromSurface( GetDrawSurface() );
                 isDrawing = false;
             }
+            if ( mouse_check_button( mb_right ) ) {
+                gpu_set_blendmode( bm_subtract );
+                draw_circle_colour(
+                    _mousePosition.x,
+                    _mousePosition.y,
+                    4,
+                    c_black,
+                    c_black,
+                    false
+                );
+            }
         }
-        else {
-            isDrawing = false;
-        }
+        draw_reset();
+        surface_reset_target();
         
         _mousePositionPrevious = _mousePosition;
     }
     static DrawMap = function() {
         __renderer.DrawModels();
         
-        draw_sprite( brushProperties.sprite, -1, _mousePosition.x, _mousePosition.y );
-        draw_text( 
-            _mousePosition.x, 
-            _mousePosition.y, 
-            $"{_mousePosition.x},{_mousePosition.y}" 
+        // Drawing the brush outlines
+        draw_circle_colour(
+            _mousePosition.x,
+            _mousePosition.y,
+            brushProperties.size,
+            c_black,
+            c_black,
+            true
         );
         
         /*
@@ -114,6 +127,6 @@ function cMapDraw() class {
             - Get texture of surface
             - Map that texture to the model using a shader
         */
-        draw_surface_stretched( GetDrawSurface(), __renderProperties.position.x, __renderProperties.position.y, __renderProperties.width, __renderProperties.height );
+        // draw_surface_stretched( GetDrawSurface(), __renderProperties.position.x, __renderProperties.position.y, __renderProperties.width, __renderProperties.height );
     }
 }

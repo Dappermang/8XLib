@@ -2,6 +2,7 @@ function c3dModel() constructor {
     name = "";
     filePath = "";
     modelTexture = texMissing;
+    overlayTexture = -1;
     vertexBuffer = vertex_create_buffer();
     
     transform = new cTransform3D();
@@ -82,6 +83,10 @@ function c3dModel() constructor {
     }    
     static SetTextureFromSurface = function( surface ) {
         modelTexture = surface_get_texture( surface );
+        return self;
+    }    
+    static SetOverlayTextureFromSurface = function( surface ) {
+        overlayTexture = surface_get_texture( surface );
         return self;
     }
     

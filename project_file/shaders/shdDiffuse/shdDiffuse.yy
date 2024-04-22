@@ -3,8 +3,8 @@
   "resourceVersion": "1.0",
   "name": "shdDiffuse",
   "parent": {
-    "name": "3D",
-    "path": "folders/Libraries/3D.yy",
+    "name": "Shaders",
+    "path": "folders/Libraries/3D/Shaders.yy",
   },
   "type": 1,
 }
