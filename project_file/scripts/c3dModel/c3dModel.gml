@@ -76,8 +76,12 @@ function c3dModel() constructor {
         vertexBuffer = importObjModel( modelPath + ".obj", vertexDefaultFormat() );
         return self;
     }
-    static SetTexture = function( spriteIndex, _imageIndex = 0 ) {
+    static SetTextureFromSprite = function( spriteIndex, _imageIndex = 0 ) {
         modelTexture = sprite_get_texture( spriteIndex, _imageIndex );
+        return self;
+    }    
+    static SetTextureFromSurface = function( surface ) {
+        modelTexture = surface_get_texture( surface );
         return self;
     }
     

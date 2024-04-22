@@ -10,20 +10,27 @@ function cMapDraw() class {
     .SetName( "map" )
     .SetModel( CACHE_PATH + "testMap" )
     .SetRotation( 5, 0, 0 )
-    .SetTexture( texMap );
+    .SetTextureFromSprite( texMap );
     __renderer.AddModel( __mapModel );
     __drawSurface = -1;
     
     __renderer.__renderProperties.modelScale = 256;
     __renderer.__renderProperties.resolution = 1.5;
     __renderer.__renderProperties.fullBright = true;
+    
+    _mousePosition = new Vector2(
+        mouse_x - camera_get_view_x( global.camera.GetCamera() ),
+        mouse_y - camera_get_view_y( global.camera.GetCamera() ) 
+    );
+    _mousePositionPrevious = _mousePosition;
     #endregion
     /* 
         brushProperties <- The properties that the map brush will be drawn with
     */
     brushProperties = {
         sprite : __animoFallbackSprite,
-        colour : c_white
+        colour : c_black,
+        color : c_black
     }
     isDrawing = false;
     
@@ -46,36 +53,59 @@ function cMapDraw() class {
     static Tick = function() {
         __renderer.Tick();
         
+        _mousePosition = new Vector2(
+            mouse_x - camera_get_view_x( global.camera.GetCamera() ),
+            mouse_y - camera_get_view_y( global.camera.GetCamera() ) 
+        );
+        
+        var _scaleX = ( __renderProperties.width / 2 ) / ( sprite_get_width( brushProperties.sprite ) );
+        var _scaleY = ( __renderProperties.height / 2 ) / ( sprite_get_height( brushProperties.sprite ) );
+        
         if ( mouse_check_button( mb_left ) ) {
-            // var _brush = instance_create_depth( 
-            //     mouse_x,
-            //     mouse_y,
-            //     -3072,
-            //     __brush,
-            //     {
-            //         __renderSurface : __renderer.GetRenderSurface(),
-            //         __brushProperties : brushProperties
-            //     }
-            // );
-            // isDrawing = true;
+            isDrawing = true;
+            surface_set_target( GetDrawSurface() ); {
+                draw_line_width_color(
+                    _mousePosition.x,
+                    _mousePosition.y,
+                    _mousePositionPrevious.x,
+                    _mousePositionPrevious.y,
+                    2,
+                    brushProperties.colour,
+                    brushProperties.colour
+                );
+                // draw_sprite_stretched_ext(
+                //     brushProperties.sprite, 
+                //     -1, 
+                //     _mousePosition.x, 
+                //     _mousePosition.y,
+                //     _scaleX,
+                //     _scaleY,
+                //     brushProperties.colour,
+                //     1
+                // );
+            }
+            draw_reset();
+            surface_reset_target();
+            
+            if ( isDrawing ) {
+                __renderer.GetCurrentModel().SetTextureFromSurface( GetDrawSurface() );
+                isDrawing = false;
+            }
         }
         else {
             isDrawing = false;
         }
+        
+        _mousePositionPrevious = _mousePosition;
     }
     static DrawMap = function() {
         __renderer.DrawModels();
         
-        var _mouseX = mouse_x - camera_get_view_x( global.camera.GetCamera() );
-        var _mouseY = mouse_y - camera_get_view_y( global.camera.GetCamera() );
-        var _scaleX = ( __renderProperties.width / 2 ) / ( sprite_get_width( brushProperties.sprite ) );
-        var _scaleY = ( __renderProperties.height / 2 ) / ( sprite_get_height( brushProperties.sprite ) );
-        
-        draw_sprite( brushProperties.sprite, -1, _mouseX, _mouseY );
+        draw_sprite( brushProperties.sprite, -1, _mousePosition.x, _mousePosition.y );
         draw_text( 
-            _mouseX, 
-            _mouseY, 
-            $"{_mouseX},{_mouseY}" 
+            _mousePosition.x, 
+            _mousePosition.y, 
+            $"{_mousePosition.x},{_mousePosition.y}" 
         );
         
         /*
@@ -84,32 +114,6 @@ function cMapDraw() class {
             - Get texture of surface
             - Map that texture to the model using a shader
         */
-        
-        if ( isDrawing ) {
-            surface_set_target( __renderer.GetRenderSurface() ); {
-                draw_clear_alpha( c_black, 1 );
-                camera_apply( global.camera.GetCamera() );
-                
-                draw_circle( _mouseX, _mouseY, 4, false );
-                draw_sprite_stretched_ext( 
-                    brushProperties.sprite, 
-                    -1, 
-                    _mouseX, 
-                    _mouseY,
-                    _scaleX,
-                    _scaleY,
-                    brushProperties.colour,
-                    1
-                );
-            }
-            draw_reset();
-            surface_reset_target();
-            
-            // var _surfaceSprite = sprite_create_from_surface( __renderer.GetRenderSurface(), 0, 0, __renderProperties.width * __renderProperties.resolution, __renderProperties.height * __renderProperties.resolution, false, false, 0, 0 );
-            
-            // __renderer.GetCurrentModel().SetTexture( _surfaceSprite );
-            isDrawing = false;
-        }
-        // draw_surface_stretched( GetDrawSurface(), __renderProperties.position.x, __renderProperties.position.y, __renderProperties.width, __renderProperties.height );
+        draw_surface_stretched( GetDrawSurface(), __renderProperties.position.x, __renderProperties.position.y, __renderProperties.width, __renderProperties.height );
     }
 }
