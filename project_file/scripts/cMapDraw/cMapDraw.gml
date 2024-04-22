@@ -34,11 +34,24 @@ function cMapDraw() class {
         colours : [
             c_black,
             c_red,
-            c_lime
+            c_green,
+            c_blue
         ]
     }
     isDrawing = false;
     
+    static Serialize = function() {
+        var _saveBuffer = buffer_create( 0, buffer_grow, 1 );
+        
+        buffer_get_surface( _saveBuffer, GetDrawSurface(), 0 );
+        buffer_save( _saveBuffer, CACHE_PATH + "map01.data" );
+        buffer_delete( _saveBuffer );
+    }
+    static Deserialize = function() {
+        var _saveBuffer = buffer_load( CACHE_PATH + "map01.data" );
+        
+        buffer_set_surface( _saveBuffer, GetDrawSurface(), 0 );
+    }
     static GetDrawSurface = function() {
         if ( !surface_exists( __drawSurface ) ) {
             __drawSurface = surface_create( __renderProperties.width * __renderProperties.resolution, __renderProperties.height * __renderProperties.resolution );
@@ -57,6 +70,13 @@ function cMapDraw() class {
     
     static Tick = function() {
         __renderer.Tick();
+        
+        if ( keyboard_check_pressed( vk_f6 ) ) {
+            Serialize();
+        }         
+        if ( keyboard_check_pressed( vk_f7 ) ) {
+            Deserialize();
+        } 
         
         _mousePosition = new Vector2(
             mouse_x - camera_get_view_x( global.camera.GetCamera() ),
@@ -86,23 +106,9 @@ function cMapDraw() class {
                     brushProperties.colours[brushProperties.currentColour],
                     brushProperties.colours[brushProperties.currentColour]
                 );
-                // draw_sprite_stretched_ext(
-                //     brushProperties.sprite, 
-                //     -1, 
-                //     _mousePosition.x, 
-                //     _mousePosition.y,
-                //     _scaleX,
-                //     _scaleY,
-                //     brushProperties.colour,
-                //     1
-                // );
             }
-                
-            if ( isDrawing ) {
-                __renderer.GetCurrentModel().SetOverlayTextureFromSurface( GetDrawSurface() );
-                isDrawing = false;
-            }
-            if ( mouse_check_button( mb_right ) ) {
+            if ( mouse_check_button( mb_right )
+            && !isDrawing ) {
                 gpu_set_blendmode( bm_subtract );
                 draw_circle_colour(
                     _mousePosition.x,
@@ -112,6 +118,10 @@ function cMapDraw() class {
                     c_black,
                     false
                 );
+            }
+            if ( isDrawing ) {
+                __renderer.GetCurrentModel().SetOverlayTextureFromSurface( GetDrawSurface() );
+                isDrawing = false;
             }
         }
         draw_reset();
