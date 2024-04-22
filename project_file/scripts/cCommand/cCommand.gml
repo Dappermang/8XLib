@@ -19,6 +19,9 @@ function cCommand() constructor {
         for( var i = 0; i < argument_count; ++i ) {
             arguments[$ i ] = argument[i];
         };
+        return self;
     }
     static Execute = function(){};
+    
+    return self;
 }

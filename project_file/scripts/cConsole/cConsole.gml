@@ -137,10 +137,10 @@ function cConsole() constructor {
             gc_enable( false );
         };
         
-        var show_gm_debug = new cCommand();
-        show_gm_debug.label = "show_gm_debug";
-        show_gm_debug.usageTip = "show_gm_debug     Enables the GameMaker debug overlay.";
-        show_gm_debug.Execute = function() {
+        var gm_debug = new cCommand();
+        gm_debug.label = "gm_debug";
+        gm_debug.usageTip = "gm_debug     Enables the GameMaker debug overlay.";
+        gm_debug.Execute = function() {
             show_debug_overlay( true );
         }; 
         
@@ -159,7 +159,7 @@ function cConsole() constructor {
         RegisterCommand( help );
         RegisterCommand( clear_log );
         RegisterCommand( playsound );
-        RegisterCommand( show_gm_debug );
+        RegisterCommand( gm_debug );
         RegisterCommand( _gc_disable );
         RegisterCommand( _gc_collect );
         RegisterCommand( quit );
