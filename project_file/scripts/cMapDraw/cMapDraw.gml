@@ -87,10 +87,10 @@ function cMapDraw() class {
         var _scaleY = ( __renderProperties.height / 2 ) / ( sprite_get_height( brushProperties.sprite ) );
         
         if ( keyboard_check_pressed( vk_up ) ) {
-            brushProperties.currentColour = ( brushProperties.currentColour + 1 ) % (array_length(brushProperties.colours ) );
+            brushProperties.currentColour = ( brushProperties.currentColour + 1 ) % ( array_length(brushProperties.colours ) );
         }       
         if ( keyboard_check_pressed( vk_down ) ) {
-            brushProperties.currentColour = ( brushProperties.currentColour - 1 + array_length(brushProperties.colours ) ) % ( array_length(brushProperties.colours ) );
+            brushProperties.currentColour = ( brushProperties.currentColour - 1 + array_length( brushProperties.colours ) ) % ( array_length(brushProperties.colours ) );
         }
         
         surface_set_target( GetDrawSurface() ); {
