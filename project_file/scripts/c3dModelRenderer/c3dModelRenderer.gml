@@ -122,6 +122,9 @@ function c3dModelRenderer() constructor {
         var _rollSpeed = _inputLeftRight * 2;
         var _scale = 0.85;
         
+        if ( keyboard_check_pressed( vk_backspace ) ) {
+        	drawEnabled = !drawEnabled;
+        }
         if ( !is_undefined( __models[__currentModel] ) ) {
         	if ( keyboard_check_pressed( ord( "R" ) ) ) {
         		resetTransforms = !resetTransforms;
@@ -184,11 +187,15 @@ function c3dModelRenderer() constructor {
         matrix_set( matrix_world, MATRIX_IDENTITY );
     }
     static DrawModels = function() {
-        var _modelListSize = array_length( __models );
+        if ( !drawEnabled ) {
+        	return;
+        }
         
 		if ( !__renderProperties.fullBright ) {
 			shader_set( shdDiffuse );
 		}
+        
+        var _modelListSize = array_length( __models );
         
         surface_set_target( GetRenderSurface() ); {
             draw_clear_alpha( c_black, 0 );
