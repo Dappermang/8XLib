@@ -188,7 +188,7 @@ function c3dModelRenderer() constructor {
             For the future consider ; 
                 - A list of available textures for overlay ?
         */
-        if ( _modelToDraw.overlayTexture != -1 ) {
+        if ( !is_undefined( _modelToDraw.overlayTexture ) ) {
         	shader_set( shdOverlay );
         	
         	var _baseSample = shader_get_sampler_index( shdOverlay, "baseTexture" );

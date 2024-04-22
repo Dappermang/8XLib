@@ -2,7 +2,7 @@ function c3dModel() constructor {
     name = "";
     filePath = "";
     modelTexture = texMissing;
-    overlayTexture = -1;
+    overlayTexture = undefined;
     vertexBuffer = vertex_create_buffer();
     
     transform = new cTransform3D();
