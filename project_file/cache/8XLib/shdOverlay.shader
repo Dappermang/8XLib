@@ -25,7 +25,7 @@ void main() {
     vec4 baseColor = texture2D( baseTexture, v_vTexcoord );
     vec4 overlayColor = texture2D( overlayTexture, v_vTexcoord );
     
-    // Mixing the two samples.
+    // Mixing the two samples using the overlay Alpha.
     vec4 finalColor = mix( baseColor, overlayColor, overlayColor.a );
     
     // Final color multiplied by the input RGBA

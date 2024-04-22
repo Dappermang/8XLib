@@ -29,9 +29,13 @@ function cMapDraw() class {
     */
     brushProperties = {
         sprite : __animoFallbackSprite,
-        size : 4,
-        colour : c_black,
-        color : c_black
+        size : 1.5,
+        currentColour : 0,
+        colours : [
+            c_black,
+            c_red,
+            c_lime
+        ]
     }
     isDrawing = false;
     
@@ -62,6 +66,13 @@ function cMapDraw() class {
         var _scaleX = ( __renderProperties.width / 2 ) / ( sprite_get_width( brushProperties.sprite ) );
         var _scaleY = ( __renderProperties.height / 2 ) / ( sprite_get_height( brushProperties.sprite ) );
         
+        if ( keyboard_check_pressed( vk_up ) ) {
+            brushProperties.currentColour = ( brushProperties.currentColour + 1 ) % (array_length(brushProperties.colours ) );
+        }       
+        if ( keyboard_check_pressed( vk_down ) ) {
+            brushProperties.currentColour = ( brushProperties.currentColour - 1 + array_length(brushProperties.colours ) ) % ( array_length(brushProperties.colours ) );
+        }
+        
         surface_set_target( GetDrawSurface() ); {
             if ( mouse_check_button( mb_left ) ) {
                 isDrawing = true;
@@ -72,8 +83,8 @@ function cMapDraw() class {
                     _mousePositionPrevious.x,
                     _mousePositionPrevious.y,
                     brushProperties.size,
-                    brushProperties.colour,
-                    brushProperties.colour
+                    brushProperties.colours[brushProperties.currentColour],
+                    brushProperties.colours[brushProperties.currentColour]
                 );
                 // draw_sprite_stretched_ext(
                 //     brushProperties.sprite, 

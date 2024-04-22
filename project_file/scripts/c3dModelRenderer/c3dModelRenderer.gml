@@ -190,6 +190,7 @@ function c3dModelRenderer() constructor {
         */
         if ( _modelToDraw.overlayTexture != -1 ) {
         	shader_set( shdOverlay );
+        	
         	var _baseSample = shader_get_sampler_index( shdOverlay, "baseTexture" );
         	var _overlaySample = shader_get_sampler_index( shdOverlay, "overlayTexture" );
         	
