@@ -23,6 +23,11 @@ function cCamera() constructor {
 	
 	__Init();
 	
+    mousePosition = new Vector2(
+        mouse_x - camera_get_view_x( __camera ),
+        mouse_y - camera_get_view_y( __camera ) 
+    );
+	
 	// Animation curves used for 'zoom' and 'shake' FX
 	zoomCurve = undefined;
 	shakeCurve = undefined;
@@ -144,7 +149,24 @@ function cCamera() constructor {
 		}
 	}
 	
+	static GetMousePosition = function() {
+    	return new Vector2(
+    	    mouse_x - camera_get_view_x( __camera ),
+    	    mouse_y - camera_get_view_y( __camera ) 
+    	);
+	}
+	static GetMousePositionNormalized = function() {
+		var _mousePosition = GetMousePosition();
+		var _mouseNormalized = new Vector2( _mousePosition.x / camera_get_view_width( __camera ), _mousePosition.y / camera_get_view_height( __camera ) );
+		
+		return _mouseNormalized;
+	}
 	static Tick = function() {
+    	mousePosition = new Vector2(
+    	    mouse_x - camera_get_view_x( __camera ),
+    	    mouse_y - camera_get_view_y( __camera ) 
+    	);
+		
 		if ( !is_undefined( focusPosition ) ) {
 			var _focus_dir = GetFocusDirFromCenter();
 			var _focus_dis = GetFocusDisFromCenter();

@@ -32,10 +32,10 @@ function cMapDraw() class {
         size : 1.5,
         currentColour : 0,
         colours : [
-            c_black,
             c_red,
             c_green,
-            c_blue
+            c_blue,
+            c_black,
         ]
     }
     isDrawing = false;
@@ -140,6 +140,15 @@ function cMapDraw() class {
             c_black,
             c_black,
             true
+        );
+        
+        var _mouseCoords = global.camera.GetMousePosition();
+        var _mouseCoordsNormalized = global.camera.GetMousePositionNormalized();
+        
+        draw_text( 
+            _mouseCoords.x,
+            _mouseCoords.y,
+            $"{_mouseCoordsNormalized.x},{_mouseCoordsNormalized.y}"
         );
         
         /*

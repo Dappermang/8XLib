@@ -146,7 +146,11 @@ function c3dModelRenderer() constructor {
             
             __models[__currentModel].transform.rotation.x += _pitchSpeed;
             __models[__currentModel].transform.rotation.y += _yawSpeed;
-            __models[__currentModel].transform.rotation.z += _rollSpeed;
+            __models[__currentModel].transform.rotation.z += _rollSpeed; 
+            
+            // __models[__currentModel].transform.origin.x += _pitchSpeed;
+            // __models[__currentModel].transform.origin.y += _yawSpeed;
+            // __models[__currentModel].transform.origin.z += _rollSpeed;
         }
     }
     
@@ -191,11 +195,16 @@ function c3dModelRenderer() constructor {
         if ( !is_undefined( _modelToDraw.overlayTexture ) ) {
         	shader_set( shdOverlay );
         	
-        	var _baseSample = shader_get_sampler_index( shdOverlay, "baseTexture" );
-        	var _overlaySample = shader_get_sampler_index( shdOverlay, "overlayTexture" );
+        	var _mouseCoordinatesNormalized = global.camera.GetMousePositionNormalized();
+        	var _u_MouseCoordinateX = shader_get_uniform( shdOverlay, "mouseCoordinatesX" );
+        	var _u_MouseCoordinateY = shader_get_uniform( shdOverlay, "mouseCoordinatesY" );
+        	var _u_BaseSample = shader_get_sampler_index( shdOverlay, "baseTexture" );
+        	var _u_OverlaySample = shader_get_sampler_index( shdOverlay, "overlayTexture" );
         	
-        	texture_set_stage( _baseSample, _modelToDraw.GetTexture() );
-        	texture_set_stage( _overlaySample, _modelToDraw.overlayTexture );
+        	shader_set_uniform_f( _u_MouseCoordinateX, _mouseCoordinatesNormalized.x );
+        	shader_set_uniform_f( _u_MouseCoordinateY, _mouseCoordinatesNormalized.y );
+        	texture_set_stage( _u_BaseSample, _modelToDraw.GetTexture() );
+        	texture_set_stage( _u_OverlaySample, _modelToDraw.overlayTexture );
         }
         
         vertex_submit( _modelToDraw.GetVertexBuffer(), pr_trianglelist, _modelToDraw.GetTexture() );
