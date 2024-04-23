@@ -132,7 +132,7 @@ function c3dModelRenderer() constructor {
         var _pitchSpeed = _inputUpDown * 2;
         var _yawSpeed = _inputYaw * 2;
         var _rollSpeed = _inputLeftRight * 2;
-        var _scale = 0.01;
+        var _scale = 0.5;
         
         if ( keyboard_check_pressed( vk_backspace ) ) {
         	drawEnabled = !drawEnabled;
@@ -144,24 +144,10 @@ function c3dModelRenderer() constructor {
         	if ( resetTransforms ) {
         		ResetModelTransforms();
         	}
-        	if ( mouse_wheel_up() ) {
-        		__renderProperties.modelScale += _scale;
-        		__renderProperties.modelScale += _scale;
-        		__renderProperties.modelScale += _scale;
-        	}        	
-        	if ( mouse_wheel_down() ) {
-        		__renderProperties.modelScale -= _scale;
-        		__renderProperties.modelScale -= _scale;
-        		__renderProperties.modelScale -= _scale;
-        	}
             
             __models[__currentModel].transform.rotation.x += _pitchSpeed;
             __models[__currentModel].transform.rotation.y += _yawSpeed;
             __models[__currentModel].transform.rotation.z += _rollSpeed;
-            
-            __models[__currentModel].transform.scale.x *= __renderProperties.modelScale;
-            __models[__currentModel].transform.scale.y *= __renderProperties.modelScale;
-            __models[__currentModel].transform.scale.z *= __renderProperties.modelScale; 
             
             // __models[__currentModel].transform.origin.x += _pitchSpeed;
             // __models[__currentModel].transform.origin.y += _yawSpeed;
@@ -192,12 +178,12 @@ function c3dModelRenderer() constructor {
         );
         _modelToDraw.SetRotation( 
         	_modelRotation.x, 
-        	_modelRotation.y, 
+        	_modelRotation.y,
         	_modelRotation.z 
         );
         _modelToDraw.SetPosition( 
         	_modelOrigin.x, 
-        	_modelOrigin.y, 
+        	_modelOrigin.y,
         	_modelOrigin.z 
         );
         

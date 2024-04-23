@@ -10,7 +10,7 @@ function cMapDraw() class {
     .SetName( "map" )
     .SetModel( CACHE_PATH + "testMap" )
     .SetRotation( 5, 0, 0 )
-    .SetScale( 64 )
+    .SetScale( 256 )
     .SetTextureFromSprite( texMap );
     __renderer.AddModel( __mapModel );
     __drawSurface = -1;
@@ -32,6 +32,7 @@ function cMapDraw() class {
             c_black,
         ]
     }
+    mousePositionPrevious = global.camera.GetMousePosition();
     isDrawing = false;
     
     static Serialize = function() {
@@ -70,24 +71,23 @@ function cMapDraw() class {
         }         
         if ( keyboard_check_pressed( vk_f7 ) ) {
             Deserialize();
-        } 
-        
-        var _camera = global.camera;
-        var _cameraID = _camera.GetCamera();
-        var _cameraPosition = _camera.GetPosition2D();
-        var _cameraViewPosition = _camera.GetCameraViewPosition();
-        var _cameraMousePosition = _camera.GetMousePosition();
-        var _cameraMousePositionPrevious = _cameraMousePosition;
-        
-        var _scaleX = ( __renderProperties.width / 2 ) / ( sprite_get_width( brushProperties.sprite ) );
-        var _scaleY = ( __renderProperties.height / 2 ) / ( sprite_get_height( brushProperties.sprite ) );
-        
+        }
         if ( keyboard_check_pressed( vk_up ) ) {
             brushProperties.currentColour = ( brushProperties.currentColour + 1 ) % ( array_length( brushProperties.colours ) );
         }       
         if ( keyboard_check_pressed( vk_down ) ) {
             brushProperties.currentColour = ( brushProperties.currentColour - 1 + array_length( brushProperties.colours ) ) % ( array_length(brushProperties.colours ) );
         }
+        
+        var _camera = global.camera;
+        var _cameraID = _camera.GetCamera();
+        var _cameraPosition = _camera.GetPosition2D();
+        var _cameraViewPosition = _camera.GetCameraViewPosition();
+        var _cameraMousePosition = _camera.GetMousePosition();
+        var _cameraMousePositionNormalized = _camera.GetMousePositionNormalized();
+        
+        var _scaleX = ( __renderProperties.width / 2 ) / ( sprite_get_width( brushProperties.sprite ) );
+        var _scaleY = ( __renderProperties.height / 2 ) / ( sprite_get_height( brushProperties.sprite ) );
         
         // Paint to surface.
         surface_set_target( GetDrawSurface() ); {
@@ -98,8 +98,8 @@ function cMapDraw() class {
                 draw_line_width_color(
                     _cameraMousePosition.x,
                     _cameraMousePosition.y,
-                    _cameraMousePositionPrevious.x,
-                    _cameraMousePositionPrevious.y,
+                    mousePositionPrevious.x,
+                    mousePositionPrevious.y,
                     brushProperties.size,
                     brushProperties.colours[brushProperties.currentColour],
                     brushProperties.colours[brushProperties.currentColour]
@@ -125,7 +125,7 @@ function cMapDraw() class {
         draw_reset();
         surface_reset_target();
         
-        _cameraMousePositionPrevious = _cameraMousePosition;
+        mousePositionPrevious = _cameraMousePosition;
     }
     static DrawMap = function() {
         __renderer.DrawModels();
@@ -150,7 +150,7 @@ function cMapDraw() class {
         
         var _cameraMousePositionNormalized = global.camera.GetMousePositionNormalized();
         
-        draw_text( 
+        draw_text(
             _cameraMousePosition.x,
             _cameraMousePosition.y,
             $"{_cameraMousePositionNormalized.x},{_cameraMousePositionNormalized.y}"
@@ -163,7 +163,7 @@ function cMapDraw() class {
             - Map that texture to the model using a shader
         */
         draw_rectangle(
-            _cameraViewPosition.x, 
+            _cameraViewPosition.x,
             _cameraViewPosition.y, 
             _cameraViewPosition.x + __renderProperties.width * _cameraViewSize.x, 
             _cameraViewPosition.y + __renderProperties.height * _cameraViewSize.y,
@@ -173,8 +173,8 @@ function cMapDraw() class {
             GetDrawSurface(),
              _cameraViewPosition.x, 
              _cameraViewPosition.y, 
-            __renderProperties.width * _cameraViewSize.x, 
-            __renderProperties.height * _cameraViewSize.y
+            __renderProperties.width, 
+            __renderProperties.height
         );
     }
 }
