@@ -28,10 +28,10 @@ uniform float mouseCoordinatesY;
 
 void main() {
     // Convert mouse coordinates to view space
-    vec2 mouseCoordinates = vec2( mouseCoordinatesX, mouseCoordinatesY );
-    vec4 mouseCoordinatesMatrix = v_vMatrix * vec4( mouseCoordinates, 0.0, 1.0 );
+    vec2 mousePixelPosition = vec2( mouseCoordinatesX, mouseCoordinatesY ) / v_vTexcoord;
+    vec4 mouseCoordinatesMatrix = v_vMatrix * vec4( mousePixelPosition, 0.0, 1.0 );
     
-    // vec4 surfaceTextureSample = texture2D( overlayTexture, mouseCoordinatesMatrix.xy );
+    // vec4 surfaceTextureSample = texture2D( overlayTexture, v_vTexcoord );
     // vec4 modelTextureSample = texture2D( baseTexture, v_vTexcoord );
     
     // // The final fragment color. Model and Surface samples are mixed by the surface samples alpha.
@@ -39,6 +39,6 @@ void main() {
   
     // finalColor *= v_vColour;
     // gl_FragColor = finalColor;
-    gl_FragColor = vec4( mouseCoordinatesMatrix.xy, 0.0, 1.0 );
+    gl_FragColor = vec4( mousePixelPosition.xy, 0.0, 1.0 );
 }
 

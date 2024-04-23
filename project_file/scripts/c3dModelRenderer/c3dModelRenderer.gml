@@ -174,11 +174,7 @@ function c3dModelRenderer() constructor {
         _modelToDraw.SetRotation( _modelRotation.x, _modelRotation.y, _modelRotation.z );
         _modelToDraw.SetPosition( _modelOrigin.x, _modelOrigin.y, _modelOrigin.z );
         
-        var _finalTransformMatrix = matrix_multiply(
-        	matrix_multiply( 
-        		_modelToDraw.GetScaleMatrix(), _modelToDraw.GetRotationMatrix() ),
-        		_modelToDraw.GetTransformMatrix() 
-        	);
+        var _finalTransformMatrix = _modelToDraw.GetFinalMatrix();
         
         matrix_set( matrix_world, _finalTransformMatrix );
         

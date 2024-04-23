@@ -108,6 +108,13 @@ function c3dModel() constructor {
     static GetRotationMatrix = function() {
         return __rotationMatrix;
     }
+    static GetFinalMatrix = function() {
+        return matrix_multiply(
+        	matrix_multiply( 
+        		GetScaleMatrix(), GetRotationMatrix() ),
+        		GetTransformMatrix() 
+        );
+    }
     
     return self;
 }
