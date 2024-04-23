@@ -16,7 +16,7 @@ function c3dModelRenderer() constructor {
         height : __GAME_HEIGHT,
         renderType : RENDER_TYPE.VIEWPORT,
         resolution : 1,
-        modelScale : 32,
+        modelScale : 1,
         position : new Vector2( 0, 0 ),
         fullBright : false,
         drawOverlays : true,
@@ -110,8 +110,19 @@ function c3dModelRenderer() constructor {
     static Tick = function() {
         // Rebuilding the render surface if it suddenly doesn't exist.
         __renderSurface = GetRenderSurface();
-        __renderProperties.position.x = global.camera.position.x;
-        __renderProperties.position.y = global.camera.position.y;
+        
+        var _camera = global.camera;
+        var _cameraPosition = _camera.GetCameraViewPosition();
+        var _cameraViewSize = _camera.GetCameraSize();
+        
+        __renderProperties.position.x = _cameraPosition.x;
+        __renderProperties.position.y = _cameraPosition.y;
+        __renderProperties.width = _cameraViewSize.x;
+        __renderProperties.height = _cameraViewSize.y;
+        
+        // var _aspectRatio = __renderProperties.width / __renderProperties.height;
+        
+        // __renderProperties.modelScale = __renderProperties.modelScale / _aspectRatio;
         
         var _inputLeftRight = ( keyboard_check( ord( "D" ) ) - keyboard_check( ord( "A" ) ) );
         var _inputYaw = ( keyboard_check( ord( "E" ) ) - keyboard_check( ord( "Q" ) ) );
@@ -121,7 +132,7 @@ function c3dModelRenderer() constructor {
         var _pitchSpeed = _inputUpDown * 2;
         var _yawSpeed = _inputYaw * 2;
         var _rollSpeed = _inputLeftRight * 2;
-        var _scale = 0.85;
+        var _scale = 0.01;
         
         if ( keyboard_check_pressed( vk_backspace ) ) {
         	drawEnabled = !drawEnabled;
@@ -146,7 +157,11 @@ function c3dModelRenderer() constructor {
             
             __models[__currentModel].transform.rotation.x += _pitchSpeed;
             __models[__currentModel].transform.rotation.y += _yawSpeed;
-            __models[__currentModel].transform.rotation.z += _rollSpeed; 
+            __models[__currentModel].transform.rotation.z += _rollSpeed;
+            
+            __models[__currentModel].transform.scale.x *= __renderProperties.modelScale;
+            __models[__currentModel].transform.scale.y *= __renderProperties.modelScale;
+            __models[__currentModel].transform.scale.z *= __renderProperties.modelScale; 
             
             // __models[__currentModel].transform.origin.x += _pitchSpeed;
             // __models[__currentModel].transform.origin.y += _yawSpeed;
@@ -170,9 +185,21 @@ function c3dModelRenderer() constructor {
         var _modelRotation = _modelToDraw.GetTransform().rotation;
         var _modelScale = _modelToDraw.GetTransform().scale;
         
-        _modelToDraw.SetScale( __renderProperties.modelScale, __renderProperties.modelScale, __renderProperties.modelScale );
-        _modelToDraw.SetRotation( _modelRotation.x, _modelRotation.y, _modelRotation.z );
-        _modelToDraw.SetPosition( _modelOrigin.x, _modelOrigin.y, _modelOrigin.z );
+        _modelToDraw.SetScale( 
+        	_modelScale.x, 
+        	_modelScale.y, 
+        	_modelScale.z 
+        );
+        _modelToDraw.SetRotation( 
+        	_modelRotation.x, 
+        	_modelRotation.y, 
+        	_modelRotation.z 
+        );
+        _modelToDraw.SetPosition( 
+        	_modelOrigin.x, 
+        	_modelOrigin.y, 
+        	_modelOrigin.z 
+        );
         
         var _finalTransformMatrix = _modelToDraw.GetFinalMatrix();
         
@@ -240,7 +267,27 @@ function c3dModelRenderer() constructor {
         surface_reset_target();
         draw_reset();
         
-        draw_rectangle( __renderProperties.position.x - 1, __renderProperties.position.y - 1, __renderProperties.position.x + surface_get_width( __renderSurface ), __renderProperties.position.y + surface_get_height( __renderSurface ), true );
-        draw_surface_stretched( GetRenderSurface(), __renderProperties.position.x, __renderProperties.position.y, __renderProperties.width, __renderProperties.height );
+        draw_set_color( c_aqua );
+        draw_roundrect(
+            __renderProperties.position.x - 1, 
+            __renderProperties.position.y - 1, 
+            __renderProperties.position.x + __renderProperties.width - 1, 
+            __renderProperties.position.y + __renderProperties.height - 1,
+            true
+        );
+        draw_circle(
+        	__renderProperties.position.x,
+        	__renderProperties.position.y,
+        	8,
+        	false
+        );
+        draw_set_color( c_white );
+        draw_surface_stretched(
+        	GetRenderSurface(), 
+        	__renderProperties.position.x, 
+        	__renderProperties.position.y, 
+        	__renderProperties.width, 
+        	__renderProperties.height 
+        );
     }
 }

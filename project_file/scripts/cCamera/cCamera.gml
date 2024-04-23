@@ -150,22 +150,32 @@ function cCamera() constructor {
 	}
 	
 	static GetMousePosition = function() {
-    	return new Vector2(
-    	    mouse_x - camera_get_view_x( __camera ),
-    	    mouse_y - camera_get_view_y( __camera ) 
-    	);
+        return new Vector2(
+            ( mouse_x + GetPosition2D().x ) - GetCameraViewPosition().x,
+            ( mouse_y + GetPosition2D().y ) - GetCameraViewPosition().y 
+        );
 	}
 	static GetMousePositionNormalized = function() {
-		var _mousePosition = GetMousePosition();
-		var _mouseNormalized = new Vector2( _mousePosition.x / camera_get_view_width( __camera ), _mousePosition.y / camera_get_view_height( __camera ) );
-		
-		return _mouseNormalized;
+	    var _cameraPosition = GetCameraViewPosition();
+	    var _cameraSize = GetCameraSize();
+	
+	    var _mouseXRelativeToCamera = mouse_x - _cameraPosition.x;
+	    var _mouseYRelativeToCamera = mouse_y - _cameraPosition.y;
+	
+	    var _cameraWidth = _cameraSize.x;
+	    var _cameraHeight = _cameraSize.y;
+	
+	    var _normalizedMouseX = _mouseXRelativeToCamera / _cameraWidth;
+	    var _normalizedMouseY = _mouseYRelativeToCamera / _cameraHeight;
+	
+	    // Return the normalized mouse position
+	    return new Vector2( 
+	    	_normalizedMouseX, 
+	    	_normalizedMouseY 
+	    );
 	}
 	static Tick = function() {
-    	mousePosition = new Vector2(
-    	    mouse_x - camera_get_view_x( __camera ),
-    	    mouse_y - camera_get_view_y( __camera ) 
-    	);
+    	mousePosition = GetMousePosition();
 		
 		if ( !is_undefined( focusPosition ) ) {
 			var _focus_dir = GetFocusDirFromCenter();
@@ -204,6 +214,17 @@ function cCamera() constructor {
 			if ( keyboard_check( vk_down ) ) {
 				camScale -= 0.1;
 			}
+			
+			var _inputLeftRight = ( keyboard_check( ord( "D" ) ) - keyboard_check( ord( "A" ) ) );
+			var _inputUpDown = ( keyboard_check( ord( "S" ) ) - keyboard_check( ord( "W" ) ) );
+			var _inputMagnitude = point_distance( 0, 0, _inputLeftRight, _inputUpDown );
+			
+			var _pitchSpeed = _inputUpDown * 2;
+			var _yawSpeed = _inputLeftRight * 2;
+			var _rollSpeed = _inputLeftRight * 2;
+			
+			position.x += _yawSpeed;
+			position.y += _pitchSpeed;
 		}
 	}
 	
@@ -214,12 +235,27 @@ function cCamera() constructor {
 		var _center_y = ( camHeight / 2 ) * camScale;
 		
 		return new Vector2( _center_x, _center_y );
+	}	
+	/// @static
+	/// @returns {struct} Vector2( posX, posY )
+	static GetPosition2D = function() {
+		return new Vector2( position.x, position.y );
 	}
 	
 	/// @static
 	/// @returns {struct} Vector2
 	static GetCameraResolution = function() {
 		return new Vector2( camera_get_view_width( __camera ), camera_get_view_height( __camera ) );
+	}		
+	/// @static
+	/// @returns {struct} Vector2
+	static GetCameraSize = function() {
+		return new Vector2( camera_get_view_width( __camera ) * camScale, camera_get_view_height( __camera ) * camScale );
+	}	
+	/// @static
+	/// @returns {struct} Vector2
+	static GetCameraViewPosition = function() {
+		return new Vector2( camera_get_view_x( __camera ), camera_get_view_y( __camera ) );
 	}
 	
 	// Draw END

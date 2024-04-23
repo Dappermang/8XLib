@@ -10,19 +10,13 @@ function cMapDraw() class {
     .SetName( "map" )
     .SetModel( CACHE_PATH + "testMap" )
     .SetRotation( 5, 0, 0 )
+    .SetScale( 64 )
     .SetTextureFromSprite( texMap );
     __renderer.AddModel( __mapModel );
     __drawSurface = -1;
     
-    __renderer.__renderProperties.modelScale = 256;
     __renderer.__renderProperties.resolution = 1.5;
     __renderer.__renderProperties.fullBright = true;
-    
-    _mousePosition = new Vector2(
-        mouse_x - camera_get_view_x( global.camera.GetCamera() ),
-        mouse_y - camera_get_view_y( global.camera.GetCamera() ) 
-    );
-    _mousePositionPrevious = _mousePosition;
     #endregion
     /* 
         brushProperties <- The properties that the map brush will be drawn with
@@ -78,30 +72,34 @@ function cMapDraw() class {
             Deserialize();
         } 
         
-        _mousePosition = new Vector2(
-            mouse_x - camera_get_view_x( global.camera.GetCamera() ),
-            mouse_y - camera_get_view_y( global.camera.GetCamera() ) 
-        );
+        var _camera = global.camera;
+        var _cameraID = _camera.GetCamera();
+        var _cameraPosition = _camera.GetPosition2D();
+        var _cameraViewPosition = _camera.GetCameraViewPosition();
+        var _cameraMousePosition = _camera.GetMousePosition();
+        var _cameraMousePositionPrevious = _cameraMousePosition;
         
         var _scaleX = ( __renderProperties.width / 2 ) / ( sprite_get_width( brushProperties.sprite ) );
         var _scaleY = ( __renderProperties.height / 2 ) / ( sprite_get_height( brushProperties.sprite ) );
         
         if ( keyboard_check_pressed( vk_up ) ) {
-            brushProperties.currentColour = ( brushProperties.currentColour + 1 ) % ( array_length(brushProperties.colours ) );
+            brushProperties.currentColour = ( brushProperties.currentColour + 1 ) % ( array_length( brushProperties.colours ) );
         }       
         if ( keyboard_check_pressed( vk_down ) ) {
             brushProperties.currentColour = ( brushProperties.currentColour - 1 + array_length( brushProperties.colours ) ) % ( array_length(brushProperties.colours ) );
         }
         
+        // Paint to surface.
         surface_set_target( GetDrawSurface() ); {
+            camera_apply( _cameraID );
             if ( mouse_check_button( mb_left ) ) {
                 isDrawing = true;
                 
                 draw_line_width_color(
-                    _mousePosition.x,
-                    _mousePosition.y,
-                    _mousePositionPrevious.x,
-                    _mousePositionPrevious.y,
+                    _cameraMousePosition.x,
+                    _cameraMousePosition.y,
+                    _cameraMousePositionPrevious.x,
+                    _cameraMousePositionPrevious.y,
                     brushProperties.size,
                     brushProperties.colours[brushProperties.currentColour],
                     brushProperties.colours[brushProperties.currentColour]
@@ -111,8 +109,8 @@ function cMapDraw() class {
             && !isDrawing ) {
                 gpu_set_blendmode( bm_subtract );
                 draw_circle_colour(
-                    _mousePosition.x,
-                    _mousePosition.y,
+                    _cameraMousePosition.x,
+                    _cameraMousePosition.y,
                     4,
                     c_black,
                     c_black,
@@ -127,28 +125,35 @@ function cMapDraw() class {
         draw_reset();
         surface_reset_target();
         
-        _mousePositionPrevious = _mousePosition;
+        _cameraMousePositionPrevious = _cameraMousePosition;
     }
     static DrawMap = function() {
         __renderer.DrawModels();
         
+        var _camera = global.camera;
+        var _cameraID = _camera.GetCamera();
+        var _cameraPosition = _camera.GetPosition2D();
+        var _cameraViewPosition = _camera.GetCameraViewPosition();
+        var _cameraViewSize = _camera.GetCameraSize();
+        var _cameraMousePosition = _camera.GetMousePosition();
+        var _cameraMousePositionPrevious = _cameraMousePosition;
+        
         // Drawing the brush outlines
         draw_circle_colour(
-            _mousePosition.x,
-            _mousePosition.y,
+            _cameraMousePosition.x,
+            _cameraMousePosition.y,
             brushProperties.size,
             c_black,
             c_black,
             true
         );
         
-        var _mouseCoords = global.camera.GetMousePosition();
-        var _mouseCoordsNormalized = global.camera.GetMousePositionNormalized();
+        var _cameraMousePositionNormalized = global.camera.GetMousePositionNormalized();
         
         draw_text( 
-            _mouseCoords.x,
-            _mouseCoords.y,
-            $"{_mouseCoordsNormalized.x},{_mouseCoordsNormalized.y}"
+            _cameraMousePosition.x,
+            _cameraMousePosition.y,
+            $"{_cameraMousePositionNormalized.x},{_cameraMousePositionNormalized.y}"
         );
         
         /*
@@ -157,6 +162,19 @@ function cMapDraw() class {
             - Get texture of surface
             - Map that texture to the model using a shader
         */
-        // draw_surface_stretched( GetDrawSurface(), __renderProperties.position.x, __renderProperties.position.y, __renderProperties.width, __renderProperties.height );
+        draw_rectangle(
+            _cameraViewPosition.x, 
+            _cameraViewPosition.y, 
+            _cameraViewPosition.x + __renderProperties.width * _cameraViewSize.x, 
+            _cameraViewPosition.y + __renderProperties.height * _cameraViewSize.y,
+            true
+        );
+        draw_surface_stretched( 
+            GetDrawSurface(),
+             _cameraViewPosition.x, 
+             _cameraViewPosition.y, 
+            __renderProperties.width * _cameraViewSize.x, 
+            __renderProperties.height * _cameraViewSize.y
+        );
     }
 }

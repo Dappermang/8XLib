@@ -53,7 +53,7 @@ function c3dModel() constructor {
 
         return self;
     }
-    static SetScale = function( x, y, z = y ) {
+    static SetScale = function( x, y = x, z = y ) {
         transform.scale.x = x;
         transform.scale.y = y;
         transform.scale.z = z;

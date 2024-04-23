@@ -13,13 +13,13 @@ void main() {
     vec2 mousePixelPosition = vec2( mouseCoordinatesX, mouseCoordinatesY ) / v_vTexcoord;
     vec4 mouseCoordinatesMatrix = v_vMatrix * vec4( mousePixelPosition, 0.0, 1.0 );
     
-    // vec4 surfaceTextureSample = texture2D( overlayTexture, v_vTexcoord );
-    // vec4 modelTextureSample = texture2D( baseTexture, v_vTexcoord );
+    vec4 surfaceTextureSample = texture2D( overlayTexture, v_vTexcoord );
+    vec4 modelTextureSample = texture2D( baseTexture, v_vTexcoord );
     
-    // // The final fragment color. Model and Surface samples are mixed by the surface samples alpha.
-    // vec4 finalColor = mix( modelTextureSample, surfaceTextureSample, surfaceTextureSample.a );
+    // The final fragment color. Model and Surface samples are mixed by the surface samples alpha.
+    vec4 finalColor = mix( modelTextureSample, surfaceTextureSample, surfaceTextureSample.a );
   
-    // finalColor *= v_vColour;
-    // gl_FragColor = finalColor;
-    gl_FragColor = vec4( mousePixelPosition.xy, 0.0, 1.0 );
+    finalColor *= v_vColour;
+    gl_FragColor = finalColor;
+    // gl_FragColor = vec4( mousePixelPosition.xy, 0.0, 1.0 );
 }
