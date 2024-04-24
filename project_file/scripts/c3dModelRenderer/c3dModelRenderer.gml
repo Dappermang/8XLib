@@ -126,12 +126,19 @@ function c3dModelRenderer() constructor {
         
         var _inputLeftRight = ( keyboard_check( ord( "D" ) ) - keyboard_check( ord( "A" ) ) );
         var _inputYaw = ( keyboard_check( ord( "E" ) ) - keyboard_check( ord( "Q" ) ) );
-        var _inputUpDown = ( keyboard_check( ord( "W" ) ) - keyboard_check( ord( "S" ) ) );
-        var _inputMagnitude = point_distance( 0, 0, _inputLeftRight, _inputUpDown );
+        var _inputUpDown = ( keyboard_check( ord( "W" ) ) - keyboard_check( ord( "S" ) ) ); 
+        
+        var _inputLeftRight2 = ( keyboard_check( vk_left ) - keyboard_check( vk_right ) );
+        var _inputYaw2 = ( keyboard_check( ord( "E" ) ) - keyboard_check( ord( "Q" ) ) );
+        var _inputUpDown2 = ( keyboard_check( vk_up ) - keyboard_check( vk_down ) );
         
         var _pitchSpeed = _inputUpDown * 2;
         var _yawSpeed = _inputYaw * 2;
-        var _rollSpeed = _inputLeftRight * 2;
+        var _rollSpeed = _inputLeftRight * 2;  
+        
+        var _pitchSpeed2 = _inputUpDown2 * 2;
+        var _yawSpeed2 = _inputYaw2 * 2;
+        var _rollSpeed2 = _inputLeftRight2 * 2;
         var _scale = 0.5;
         
         if ( keyboard_check_pressed( vk_backspace ) ) {
@@ -145,13 +152,13 @@ function c3dModelRenderer() constructor {
         		ResetModelTransforms();
         	}
             
-            __models[__currentModel].transform.rotation.x += _pitchSpeed;
-            __models[__currentModel].transform.rotation.y += _yawSpeed;
-            __models[__currentModel].transform.rotation.z += _rollSpeed;
+            __models[__currentModel].transform.rotation.x += _pitchSpeed2;
+            __models[__currentModel].transform.rotation.y += _yawSpeed2;
+            __models[__currentModel].transform.rotation.z += _rollSpeed2;
             
-            // __models[__currentModel].transform.origin.x += _pitchSpeed;
-            // __models[__currentModel].transform.origin.y += _yawSpeed;
-            // __models[__currentModel].transform.origin.z += _rollSpeed;
+            __models[__currentModel].transform.origin.x += _pitchSpeed;
+            __models[__currentModel].transform.origin.y += _yawSpeed;
+            __models[__currentModel].transform.origin.z += _rollSpeed;
         }
     }
     
@@ -202,16 +209,14 @@ function c3dModelRenderer() constructor {
                 - A list of available textures for overlay ?
         */
         if ( !is_undefined( _modelToDraw.overlayTexture ) ) {
-        	shader_set( shdOverlay );
+        	shader_set( shdBakeTex );
         	
         	var _mouseCoordinatesNormalized = global.camera.GetMousePositionNormalized();
-        	var _u_MouseCoordinateX = shader_get_uniform( shdOverlay, "mouseCoordinatesX" );
-        	var _u_MouseCoordinateY = shader_get_uniform( shdOverlay, "mouseCoordinatesY" );
-        	var _u_BaseSample = shader_get_sampler_index( shdOverlay, "baseTexture" );
-        	var _u_OverlaySample = shader_get_sampler_index( shdOverlay, "overlayTexture" );
+        	var _u_Matrix = shader_get_uniform( shdBakeTex, "u_vMatrix" );
+        	var _u_BaseSample = shader_get_sampler_index( shdBakeTex, "u_vBaseTexture" );
+        	var _u_OverlaySample = shader_get_sampler_index( shdBakeTex, "u_vOverlayTexture" );
         	
-        	shader_set_uniform_f( _u_MouseCoordinateX, _mouseCoordinatesNormalized.x );
-        	shader_set_uniform_f( _u_MouseCoordinateY, _mouseCoordinatesNormalized.y );
+        	shader_set_uniform_matrix_array( _u_Matrix, _finalTransformMatrix );
         	texture_set_stage( _u_BaseSample, _modelToDraw.GetTexture() );
         	texture_set_stage( _u_OverlaySample, _modelToDraw.overlayTexture );
         }

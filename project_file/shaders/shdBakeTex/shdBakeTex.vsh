@@ -4,17 +4,20 @@ attribute vec2 in_TextureCoord; // (u, v)
 
 varying vec2 v_vTexcoord;
 varying vec4 v_vColour;
-
-varying vec2 v_vUVPosition;
 varying vec4 v_vCameraPosition;
 
 void main() {
 	vec4 objectWorldPosition = vec4( in_Position, 1.0 );
+	
+	/* 
+		v_vCameraPosition <- Camera Position
+		v_vColour <- Vertex Colour
+		v_vTexcoord <- UV Coordinate
+	*/
+	v_vCameraPosition = gm_Matrices[MATRIX_WORLD_VIEW_PROJECTION] * objectWorldPosition;
 	v_vColour = in_Colour;
 	v_vTexcoord = in_TextureCoord;
 	
-	v_vCameraPosition = gm_Matrices[MATRIX_VIEW] * objectWorldPosition;
-	v_vUVPosition = in_TextureCoord.xy;
-	
-	gl_Position = gm_Matrices[MATRIX_PROJECTION] * v_vCameraPosition;
+	// Vertex Position based on the current ( orthographic ) projection.
+	gl_Position = gm_Matrices[MATRIX_WORLD_VIEW_PROJECTION] * vec4( in_Position, 1.0 );
 }

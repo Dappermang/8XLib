@@ -164,7 +164,6 @@
     {"id":{"name":"cPromptManager","path":"scripts/cPromptManager/cPromptManager.yy",},"order":0,},
     {"id":{"name":"objLight","path":"objects/objLight/objLight.yy",},},
     {"id":{"name":"__spr_animo_fallback","path":"sprites/__spr_animo_fallback/__spr_animo_fallback.yy",},},
-    {"id":{"name":"shdSampler","path":"shaders/shdSampler/shdSampler.yy",},"order":0,},
     {"id":{"name":"__BulbGetSpriteImage","path":"scripts/__BulbGetSpriteImage/__BulbGetSpriteImage.yy",},},
     {"id":{"name":"cGOAPAction","path":"scripts/cGOAPAction/cGOAPAction.yy",},},
     {"id":{"name":"sprLight","path":"sprites/sprLight/sprLight.yy",},},

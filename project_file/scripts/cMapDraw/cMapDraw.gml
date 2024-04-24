@@ -23,7 +23,7 @@ function cMapDraw() class {
     */
     brushProperties = {
         sprite : __animoFallbackSprite,
-        size : 1.5,
+        size : 16,
         currentColour : 0,
         colours : [
             c_red,
@@ -138,6 +138,23 @@ function cMapDraw() class {
         var _cameraMousePosition = _camera.GetMousePosition();
         var _cameraMousePositionPrevious = _cameraMousePosition;
         
+        #region Debug Draw
+        draw_rectangle(
+            _cameraViewPosition.x,
+            _cameraViewPosition.y, 
+            _cameraViewPosition.x + __renderProperties.width * _cameraViewSize.x, 
+            _cameraViewPosition.y + __renderProperties.height * _cameraViewSize.y,
+            true
+        );
+        // draw_surface_stretched( 
+        //     GetDrawSurface(),
+        //      _cameraViewPosition.x, 
+        //      _cameraViewPosition.y, 
+        //     __renderProperties.width, 
+        //     __renderProperties.height
+        // );
+        #endregion
+        
         // Drawing the brush outlines
         draw_circle_colour(
             _cameraMousePosition.x,
@@ -162,19 +179,5 @@ function cMapDraw() class {
             - Get texture of surface
             - Map that texture to the model using a shader
         */
-        draw_rectangle(
-            _cameraViewPosition.x,
-            _cameraViewPosition.y, 
-            _cameraViewPosition.x + __renderProperties.width * _cameraViewSize.x, 
-            _cameraViewPosition.y + __renderProperties.height * _cameraViewSize.y,
-            true
-        );
-        draw_surface_stretched( 
-            GetDrawSurface(),
-             _cameraViewPosition.x, 
-             _cameraViewPosition.y, 
-            __renderProperties.width, 
-            __renderProperties.height
-        );
     }
 }

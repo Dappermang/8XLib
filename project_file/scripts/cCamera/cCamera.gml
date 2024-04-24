@@ -174,6 +174,35 @@ function cCamera() constructor {
 	    	_normalizedMouseY 
 	    );
 	}
+	/// @static
+	/// @returns {struct} Vector2( center_x, center_y )
+	static GetCameraCenter = function() {
+		var _center_x = ( camWidth / 2 ) * camScale;
+		var _center_y = ( camHeight / 2 ) * camScale;
+		
+		return new Vector2( _center_x, _center_y );
+	}	
+	/// @static
+	/// @returns {struct} Vector2( posX, posY )
+	static GetPosition2D = function() {
+		return new Vector2( position.x, position.y );
+	}
+	
+	/// @static
+	/// @returns {struct} Vector2
+	static GetCameraResolution = function() {
+		return new Vector2( camera_get_view_width( __camera ), camera_get_view_height( __camera ) );
+	}		
+	/// @static
+	/// @returns {struct} Vector2
+	static GetCameraSize = function() {
+		return new Vector2( camera_get_view_width( __camera ) * camScale, camera_get_view_height( __camera ) * camScale );
+	}	
+	/// @static
+	/// @returns {struct} Vector2
+	static GetCameraViewPosition = function() {
+		return new Vector2( camera_get_view_x( __camera ), camera_get_view_y( __camera ) );
+	}
 	static Tick = function() {
     	mousePosition = GetMousePosition();
 		
@@ -227,37 +256,6 @@ function cCamera() constructor {
 			position.y += _pitchSpeed;
 		}
 	}
-	
-	/// @static
-	/// @returns {struct} Vector2( center_x, center_y )
-	static GetCameraCenter = function() {
-		var _center_x = ( camWidth / 2 ) * camScale;
-		var _center_y = ( camHeight / 2 ) * camScale;
-		
-		return new Vector2( _center_x, _center_y );
-	}	
-	/// @static
-	/// @returns {struct} Vector2( posX, posY )
-	static GetPosition2D = function() {
-		return new Vector2( position.x, position.y );
-	}
-	
-	/// @static
-	/// @returns {struct} Vector2
-	static GetCameraResolution = function() {
-		return new Vector2( camera_get_view_width( __camera ), camera_get_view_height( __camera ) );
-	}		
-	/// @static
-	/// @returns {struct} Vector2
-	static GetCameraSize = function() {
-		return new Vector2( camera_get_view_width( __camera ) * camScale, camera_get_view_height( __camera ) * camScale );
-	}	
-	/// @static
-	/// @returns {struct} Vector2
-	static GetCameraViewPosition = function() {
-		return new Vector2( camera_get_view_x( __camera ), camera_get_view_y( __camera ) );
-	}
-	
 	// Draw END
 	static DrawOverlay = function() {
 		var _center_pos = GetCameraCenter();

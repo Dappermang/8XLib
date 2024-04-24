@@ -40,6 +40,6 @@ void main() {
   
     // finalColor *= v_vColour;
     // gl_FragColor = finalColor;
-    gl_FragColor = vec4( mousePixelPosition.xy, 0.0, 1.0 );
+    gl_FragColor = vec4( mouseCoordinatesMatrix.xy, 0.0, 1.0 );
 }
 
