@@ -12,5 +12,6 @@ void main() {
 
 	v_vColour = in_Colour;
 	v_vTexcoord = in_TextureCoord;
-	v_vMatrix = gm_Matrices[MATRIX_VIEW];
+	// This Matrix is set to the models current Transform Matrix.
+	v_vMatrix = gm_Matrices[MATRIX_WORLD];
 }
