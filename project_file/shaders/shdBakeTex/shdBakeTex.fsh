@@ -20,7 +20,7 @@ void main() {
     
     // The final fragment color. Model and Surface samples are mixed by the surface samples alpha.
     vec4 finalColor = mix( modelTextureSample, overlayTextureSample, overlayTextureSample.a );
-  
+    
     // finalColor *= v_vColour;
     // gl_FragColor = finalColor;
     

@@ -6,6 +6,8 @@ varying vec2 v_vTexcoord;
 varying vec4 v_vColour;
 varying vec4 v_vCameraPosition;
 
+uniform mat4 u_vMatrix;
+
 void main() {
 	vec4 objectWorldPosition = vec4( in_Position, 1.0 );
 	
@@ -14,7 +16,7 @@ void main() {
 		v_vColour <- Vertex Colour
 		v_vTexcoord <- UV Coordinate
 	*/
-	v_vCameraPosition = gm_Matrices[MATRIX_WORLD_VIEW_PROJECTION] * objectWorldPosition;
+	v_vCameraPosition = u_vMatrix * objectWorldPosition;
 	v_vColour = in_Colour;
 	v_vTexcoord = in_TextureCoord;
 	
@@ -45,12 +47,12 @@ void main() {
     
     // The final fragment color. Model and Surface samples are mixed by the surface samples alpha.
     vec4 finalColor = mix( modelTextureSample, overlayTextureSample, overlayTextureSample.a );
-  
+    
     // finalColor *= v_vColour;
     // gl_FragColor = finalColor;
     
     // UV DEBUG
-    gl_FragColor = vec4( v_vTexcoord.xy, 0.0, 1.0 );
+    gl_FragColor = vec4( uvTransformed.xyz, 1.0 );
 }
 
 //PAINT
