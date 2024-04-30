@@ -15,6 +15,9 @@ function cMapDraw() class {
     __renderer.AddModel( __mapModel );
     __drawSurface = -1;
     
+    __renderer.width = texture_get_width( __mapModel.GetTexture() );
+    __renderer.height = texture_get_height( __mapModel.GetTexture() );
+    
     __renderer.__renderProperties.resolution = 1.5;
     __renderer.__renderProperties.fullBright = true;
     #endregion
@@ -23,7 +26,7 @@ function cMapDraw() class {
     */
     brushProperties = {
         sprite : __animoFallbackSprite,
-        size : 16,
+        size : 4,
         currentColour : 0,
         colours : [
             c_red,
@@ -72,10 +75,10 @@ function cMapDraw() class {
         if ( keyboard_check_pressed( vk_f7 ) ) {
             Deserialize();
         }
-        if ( keyboard_check_pressed( vk_up ) ) {
+        if ( mouse_wheel_up() ) {
             brushProperties.currentColour = ( brushProperties.currentColour + 1 ) % ( array_length( brushProperties.colours ) );
         }       
-        if ( keyboard_check_pressed( vk_down ) ) {
+        if ( mouse_wheel_down() ) {
             brushProperties.currentColour = ( brushProperties.currentColour - 1 + array_length( brushProperties.colours ) ) % ( array_length(brushProperties.colours ) );
         }
         

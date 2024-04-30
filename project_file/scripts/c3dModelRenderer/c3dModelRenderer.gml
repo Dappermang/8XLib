@@ -210,12 +210,19 @@ function c3dModelRenderer() constructor {
         */
         if ( !is_undefined( _modelToDraw.overlayTexture ) ) {
         	shader_set( shdBakeTex );
-        	
+        	//        QVector2D targetScale = QVector2D(width() / (float)PAINT_FBO_WIDTH, height() / (float)PAINT_FBO_WIDTH);
         	var _mouseCoordinatesNormalized = global.camera.GetMousePositionNormalized();
-        	var _u_Matrix = shader_get_uniform( shdBakeTex, "u_vMatrix" );
+        	var _u_Matrix = shader_get_uniform( shdBakeTex, "u_mMatrix" );
+        	var _u_TargetScale = shader_get_uniform( shdBakeTex, "u_vTargetScale" );
+        	var _u_TextureSize = shader_get_uniform( shdBakeTex, "u_vTextureSize" );
         	var _u_BaseSample = shader_get_sampler_index( shdBakeTex, "u_vBaseTexture" );
         	var _u_OverlaySample = shader_get_sampler_index( shdBakeTex, "u_vOverlayTexture" );
         	
+        	var _targetScale = new Vector2( __renderProperties.width, __renderProperties.height );
+        	var _textureSize = new Vector2( texture_get_width( _modelToDraw.GetTexture() ), texture_get_height( _modelToDraw.GetTexture() ) );
+        	
+        	shader_set_uniform_f( _u_TargetScale, _targetScale.x, _targetScale.y );
+        	shader_set_uniform_f( _u_TextureSize, _textureSize.x, _textureSize.y );
         	shader_set_uniform_matrix_array( _u_Matrix, _finalTransformMatrix );
         	texture_set_stage( _u_BaseSample, _modelToDraw.GetTexture() );
         	texture_set_stage( _u_OverlaySample, _modelToDraw.overlayTexture );
