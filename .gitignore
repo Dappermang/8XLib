@@ -8,4 +8,6 @@ project_file/rooms/
 project_file/sounds/
 project_file/sprites/
 project_file/tilesets/
+project_file/output/8XLib/*.win
 extensions
+project_file/output

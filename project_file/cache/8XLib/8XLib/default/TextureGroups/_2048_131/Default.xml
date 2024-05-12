@@ -1,105 +1,105 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TextureGroup>
-  <texture scale="1" mipsToGenerate="0" texwidth="1024" texheight="2048">Default_0.bz2</texture>
-  <texture scale="1" mipsToGenerate="0" texwidth="256" texheight="256">Default_1.bz2</texture>
-  <texture scale="1" mipsToGenerate="0" texwidth="256" texheight="256">Default_2.bz2</texture>
-  <texture scale="1" mipsToGenerate="0" texwidth="128" texheight="128">Default_3.bz2</texture>
-  <texture scale="1" mipsToGenerate="0" texwidth="64" texheight="64">Default_4.bz2</texture>
-  <texture scale="1" mipsToGenerate="0" texwidth="16" texheight="32">Default_5.bz2</texture>
-  <texture scale="1" mipsToGenerate="0" texwidth="16" texheight="16">Default_6.bz2</texture>
-  <texture scale="1" mipsToGenerate="0" texwidth="16" texheight="16">Default_7.bz2</texture>
-  <tpe x="0" y="2" tpage="Default_0">fntConsole_fntConsole.tpe</tpe>
-  <tpe x="2" y="518" tpage="Default_0">Sprite12_7bf86048-b2d7-42e2-8f28-a82ee6222965.tpe</tpe>
-  <tpe x="2" y="1070" tpage="Default_0">sprLight3_04631475-a838-4126-b3c2-11cef5c84954.tpe</tpe>
-  <tpe x="2" y="1257" tpage="Default_0">sprLight2_04631475-a838-4126-b3c2-11cef5c84954.tpe</tpe>
-  <tpe x="2" y="1444" tpage="Default_0">sprChicken_a8c20bba-f585-4e43-bfbf-3fd2af4f78a0.tpe</tpe>
-  <tpe x="2" y="1704" tpage="Default_0">sprLight_a6f40c87-cd98-4ceb-9c7e-0a7465d3ed9c.tpe</tpe>
-  <tpe x="0" y="0" tpage="Default_1">texBandage_513095c4-c6f9-4483-b597-32469a449a9e.tpe</tpe>
-  <tpe x="0" y="0" tpage="Default_2">texMap_713b05ae-edfc-4b5c-9a8d-767952ca9f00.tpe</tpe>
-  <tpe x="262" y="1444" tpage="Default_0">spr_bob_awesome_8ccf3f58-e389-4c6f-bc4a-2224990d163e.tpe</tpe>
-  <tpe x="0" y="0" tpage="Default_3">texAmmo_c5ac1836-f697-413e-8d6c-34d4c3535cae.tpe</tpe>
-  <tpe x="373" y="1259" tpage="Default_0">tileTile_output_tileset.tpe</tpe>
-  <tpe x="0" y="0" tpage="Default_4">texChicken64_29001249-69c5-4ff9-a8fa-18e1f7c42934.tpe</tpe>
-  <tpe x="416" y="1345" tpage="Default_0">__spr_animo_fallback_37c00262-845b-4b6d-9d09-974fee0926f8.tpe</tpe>
-  <tpe x="416" y="1345" tpage="Default_0">spr_guy_is_sprite_71fb747a-21ed-4db0-b20a-a80fa1fec9c1.tpe</tpe>
-  <tpe x="416" y="1381" tpage="Default_0">sprColtIdle_b077ee2b-b0e4-4f4a-9e37-e71f650888af.tpe</tpe>
-  <tpe x="416" y="1381" tpage="Default_0">sprReloadEnter_b077ee2b-b0e4-4f4a-9e37-e71f650888af.tpe</tpe>
-  <tpe x="416" y="1381" tpage="Default_0">sprReloadExit_4471ae4b-4d70-4f5e-bb4a-d726f1d160f6.tpe</tpe>
-  <tpe x="371" y="1345" tpage="Default_0">sprGuy_a1fa337d-fa81-4cee-ac0a-11bb1899d578.tpe</tpe>
-  <tpe x="416" y="1404" tpage="Default_0">sprReloadEnter_75e70af5-4d71-4122-916e-80a61d7de97f.tpe</tpe>
-  <tpe x="416" y="1404" tpage="Default_0">sprReloadExit_decc7cee-6f33-4ad3-9dd8-b908cc3d0ca7.tpe</tpe>
-  <tpe x="371" y="1396" tpage="Default_0">sprReloadEnter_49273bb9-3ff5-4fca-baf5-2a701bd9124b.tpe</tpe>
-  <tpe x="416" y="1427" tpage="Default_0">sprReloadEnter_94c0ed1e-b890-407d-bb63-796d1812e6c6.tpe</tpe>
-  <tpe x="371" y="1373" tpage="Default_0">sprReloadEnter_aee7441e-8c12-4eb1-96a3-1556630ad125.tpe</tpe>
-  <tpe x="416" y="1427" tpage="Default_0">sprReloadExit_88765e6b-dd56-4c37-93d3-efa375d25a54.tpe</tpe>
-  <tpe x="371" y="1396" tpage="Default_0">sprReloadExit_d1e90df5-51ff-45dd-99da-b50e1488ea92.tpe</tpe>
-  <tpe x="416" y="1450" tpage="Default_0">sprGuy_d2dcb81a-40fb-41e8-9587-15effd19c608.tpe</tpe>
-  <tpe x="371" y="1419" tpage="Default_0">sprReloadEnter_628e24d1-99a2-436c-8892-f9e9f0727b37.tpe</tpe>
-  <tpe x="371" y="1419" tpage="Default_0">sprReloadExit_1826207c-e14f-438e-bc30-8cab12236121.tpe</tpe>
-  <tpe x="416" y="1521" tpage="Default_0">sprReloadEnter_2874b3d7-96ce-4ff6-b164-4e908865264a.tpe</tpe>
-  <tpe x="416" y="1477" tpage="Default_0">sprReloadEnter_9d56ec9d-88a0-4d81-83be-89581fdad706.tpe</tpe>
-  <tpe x="416" y="1499" tpage="Default_0">sprReloadExit_67788097-cf4a-4dd7-be86-94c2c2e2c3a2.tpe</tpe>
-  <tpe x="416" y="1521" tpage="Default_0">sprReloadExit_cd2b765d-9b74-4f47-b8e3-995062fe410d.tpe</tpe>
-  <tpe x="416" y="1521" tpage="Default_0">sprReloadHold_2874b3d7-96ce-4ff6-b164-4e908865264a.tpe</tpe>
-  <tpe x="416" y="1543" tpage="Default_0">sprReloadSingle_32d289a5-0330-4537-9c00-33e97e19f74a.tpe</tpe>
-  <tpe x="416" y="1565" tpage="Default_0">sprReloadSingle_4b79f5a1-086c-46fa-b0ae-d6e57342e7d8.tpe</tpe>
-  <tpe x="262" y="1586" tpage="Default_0">sprReloadSingle_82170c5e-f479-47b5-90e5-ab12d808ca26.tpe</tpe>
-  <tpe x="299" y="1586" tpage="Default_0">sprReloadSingle_83d690ff-3b55-402b-947f-309a3b62ec6c.tpe</tpe>
-  <tpe x="262" y="1608" tpage="Default_0">sprReloadSingle_fbfe38c8-99da-49fd-baae-0e52b29891ee.tpe</tpe>
-  <tpe x="336" y="1586" tpage="Default_0">sprReloadSpeedloader_32d289a5-0330-4537-9c00-33e97e19f74a.tpe</tpe>
-  <tpe x="299" y="1608" tpage="Default_0">sprReloadSpeedloader_4b79f5a1-086c-46fa-b0ae-d6e57342e7d8.tpe</tpe>
-  <tpe x="262" y="1630" tpage="Default_0">sprReloadSpeedloader_82170c5e-f479-47b5-90e5-ab12d808ca26.tpe</tpe>
-  <tpe x="373" y="1586" tpage="Default_0">sprReloadSpeedloader_83d690ff-3b55-402b-947f-309a3b62ec6c.tpe</tpe>
-  <tpe x="336" y="1608" tpage="Default_0">sprReloadSpeedloader_fbfe38c8-99da-49fd-baae-0e52b29891ee.tpe</tpe>
-  <tpe x="299" y="1630" tpage="Default_0">sprGuy_15a52465-9acc-4204-b5c6-d918480e58f9.tpe</tpe>
-  <tpe x="410" y="1587" tpage="Default_0">sprReloadEnter_c8be7947-9c3d-4e56-8b6b-3cd26c45e02f.tpe</tpe>
-  <tpe x="262" y="1652" tpage="Default_0">sprColtAimEnd_110737b2-08be-40b3-bc5a-5400dc8681fd.tpe</tpe>
-  <tpe x="373" y="1608" tpage="Default_0">sprColtAimHold_5f30f1ce-1c9f-4120-8e6b-814865764908.tpe</tpe>
-  <tpe x="262" y="1652" tpage="Default_0">sprColtAimHold_7c8e8dca-f655-4b4e-89d0-974cf7290afa.tpe</tpe>
-  <tpe x="373" y="1608" tpage="Default_0">sprColtAimHold_a7e6122f-4c43-4127-821c-498ab688777a.tpe</tpe>
-  <tpe x="373" y="1608" tpage="Default_0">sprColtAimHold_e48956b1-05e3-4966-89cb-be4ec1f69a0b.tpe</tpe>
-  <tpe x="262" y="1652" tpage="Default_0">sprColtAimHold_e5c5eb51-bcf2-41e2-ad3e-6fdeaf5b6438.tpe</tpe>
-  <tpe x="262" y="1652" tpage="Default_0">sprColtAimStart_54b6ffa4-f7f1-4a81-96eb-dfa9c41b010c.tpe</tpe>
-  <tpe x="406" y="1608" tpage="Default_0">sprColtHolster_9ffe7fd7-6115-4df9-8877-87d771018980.tpe</tpe>
-  <tpe x="406" y="1608" tpage="Default_0">sprColtUnholster_9ffe7fd7-6115-4df9-8877-87d771018980.tpe</tpe>
-  <tpe x="330" y="1630" tpage="Default_0">sprColtHolster_cdfbdd74-6a70-429b-bc58-38fa53d3cb15.tpe</tpe>
-  <tpe x="330" y="1630" tpage="Default_0">sprColtUnholster_cdfbdd74-6a70-429b-bc58-38fa53d3cb15.tpe</tpe>
-  <tpe x="0" y="0" tpage="Default_5">texKey_975d204b-c66c-4c8a-b371-6a798151dac6.tpe</tpe>
-  <tpe x="262" y="1675" tpage="Default_0">sprGuy_4dbdd202-3a78-48fa-987e-b76d30b31093.tpe</tpe>
-  <tpe x="295" y="1655" tpage="Default_0">sprColtHolster_e64ef346-08e6-42aa-80fb-320423d59bb8.tpe</tpe>
-  <tpe x="295" y="1655" tpage="Default_0">sprColtUnholster_e64ef346-08e6-42aa-80fb-320423d59bb8.tpe</tpe>
-  <tpe x="358" y="1631" tpage="Default_0">sprColtHolster_40558399-5487-4560-b9b5-c044bf4af0ad.tpe</tpe>
-  <tpe x="358" y="1631" tpage="Default_0">sprColtUnholster_40558399-5487-4560-b9b5-c044bf4af0ad.tpe</tpe>
-  <tpe x="262" y="1699" tpage="Default_0">sprColtHolster_77755b77-fa94-4d47-80f4-f8d7e48a158e.tpe</tpe>
-  <tpe x="262" y="1699" tpage="Default_0">sprColtUnholster_77755b77-fa94-4d47-80f4-f8d7e48a158e.tpe</tpe>
-  <tpe x="322" y="1656" tpage="Default_0">sprGuy_a737098a-d188-4b49-8f09-c2dc4f1fb347.tpe</tpe>
-  <tpe x="436" y="1608" tpage="Default_0">sprColtAimEnd_74189a1e-29cc-4b84-bf57-76818b38580d.tpe</tpe>
-  <tpe x="436" y="1608" tpage="Default_0">sprColtAimStart_5013f449-e43f-4693-aa52-7b31803e328e.tpe</tpe>
-  <tpe x="291" y="1680" tpage="Default_0">sprColtAim_d1be2c5f-ed27-413e-8942-60f933af5334.tpe</tpe>
-  <tpe x="291" y="1680" tpage="Default_0">sprColtAimEnd_1f3fdab4-1bfd-4a54-b971-50d399b98a1f.tpe</tpe>
-  <tpe x="291" y="1680" tpage="Default_0">sprColtAimStart_d1be2c5f-ed27-413e-8942-60f933af5334.tpe</tpe>
-  <tpe x="383" y="1631" tpage="Default_0">sprColtHolster_12afa009-a6cd-4663-8da5-18c0e54c59a3.tpe</tpe>
-  <tpe x="383" y="1631" tpage="Default_0">sprColtUnholster_12afa009-a6cd-4663-8da5-18c0e54c59a3.tpe</tpe>
-  <tpe x="262" y="1724" tpage="Default_0">sprGuy_16b9666b-24d5-4972-a772-5d205ec73fc0.tpe</tpe>
-  <tpe x="347" y="1656" tpage="Default_0">sprGuy_e7c436dd-8370-47d4-8c0f-ca67cae3171e.tpe</tpe>
-  <tpe x="314" y="1680" tpage="Default_0">sprSharkSegments_177c8f3f-71f3-4d96-87f0-d4205a1734b6.tpe</tpe>
-  <tpe x="406" y="1633" tpage="Default_0">sprColtAimEnd_b2cad88d-6171-4bd0-901b-1573654cd771.tpe</tpe>
-  <tpe x="406" y="1633" tpage="Default_0">sprColtAimStart_0a62e5fd-ef15-4324-b97d-6e6299f017d9.tpe</tpe>
-  <tpe x="285" y="1724" tpage="Default_0">sprColtAimEnd_e64a166c-0114-4c2b-9765-bd21a7664dc6.tpe</tpe>
-  <tpe x="285" y="1724" tpage="Default_0">sprColtAimStart_4a9d6b3f-249f-4f1a-8b22-37257eb54670.tpe</tpe>
-  <tpe x="370" y="1656" tpage="Default_0">sprColtHolster_b2ba4f4f-845d-456a-b6a0-e88339dedcfa.tpe</tpe>
-  <tpe x="370" y="1656" tpage="Default_0">sprColtUnholster_b2ba4f4f-845d-456a-b6a0-e88339dedcfa.tpe</tpe>
-  <tpe x="429" y="1633" tpage="Default_0">sprColtAimEnd_bda342cb-dd43-42e9-a217-844311222f0c.tpe</tpe>
-  <tpe x="429" y="1633" tpage="Default_0">sprColtAimStart_ac8ea47f-bc07-41a4-a6df-88ae47371d66.tpe</tpe>
-  <tpe x="262" y="1749" tpage="Default_0">sprWall_270fdc21-0a81-4f8e-b95f-5bb211c4e549.tpe</tpe>
-  <tpe x="0" y="0" tpage="Default_6">texChicken_6d697c37-543d-4dd5-9cde-1ff3b51304d7.tpe</tpe>
-  <tpe x="0" y="0" tpage="Default_7">texMissing_ec42b79d-426f-402d-8bf9-d9c995b579c1.tpe</tpe>
-  <tpe x="286" y="1704" tpage="Default_0">spr_guy_doingstuff_e0e33ac7-da25-488c-a4a8-aafa9056eb14.tpe</tpe>
-  <tpe x="304" y="1709" tpage="Default_0">sprSharkSegments_7e20b7e2-8c57-4b2d-ae8f-103f65d8a10c.tpe</tpe>
-  <tpe x="387" y="1656" tpage="Default_0">sprSharkSegments_ddcf3e83-2b38-4a90-bab8-67a05c68f566.tpe</tpe>
-  <tpe x="402" y="1345" tpage="Default_0">sprSharkSegments_cb9db711-a667-46ae-99a9-a8e70a74b624.tpe</tpe>
-  <tpe x="333" y="1680" tpage="Default_0">sprSharkSegments_1622a55a-ab1c-4e15-a446-00d6dd102d61.tpe</tpe>
-  <tpe x="298" y="1749" tpage="Default_0">sprSharkSegments_b42de179-8e64-4bb5-9c7a-6bcd82a8b8c3.tpe</tpe>
-  <tpe x="298" y="1756" tpage="Default_0">__sprBulbPixel_0d9496b5-8dd4-4e56-96da-9ffa6cd7e55e.tpe</tpe>
-  <tpe x="311" y="1721" tpage="Default_0">Sprite9_0ab7bff9-2ef6-44d8-85b6-18f2178a554d.tpe</tpe>
+  <texture scale="1" mipsToGenerate="0" texwidth="1024" texheight="2048">default_0.bz2</texture>
+  <texture scale="1" mipsToGenerate="0" texwidth="256" texheight="256">default_1.bz2</texture>
+  <texture scale="1" mipsToGenerate="0" texwidth="256" texheight="256">default_2.bz2</texture>
+  <texture scale="1" mipsToGenerate="0" texwidth="128" texheight="128">default_3.bz2</texture>
+  <texture scale="1" mipsToGenerate="0" texwidth="64" texheight="64">default_4.bz2</texture>
+  <texture scale="1" mipsToGenerate="0" texwidth="16" texheight="32">default_5.bz2</texture>
+  <texture scale="1" mipsToGenerate="0" texwidth="16" texheight="16">default_6.bz2</texture>
+  <texture scale="1" mipsToGenerate="0" texwidth="16" texheight="16">default_7.bz2</texture>
+  <tpe x="0" y="2" tpage="default_0">fntConsole_fntConsole.tpe</tpe>
+  <tpe x="2" y="518" tpage="default_0">Sprite12_7bf86048-b2d7-42e2-8f28-a82ee6222965.tpe</tpe>
+  <tpe x="2" y="1070" tpage="default_0">sprLight3_04631475-a838-4126-b3c2-11cef5c84954.tpe</tpe>
+  <tpe x="2" y="1257" tpage="default_0">sprLight2_04631475-a838-4126-b3c2-11cef5c84954.tpe</tpe>
+  <tpe x="2" y="1444" tpage="default_0">sprChicken_a8c20bba-f585-4e43-bfbf-3fd2af4f78a0.tpe</tpe>
+  <tpe x="2" y="1704" tpage="default_0">sprLight_a6f40c87-cd98-4ceb-9c7e-0a7465d3ed9c.tpe</tpe>
+  <tpe x="0" y="0" tpage="default_1">texBandage_513095c4-c6f9-4483-b597-32469a449a9e.tpe</tpe>
+  <tpe x="0" y="0" tpage="default_2">texMap_713b05ae-edfc-4b5c-9a8d-767952ca9f00.tpe</tpe>
+  <tpe x="262" y="1444" tpage="default_0">spr_bob_awesome_8ccf3f58-e389-4c6f-bc4a-2224990d163e.tpe</tpe>
+  <tpe x="0" y="0" tpage="default_3">texAmmo_c5ac1836-f697-413e-8d6c-34d4c3535cae.tpe</tpe>
+  <tpe x="264" y="1588" tpage="default_0">tileTile_output_tileset.tpe</tpe>
+  <tpe x="0" y="0" tpage="default_4">texChicken64_29001249-69c5-4ff9-a8fa-18e1f7c42934.tpe</tpe>
+  <tpe x="371" y="1257" tpage="default_0">__spr_animo_fallback_37c00262-845b-4b6d-9d09-974fee0926f8.tpe</tpe>
+  <tpe x="371" y="1257" tpage="default_0">spr_guy_is_sprite_71fb747a-21ed-4db0-b20a-a80fa1fec9c1.tpe</tpe>
+  <tpe x="350" y="1586" tpage="default_0">sprColtIdle_b077ee2b-b0e4-4f4a-9e37-e71f650888af.tpe</tpe>
+  <tpe x="350" y="1586" tpage="default_0">sprReloadEnter_b077ee2b-b0e4-4f4a-9e37-e71f650888af.tpe</tpe>
+  <tpe x="350" y="1586" tpage="default_0">sprReloadExit_4471ae4b-4d70-4f5e-bb4a-d726f1d160f6.tpe</tpe>
+  <tpe x="262" y="1674" tpage="default_0">sprGuy_a1fa337d-fa81-4cee-ac0a-11bb1899d578.tpe</tpe>
+  <tpe x="371" y="1293" tpage="default_0">sprReloadEnter_75e70af5-4d71-4122-916e-80a61d7de97f.tpe</tpe>
+  <tpe x="371" y="1293" tpage="default_0">sprReloadExit_decc7cee-6f33-4ad3-9dd8-b908cc3d0ca7.tpe</tpe>
+  <tpe x="262" y="1702" tpage="default_0">sprReloadEnter_49273bb9-3ff5-4fca-baf5-2a701bd9124b.tpe</tpe>
+  <tpe x="293" y="1674" tpage="default_0">sprReloadEnter_94c0ed1e-b890-407d-bb63-796d1812e6c6.tpe</tpe>
+  <tpe x="350" y="1609" tpage="default_0">sprReloadEnter_aee7441e-8c12-4eb1-96a3-1556630ad125.tpe</tpe>
+  <tpe x="293" y="1674" tpage="default_0">sprReloadExit_88765e6b-dd56-4c37-93d3-efa375d25a54.tpe</tpe>
+  <tpe x="262" y="1702" tpage="default_0">sprReloadExit_d1e90df5-51ff-45dd-99da-b50e1488ea92.tpe</tpe>
+  <tpe x="371" y="1316" tpage="default_0">sprGuy_d2dcb81a-40fb-41e8-9587-15effd19c608.tpe</tpe>
+  <tpe x="350" y="1632" tpage="default_0">sprReloadEnter_628e24d1-99a2-436c-8892-f9e9f0727b37.tpe</tpe>
+  <tpe x="350" y="1632" tpage="default_0">sprReloadExit_1826207c-e14f-438e-bc30-8cab12236121.tpe</tpe>
+  <tpe x="299" y="1697" tpage="default_0">sprReloadEnter_2874b3d7-96ce-4ff6-b164-4e908865264a.tpe</tpe>
+  <tpe x="330" y="1674" tpage="default_0">sprReloadEnter_9d56ec9d-88a0-4d81-83be-89581fdad706.tpe</tpe>
+  <tpe x="262" y="1725" tpage="default_0">sprReloadExit_67788097-cf4a-4dd7-be86-94c2c2e2c3a2.tpe</tpe>
+  <tpe x="299" y="1697" tpage="default_0">sprReloadExit_cd2b765d-9b74-4f47-b8e3-995062fe410d.tpe</tpe>
+  <tpe x="299" y="1697" tpage="default_0">sprReloadHold_2874b3d7-96ce-4ff6-b164-4e908865264a.tpe</tpe>
+  <tpe x="371" y="1343" tpage="default_0">sprReloadSingle_32d289a5-0330-4537-9c00-33e97e19f74a.tpe</tpe>
+  <tpe x="367" y="1656" tpage="default_0">sprReloadSingle_4b79f5a1-086c-46fa-b0ae-d6e57342e7d8.tpe</tpe>
+  <tpe x="262" y="1747" tpage="default_0">sprReloadSingle_82170c5e-f479-47b5-90e5-ab12d808ca26.tpe</tpe>
+  <tpe x="299" y="1719" tpage="default_0">sprReloadSingle_83d690ff-3b55-402b-947f-309a3b62ec6c.tpe</tpe>
+  <tpe x="336" y="1696" tpage="default_0">sprReloadSingle_fbfe38c8-99da-49fd-baae-0e52b29891ee.tpe</tpe>
+  <tpe x="371" y="1365" tpage="default_0">sprReloadSpeedloader_32d289a5-0330-4537-9c00-33e97e19f74a.tpe</tpe>
+  <tpe x="262" y="1769" tpage="default_0">sprReloadSpeedloader_4b79f5a1-086c-46fa-b0ae-d6e57342e7d8.tpe</tpe>
+  <tpe x="299" y="1741" tpage="default_0">sprReloadSpeedloader_82170c5e-f479-47b5-90e5-ab12d808ca26.tpe</tpe>
+  <tpe x="336" y="1718" tpage="default_0">sprReloadSpeedloader_83d690ff-3b55-402b-947f-309a3b62ec6c.tpe</tpe>
+  <tpe x="373" y="1678" tpage="default_0">sprReloadSpeedloader_fbfe38c8-99da-49fd-baae-0e52b29891ee.tpe</tpe>
+  <tpe x="371" y="1387" tpage="default_0">sprGuy_15a52465-9acc-4204-b5c6-d918480e58f9.tpe</tpe>
+  <tpe x="262" y="1791" tpage="default_0">sprReloadEnter_c8be7947-9c3d-4e56-8b6b-3cd26c45e02f.tpe</tpe>
+  <tpe x="336" y="1740" tpage="default_0">sprColtAimEnd_110737b2-08be-40b3-bc5a-5400dc8681fd.tpe</tpe>
+  <tpe x="299" y="1763" tpage="default_0">sprColtAimHold_5f30f1ce-1c9f-4120-8e6b-814865764908.tpe</tpe>
+  <tpe x="336" y="1740" tpage="default_0">sprColtAimHold_7c8e8dca-f655-4b4e-89d0-974cf7290afa.tpe</tpe>
+  <tpe x="299" y="1763" tpage="default_0">sprColtAimHold_a7e6122f-4c43-4127-821c-498ab688777a.tpe</tpe>
+  <tpe x="299" y="1763" tpage="default_0">sprColtAimHold_e48956b1-05e3-4966-89cb-be4ec1f69a0b.tpe</tpe>
+  <tpe x="336" y="1740" tpage="default_0">sprColtAimHold_e5c5eb51-bcf2-41e2-ad3e-6fdeaf5b6438.tpe</tpe>
+  <tpe x="336" y="1740" tpage="default_0">sprColtAimStart_54b6ffa4-f7f1-4a81-96eb-dfa9c41b010c.tpe</tpe>
+  <tpe x="373" y="1700" tpage="default_0">sprColtHolster_9ffe7fd7-6115-4df9-8877-87d771018980.tpe</tpe>
+  <tpe x="373" y="1700" tpage="default_0">sprColtUnholster_9ffe7fd7-6115-4df9-8877-87d771018980.tpe</tpe>
+  <tpe x="387" y="1609" tpage="default_0">sprColtHolster_cdfbdd74-6a70-429b-bc58-38fa53d3cb15.tpe</tpe>
+  <tpe x="387" y="1609" tpage="default_0">sprColtUnholster_cdfbdd74-6a70-429b-bc58-38fa53d3cb15.tpe</tpe>
+  <tpe x="0" y="0" tpage="default_5">texKey_975d204b-c66c-4c8a-b371-6a798151dac6.tpe</tpe>
+  <tpe x="371" y="1412" tpage="default_0">sprGuy_4dbdd202-3a78-48fa-987e-b76d30b31093.tpe</tpe>
+  <tpe x="262" y="1812" tpage="default_0">sprColtHolster_e64ef346-08e6-42aa-80fb-320423d59bb8.tpe</tpe>
+  <tpe x="262" y="1812" tpage="default_0">sprColtUnholster_e64ef346-08e6-42aa-80fb-320423d59bb8.tpe</tpe>
+  <tpe x="332" y="1763" tpage="default_0">sprColtHolster_40558399-5487-4560-b9b5-c044bf4af0ad.tpe</tpe>
+  <tpe x="332" y="1763" tpage="default_0">sprColtUnholster_40558399-5487-4560-b9b5-c044bf4af0ad.tpe</tpe>
+  <tpe x="369" y="1740" tpage="default_0">sprColtHolster_77755b77-fa94-4d47-80f4-f8d7e48a158e.tpe</tpe>
+  <tpe x="369" y="1740" tpage="default_0">sprColtUnholster_77755b77-fa94-4d47-80f4-f8d7e48a158e.tpe</tpe>
+  <tpe x="289" y="1812" tpage="default_0">sprGuy_a737098a-d188-4b49-8f09-c2dc4f1fb347.tpe</tpe>
+  <tpe x="262" y="1837" tpage="default_0">sprColtAimEnd_74189a1e-29cc-4b84-bf57-76818b38580d.tpe</tpe>
+  <tpe x="262" y="1837" tpage="default_0">sprColtAimStart_5013f449-e43f-4693-aa52-7b31803e328e.tpe</tpe>
+  <tpe x="393" y="1725" tpage="default_0">sprColtAim_d1be2c5f-ed27-413e-8942-60f933af5334.tpe</tpe>
+  <tpe x="393" y="1725" tpage="default_0">sprColtAimEnd_1f3fdab4-1bfd-4a54-b971-50d399b98a1f.tpe</tpe>
+  <tpe x="393" y="1725" tpage="default_0">sprColtAimStart_d1be2c5f-ed27-413e-8942-60f933af5334.tpe</tpe>
+  <tpe x="357" y="1765" tpage="default_0">sprColtHolster_12afa009-a6cd-4663-8da5-18c0e54c59a3.tpe</tpe>
+  <tpe x="357" y="1765" tpage="default_0">sprColtUnholster_12afa009-a6cd-4663-8da5-18c0e54c59a3.tpe</tpe>
+  <tpe x="289" y="1836" tpage="default_0">sprGuy_16b9666b-24d5-4972-a772-5d205ec73fc0.tpe</tpe>
+  <tpe x="299" y="1786" tpage="default_0">sprGuy_e7c436dd-8370-47d4-8c0f-ca67cae3171e.tpe</tpe>
+  <tpe x="262" y="1862" tpage="default_0">sprSharkSegments_177c8f3f-71f3-4d96-87f0-d4205a1734b6.tpe</tpe>
+  <tpe x="390" y="1586" tpage="default_0">sprColtAimEnd_b2cad88d-6171-4bd0-901b-1573654cd771.tpe</tpe>
+  <tpe x="390" y="1586" tpage="default_0">sprColtAimStart_0a62e5fd-ef15-4324-b97d-6e6299f017d9.tpe</tpe>
+  <tpe x="393" y="1749" tpage="default_0">sprColtAimEnd_e64a166c-0114-4c2b-9765-bd21a7664dc6.tpe</tpe>
+  <tpe x="393" y="1749" tpage="default_0">sprColtAimStart_4a9d6b3f-249f-4f1a-8b22-37257eb54670.tpe</tpe>
+  <tpe x="312" y="1836" tpage="default_0">sprColtHolster_b2ba4f4f-845d-456a-b6a0-e88339dedcfa.tpe</tpe>
+  <tpe x="312" y="1836" tpage="default_0">sprColtUnholster_b2ba4f4f-845d-456a-b6a0-e88339dedcfa.tpe</tpe>
+  <tpe x="262" y="1891" tpage="default_0">sprColtAimEnd_bda342cb-dd43-42e9-a217-844311222f0c.tpe</tpe>
+  <tpe x="262" y="1891" tpage="default_0">sprColtAimStart_ac8ea47f-bc07-41a4-a6df-88ae47371d66.tpe</tpe>
+  <tpe x="380" y="1774" tpage="default_0">sprWall_270fdc21-0a81-4f8e-b95f-5bb211c4e549.tpe</tpe>
+  <tpe x="0" y="0" tpage="default_6">texChicken_6d697c37-543d-4dd5-9cde-1ff3b51304d7.tpe</tpe>
+  <tpe x="0" y="0" tpage="default_7">texMissing_ec42b79d-426f-402d-8bf9-d9c995b579c1.tpe</tpe>
+  <tpe x="384" y="1635" tpage="default_0">spr_guy_doingstuff_e0e33ac7-da25-488c-a4a8-aafa9056eb14.tpe</tpe>
+  <tpe x="285" y="1860" tpage="default_0">sprSharkSegments_7e20b7e2-8c57-4b2d-ae8f-103f65d8a10c.tpe</tpe>
+  <tpe x="350" y="1656" tpage="default_0">sprSharkSegments_ddcf3e83-2b38-4a90-bab8-67a05c68f566.tpe</tpe>
+  <tpe x="402" y="1316" tpage="default_0">sprSharkSegments_cb9db711-a667-46ae-99a9-a8e70a74b624.tpe</tpe>
+  <tpe x="400" y="1412" tpage="default_0">sprSharkSegments_1622a55a-ab1c-4e15-a446-00d6dd102d61.tpe</tpe>
+  <tpe x="371" y="1436" tpage="default_0">sprSharkSegments_b42de179-8e64-4bb5-9c7a-6bcd82a8b8c3.tpe</tpe>
+  <tpe x="407" y="1257" tpage="default_0">__sprBulbPixel_0d9496b5-8dd4-4e56-96da-9ffa6cd7e55e.tpe</tpe>
+  <tpe x="293" y="1697" tpage="default_0">Sprite9_0ab7bff9-2ef6-44d8-85b6-18f2178a554d.tpe</tpe>
 </TextureGroup>

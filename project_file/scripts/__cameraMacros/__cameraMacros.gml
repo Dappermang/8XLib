@@ -5,11 +5,11 @@ enum RES_MODE {
 }
 
 enum CAM_ALIGN {
-	LEFT = 1 << 0,
-	RIGHT = 2 << 0,
-	TOP = 3 << 0,
-	BOTTOM = 4 << 0,
-	MIDDLE = 5 << 0
+	LEFT = ( 1 << 0 ),
+	RIGHT = ( 2 << 0 ),
+	TOP = ( 3 << 0 ),
+	BOTTOM = ( 4 << 0 ),
+	MIDDLE = ( 5 << 0 )
 }
 
 #macro __MAX_CAMS 8
