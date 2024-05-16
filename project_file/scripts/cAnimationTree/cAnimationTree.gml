@@ -1,23 +1,19 @@
-function cAnimationTree( animPlayer ) constructor {
+function cAnimationTree( animPlayer ) class {
     animationPlayer = undefined;
-    tree = {
-        root : {}
-    };
-    
-    SetRoot( new cTreeNode( "root", tree ) );
+    root = new cNode();
     
     static GetRoot = function() {
-        return tree.root;
+        return root;
     }    
     static SetRoot = function( newRoot ) {
-        tree.root = newRoot;
+        root = newRoot;
     }
     static SetAnimationPlayer = function( animationPlayerReference ) {
         animationPlayer = animationPlayerReference;
     }
     
     #region Node Functions node
-    /// @param {cTreeNode}
+    /// @param {cNode}
     static AddNode = function( node, _parent = undefined ) {
         if ( !is_undefined( _parent ) ) {
             _parent.AddChild( node );
@@ -26,20 +22,28 @@ function cAnimationTree( animPlayer ) constructor {
             GetRoot().AddChild( node );
         }
     }
-    static NodeIsChild = function() {
+    static GetNode = function() {
         
     }
     #endregion
 }
 
-function cTreeNode( _parentNode = undefined, _childNode = undefined ) constructor {
-    parentNode = undefined;
-    childNode = undefined;
-    cost = 0;
-    data = {};
+function cNode( _data = {} ) class {
+    self.data = _data;
+    self.children = [];
     
-    static AddChild = function( child ) {
-        child.parentNode = self;
-        self.childNode = child;
+    static AddChild = function( node ) {
+        array_push( children, node );
+        return self;
     }
+}
+
+function TestTree( _amount = 6 ) {
+    var _root = new cNode();
+    
+    repeat( _amount ) {
+        _root.AddChild( new cNode() );
+    }
+    
+    print( _root );
 }
