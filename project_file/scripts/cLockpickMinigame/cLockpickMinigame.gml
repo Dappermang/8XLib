@@ -11,9 +11,12 @@
 function cLockpickMinigame() class {
     pinAmount = 5; /// @is {number} The amount of pins in the lock.
     pinOrder = [1, 2, 3, 4, 5]; /// @is {array[number]} The unlock order of the pins. This should match the amount of pins preferably.
-    currentPin = 0; /// @is {number} The currently selected pin.
+    currentPin = 1; /// @is {number} The currently selected pin.
     
     attemptOrder = [];
+    attemptTimeout = 15;
+    attemptTimeoutMax = attemptTimeout;
+    evaluating = false;
     attemptSucceeded = false;
     
     /// @desc Returns true or false depending on if the current attempt order is equal to the locks pin order.
@@ -30,15 +33,19 @@ function cLockpickMinigame() class {
     static OnSuccess = function() {
         // Success State, reset lock.
         attemptOrder = []; // empty attempts
-        currentPin = 0; // Reset selected pin back to 0, try again !
+        currentPin = 1; // Reset selected pin back to 0, try again !
         attemptSucceeded = true;
+        evaluating = false;
+        attemptTimeout = attemptTimeoutMax;
     }
     static OnFailure = function() {
         // Fail State, reset lock.
         attemptOrder = []; // empty attempts
-        currentPin = 0; // Reset selected pin back to 0, try again !
-        audio_play_sound( audTest, -1, false, 0.1 );
+        currentPin = 1; // Reset selected pin back to 0, try again !
+        //audio_play_sound( audTest, -1, false, 0.1 );
         attemptSucceeded = false;
+        evaluating = false;
+        attemptTimeout = attemptTimeoutMax;
     }
     static Tick = function() {
         // Todo; When moving to actual project, replace all keyboard functions with inputLib stuff.
@@ -49,25 +56,43 @@ function cLockpickMinigame() class {
         currentPin = eucMod( currentPin + sign( _inputDirection ), pinAmount + 1 );
         currentPin = ( currentPin > pinAmount || currentPin < 0 ) ? 1 : currentPin;
         
-        if ( _inputConfirm ) {
-            array_push( attemptOrder, currentPin );
-            
-            if ( array_length( attemptOrder ) >= pinAmount ) {
-                if ( EvaluateUnlock() ) {
-                    OnSuccess();
-                }
-                else {
-                    OnFailure();
-                }
+        if ( array_length( attemptOrder ) >= pinAmount ) {
+            attemptTimeout = max( 0, attemptTimeout - 1 );
+            evaluating = true;
+        }
+        
+        if ( !evaluating 
+        && _inputConfirm ) {
+            if ( !array_contains( attemptOrder, currentPin ) ) {
+                array_push( attemptOrder, currentPin );
+            }
+        }
+        
+        if ( attemptTimeout <= 0 ) {
+            if ( EvaluateUnlock() ) {
+                OnSuccess();
+            }
+            else {
+                OnFailure();
             }
         }
     }
     
     // Temporary Draw.
     static DrawDebug = function() {
-        draw_text( 0, 0, $"Current Pin : {currentPin}\nCurrent Attempt : {attemptOrder}\nPin Order : {pinOrder}" );
+        var _pinSize = 8;
+        var _offset = ( 6 * _pinSize ) / 2;
+        
+        for( var i = 0; i < pinAmount; ++i ) {
+            draw_set_color( array_contains( attemptOrder, i + 1 ) ? c_lime : c_white );
+            draw_circle( 128 + ( _offset * i ), 128, _pinSize, false );
+            draw_set_color( c_white );
+        }
+        
+        draw_text( 0, 0, $"Current Pin : {currentPin}\nCurrent Attempt : {attemptOrder}\nPin Order : {pinOrder}\n{attemptTimeout}" );
         draw_set_color( attemptSucceeded ? c_green : c_red );
         draw_text( 0, 75, attemptSucceeded ? "We Did It." : "Stupid Fuck. Try Again." );
+        draw_set_color( c_white );
     }
 }
 
