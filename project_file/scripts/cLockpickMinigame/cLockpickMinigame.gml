@@ -18,7 +18,7 @@ function cLockpickMinigame() class {
     
     succeeding = true;
     
-    attemptsLeft = 5; /// @is {number} The total amount of attempts left to try picking the lock.
+    attemptsLeft = 3; /// @is {number} The total amount of attempts left to try picking the lock.
     attemptOrder = [];
     attemptTimeout = 15;
     attemptTimeoutDefault = attemptTimeout;
@@ -135,7 +135,7 @@ function cLockpickMinigame() class {
             draw_set_color( c_white );
         }
         
-        draw_text( 0, 0, $"Current Pin : {currentPin}\nCurrent Attempt : {attemptOrder}\nPin Order : {pinOrder}\n{attemptTimeout}\nSpring Time : {pinSetTimer}" );
+        draw_text( 0, 0, $"Current Pin : {currentPin}\nCurrent Attempt : {attemptOrder}\nPin Order : {pinOrder}\n{attemptTimeout}\nSpring Time : {pinSetTimer}\nAttempts : {attemptsLeft}" );
         draw_set_color( attemptSucceeded ? c_green : c_red );
         draw_text( 0, 75, attemptSucceeded ? "We Did It." : "Stupid Fuck. Try Again." );
         draw_set_color( c_white );
