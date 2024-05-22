@@ -18,6 +18,7 @@ function cLockpickMinigame() class {
     
     succeeding = true;
     
+    attemptsLeft = 5; /// @is {number} The total amount of attempts left to try picking the lock.
     attemptOrder = [];
     attemptTimeout = 15;
     attemptTimeoutDefault = attemptTimeout;
@@ -42,6 +43,9 @@ function cLockpickMinigame() class {
         
         if ( array_equals( pinOrder, attemptOrder ) ) {
             _result = true;
+        }
+        else {
+            --attemptsLeft;
         }
         
         return _result;
@@ -73,6 +77,11 @@ function cLockpickMinigame() class {
         
         var _inputDirection = ( keyboard_check_pressed( vk_right ) - keyboard_check_pressed( vk_left ) );
         var _inputConfirm = ( mouse_check_button( mb_left ) );
+        
+        if ( attemptsLeft <= 0 ) {
+            // No more attempts left.
+            return;
+        }
         
         currentPin = eucMod( currentPin + sign( _inputDirection ), pinAmount );
         currentPin = ( currentPin > pinAmount || currentPin < 0 ) ? 1 : currentPin;
