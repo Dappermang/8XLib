@@ -13,20 +13,21 @@ function cLockpickMinigame() class {
     pinOrder = [0, 1, 2, 3, 4]; /// @is {array[number]} The unlock order of the pins. This should match the amount of pins preferably.
     currentPin = 0; /// @is {number} The currently selected pin.
     
-    pinSetTimer = 30;
+    pinSetTimer = 20;
     pinSetTimerDefault = pinSetTimer;
     
-    playingHint = false;
+    succeeding = true;
+    
     attemptOrder = [];
     attemptTimeout = 15;
     attemptTimeoutDefault = attemptTimeout;
     evaluating = false;
     attemptSucceeded = false;
     
-    /// @param {array[number]} Pin order
-    static SetPinOrder = function( order ) {
+    /// @param [array[number]] Pin order
+    static SetPinOrder = function( order = undefined ) {
         if ( is_undefined( order ) ) {
-            array_shuffle( pinOrder );
+            pinOrder = array_shuffle( pinOrder );
         }
         else {
             pinOrder = order;
@@ -54,6 +55,7 @@ function cLockpickMinigame() class {
         evaluating = false;
         attemptTimeout = attemptTimeoutDefault;
         pinSetTimer = pinSetTimerDefault;
+        print( $"Succeeded." );
     }
     static OnFailure = function() {
         // Fail State, reset lock.
@@ -64,6 +66,7 @@ function cLockpickMinigame() class {
         evaluating = false;
         attemptTimeout = attemptTimeoutDefault;
         pinSetTimer = pinSetTimerDefault;
+        print( $"Failed." );
     }
     static Tick = function() {
         // Todo; When moving to actual project, replace all keyboard functions with inputLib stuff.
@@ -95,7 +98,11 @@ function cLockpickMinigame() class {
         }
         
         // Check if current pin selected will be/is in the correct order and play 'hint' sound
+        // checking if two arrays have the same values and value orders
         
+        // Check pinOrder array values.
+        // Check attemptOrder array values.
+        // If we have the same order of the attempt values, then keep displaying hints ?
         if ( attemptTimeout <= 0 ) {
             if ( EvaluateUnlock() ) {
                 OnSuccess();
@@ -114,6 +121,8 @@ function cLockpickMinigame() class {
         for( var i = 0; i < pinAmount; ++i ) {
             draw_set_color( array_contains( attemptOrder, i ) ? c_lime : c_white );
             draw_circle( 128 + ( _offset * i ), 128, _pinSize, currentPin == i ? true : false );
+            draw_set_color( succeeding ? c_aqua : c_white );
+            draw_circle( 128 + ( _offset * currentPin ), 128, _pinSize * ( pinSetTimer / pinSetTimerDefault ), succeeding ? true : false );
             draw_set_color( c_white );
         }
         
