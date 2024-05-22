@@ -32,6 +32,7 @@ function cLockpickMinigame() class {
     }
     static OnSuccess = function() {
         // Success State, reset lock.
+        audio_play_sound( sndUnlock, -1, false, 0.2 );
         attemptOrder = []; // empty attempts
         currentPin = 1; // Reset selected pin back to 0, try again !
         attemptSucceeded = true;
@@ -40,6 +41,7 @@ function cLockpickMinigame() class {
     }
     static OnFailure = function() {
         // Fail State, reset lock.
+        audio_play_sound( sndFail, -1, false, 0.2 );
         attemptOrder = []; // empty attempts
         currentPin = 1; // Reset selected pin back to 0, try again !
         //audio_play_sound( audTest, -1, false, 0.1 );
@@ -65,6 +67,7 @@ function cLockpickMinigame() class {
         && _inputConfirm ) {
             if ( !array_contains( attemptOrder, currentPin ) ) {
                 array_push( attemptOrder, currentPin );
+                audio_play_sound( choose( sndPin1, sndPin2, sndPin3 ), -1, false, 0.2 );
             }
         }
         
@@ -85,7 +88,7 @@ function cLockpickMinigame() class {
         
         for( var i = 0; i < pinAmount; ++i ) {
             draw_set_color( array_contains( attemptOrder, i + 1 ) ? c_lime : c_white );
-            draw_circle( 128 + ( _offset * i ), 128, _pinSize, false );
+            draw_circle( 128 + ( _offset * i ), 128, _pinSize, currentPin == i + 1 ? true : false );
             draw_set_color( c_white );
         }
         
