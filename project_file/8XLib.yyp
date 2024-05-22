@@ -205,6 +205,7 @@
     {"id":{"name":"diesloSubs","path":"sounds/diesloSubs/diesloSubs.yy",},},
     {"id":{"name":"diesloSynth","path":"sounds/diesloSynth/diesloSynth.yy",},},
     {"id":{"name":"diesloVox","path":"sounds/diesloVox/diesloVox.yy",},},
+    {"id":{"name":"sndCorrectHint","path":"sounds/sndCorrectHint/sndCorrectHint.yy",},},
     {"id":{"name":"sndFail","path":"sounds/sndFail/sndFail.yy",},},
     {"id":{"name":"sndPin1","path":"sounds/sndPin1/sndPin1.yy",},},
     {"id":{"name":"sndPin2","path":"sounds/sndPin2/sndPin2.yy",},},

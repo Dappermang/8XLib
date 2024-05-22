@@ -13,12 +13,27 @@ function cLockpickMinigame() class {
     pinOrder = [0, 1, 2, 3, 4]; /// @is {array[number]} The unlock order of the pins. This should match the amount of pins preferably.
     currentPin = 0; /// @is {number} The currently selected pin.
     
+    pinSetTimer = 30;
+    pinSetTimerDefault = pinSetTimer;
+    
+    playingHint = false;
     attemptOrder = [];
     attemptTimeout = 15;
-    attemptTimeoutMax = attemptTimeout;
+    attemptTimeoutDefault = attemptTimeout;
     evaluating = false;
     attemptSucceeded = false;
     
+    /// @param {array[number]} Pin order
+    static SetPinOrder = function( order ) {
+        if ( is_undefined( order ) ) {
+            array_shuffle( pinOrder );
+        }
+        else {
+            pinOrder = order;
+        }
+        
+        pinAmount = array_length( pinOrder );
+    }
     /// @desc Returns true or false depending on if the current attempt order is equal to the locks pin order.
     /// @returns {bool}
     static EvaluateUnlock = function() {
@@ -37,23 +52,24 @@ function cLockpickMinigame() class {
         currentPin = 0; // Reset selected pin back to 0, try again !
         attemptSucceeded = true;
         evaluating = false;
-        attemptTimeout = attemptTimeoutMax;
+        attemptTimeout = attemptTimeoutDefault;
+        pinSetTimer = pinSetTimerDefault;
     }
     static OnFailure = function() {
         // Fail State, reset lock.
         audio_play_sound( sndFail, -1, false, 0.2 );
         attemptOrder = []; // empty attempts
         currentPin = 0; // Reset selected pin back to 0, try again !
-        //audio_play_sound( audTest, -1, false, 0.1 );
         attemptSucceeded = false;
         evaluating = false;
-        attemptTimeout = attemptTimeoutMax;
+        attemptTimeout = attemptTimeoutDefault;
+        pinSetTimer = pinSetTimerDefault;
     }
     static Tick = function() {
         // Todo; When moving to actual project, replace all keyboard functions with inputLib stuff.
         
         var _inputDirection = ( keyboard_check_pressed( vk_right ) - keyboard_check_pressed( vk_left ) );
-        var _inputConfirm = ( mouse_check_button_pressed( mb_left ) );
+        var _inputConfirm = ( mouse_check_button( mb_left ) );
         
         currentPin = eucMod( currentPin + sign( _inputDirection ), pinAmount );
         currentPin = ( currentPin > pinAmount || currentPin < 0 ) ? 1 : currentPin;
@@ -63,13 +79,22 @@ function cLockpickMinigame() class {
             evaluating = true;
         }
         
-        if ( !evaluating 
+        if ( !evaluating
+        && !array_contains( attemptOrder, currentPin )
         && _inputConfirm ) {
-            if ( !array_contains( attemptOrder, currentPin ) ) {
+            pinSetTimer = max( 0, pinSetTimer - 1 );
+            
+            if ( pinSetTimer <= 0 ) {
                 array_push( attemptOrder, currentPin );
                 audio_play_sound( choose( sndPin1, sndPin2, sndPin3 ), -1, false, 0.2 );
+                pinSetTimer = pinSetTimerDefault;
             }
         }
+        else if ( !_inputConfirm ) {
+            pinSetTimer = min( pinSetTimerDefault, pinSetTimer + 1 );
+        }
+        
+        // Check if current pin selected will be/is in the correct order and play 'hint' sound
         
         if ( attemptTimeout <= 0 ) {
             if ( EvaluateUnlock() ) {
@@ -92,7 +117,7 @@ function cLockpickMinigame() class {
             draw_set_color( c_white );
         }
         
-        draw_text( 0, 0, $"Current Pin : {currentPin}\nCurrent Attempt : {attemptOrder}\nPin Order : {pinOrder}\n{attemptTimeout}" );
+        draw_text( 0, 0, $"Current Pin : {currentPin}\nCurrent Attempt : {attemptOrder}\nPin Order : {pinOrder}\n{attemptTimeout}\nSpring Time : {pinSetTimer}" );
         draw_set_color( attemptSucceeded ? c_green : c_red );
         draw_text( 0, 75, attemptSucceeded ? "We Did It." : "Stupid Fuck. Try Again." );
         draw_set_color( c_white );
