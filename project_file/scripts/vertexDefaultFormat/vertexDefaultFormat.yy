@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "vertexDefaultFormat",
-  "isCompatibility": false,
-  "isDnD": false,
-  "parent": {
-    "name": "3D",
-    "path": "folders/Libraries/3D.yy",
+  "$GMScript":"",
+  "%Name":"vertexDefaultFormat",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"vertexDefaultFormat",
+  "parent":{
+    "name":"3D",
+    "path":"folders/Libraries/3D.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

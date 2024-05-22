@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "cMapDraw",
-  "isCompatibility": false,
-  "isDnD": false,
-  "parent": {
-    "name": "MapDrawTest",
-    "path": "folders/Libraries/MapDrawTest.yy",
+  "$GMScript":"",
+  "%Name":"cMapDraw",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"cMapDraw",
+  "parent":{
+    "name":"MapDrawTest",
+    "path":"folders/Libraries/MapDrawTest.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

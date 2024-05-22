@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "guiCamera",
-  "isCompatibility": false,
-  "isDnD": false,
-  "parent": {
-    "name": "GUI",
-    "path": "folders/Libraries/GUI.yy",
+  "$GMScript":"",
+  "%Name":"guiCamera",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"guiCamera",
+  "parent":{
+    "name":"GUI",
+    "path":"folders/Libraries/GUI.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

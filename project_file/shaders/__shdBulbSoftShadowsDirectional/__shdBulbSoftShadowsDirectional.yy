@@ -1,10 +1,12 @@
 {
-  "resourceType": "GMShader",
-  "resourceVersion": "1.0",
-  "name": "__shdBulbSoftShadowsDirectional",
-  "parent": {
-    "name": "Shaders",
-    "path": "folders/Libraries/3rd Party/Bulb/(System)/(Pay no attention to that man behind the curtain)/Shaders.yy",
+  "$GMShader":"",
+  "%Name":"__shdBulbSoftShadowsDirectional",
+  "name":"__shdBulbSoftShadowsDirectional",
+  "parent":{
+    "name":"Shaders",
+    "path":"folders/Libraries/3rd Party/Bulb/(System)/(Pay no attention to that man behind the curtain)/Shaders.yy",
   },
-  "type": 1,
+  "resourceType":"GMShader",
+  "resourceVersion":"2.0",
+  "type":1,
 }

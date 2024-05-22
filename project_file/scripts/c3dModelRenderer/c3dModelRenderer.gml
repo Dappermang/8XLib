@@ -210,7 +210,7 @@ function c3dModelRenderer() constructor {
         */
         if ( !is_undefined( _modelToDraw.overlayTexture ) ) {
         	shader_set( shdBakeTex );
-        	//        QVector2D targetScale = QVector2D(width() / (float)PAINT_FBO_WIDTH, height() / (float)PAINT_FBO_WIDTH);
+        	// Vector2D targetScale = Vector2D(width() / (float)PAINT_FBO_WIDTH, height() / (float)PAINT_FBO_WIDTH);
         	var _mouseCoordinatesNormalized = global.camera.GetMousePositionNormalized();
         	var _u_Matrix = shader_get_uniform( shdBakeTex, "u_mMatrix" );
         	var _u_TargetScale = shader_get_uniform( shdBakeTex, "u_vTargetScale" );

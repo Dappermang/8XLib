@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "cAnimoAnimation",
-  "isCompatibility": false,
-  "isDnD": false,
-  "parent": {
-    "name": "New Stuff",
-    "path": "folders/Libraries/Animo ( Animation Handler )/New Stuff.yy",
+  "$GMScript":"",
+  "%Name":"cAnimoAnimation",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"cAnimoAnimation",
+  "parent":{
+    "name":"New Stuff",
+    "path":"folders/Libraries/Animo ( Animation Handler )/New Stuff.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

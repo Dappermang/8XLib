@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "cAnimationLibrary",
-  "isCompatibility": false,
-  "isDnD": false,
-  "parent": {
-    "name": "AnimationPlayer!",
-    "path": "folders/Libraries/AnimationPlayer!.yy",
+  "$GMScript":"",
+  "%Name":"cAnimationLibrary",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"cAnimationLibrary",
+  "parent":{
+    "name":"AnimationPlayer!",
+    "path":"folders/Libraries/AnimationPlayer!.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

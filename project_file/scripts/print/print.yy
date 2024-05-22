@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "print",
-  "isCompatibility": false,
-  "isDnD": false,
-  "parent": {
-    "name": "Wrapper Functions",
-    "path": "folders/Libraries/Wrapper Functions.yy",
+  "$GMScript":"",
+  "%Name":"print",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"print",
+  "parent":{
+    "name":"Wrapper Functions",
+    "path":"folders/Libraries/Wrapper Functions.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

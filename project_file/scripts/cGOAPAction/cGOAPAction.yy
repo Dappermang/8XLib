@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "cGOAPAction",
-  "isCompatibility": false,
-  "isDnD": false,
-  "parent": {
-    "name": "GOAP",
-    "path": "folders/Libraries/GOAP.yy",
+  "$GMScript":"",
+  "%Name":"cGOAPAction",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"cGOAPAction",
+  "parent":{
+    "name":"GOAP",
+    "path":"folders/Libraries/GOAP.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

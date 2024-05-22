@@ -1,10 +1,11 @@
 function cStateMachine() class {
     #region Private
     __states = {};
-    __stateStack = ds_stack_create();
+    __defaultState = undefined;
+    __stateStack = [];
     __currentState = undefined;
     __instanceRef = undefined;
-    __maxStateHistory = 1; // Only one other state can stay within the stack.
+    __maxStateHistory = 1;
     __forceExit = false;
     #endregion
     
@@ -14,14 +15,20 @@ function cStateMachine() class {
         return self;
     }
     /// @desc Pushes a new state to the head of the state machine
-    static PushState = function( stateName ) {
-        var _targetState = GetState( stateName );
+    static PushState = function( state ) {
+        var _targetState = GetState( state );
 
         if ( is_undefined( _targetState ) ) {
             print( $"State Is Undefined" );
         }
         
-        ds_stack_push( __stateStack, _targetState );
+        // We set our default state to the FIRST state pushed.
+        // This way we can switch to it later or something as a fallback.
+        if ( is_undefined( __defaultState ) ) {
+            __defaultState = state;
+        }
+        
+        array_push( __stateStack, _targetState );
         __currentState = GetStateHead();
         __currentState.onEnter();
         return self;
@@ -35,8 +42,8 @@ function cStateMachine() class {
         }
         
         // Only pop the state if there is enough room in the stack to do so !
-        if ( ds_stack_size( __stateStack ) > 1 ) {
-            ds_stack_pop( __stateStack );
+        if ( array_length( __stateStack ) > 1 ) {
+            array_pop( __stateStack );
         }
         
         __currentState = GetStateHead();
@@ -50,7 +57,7 @@ function cStateMachine() class {
         return self;
     }
     static GetStateHead = function() {
-        return ds_stack_top( __stateStack );
+        return __stateStack[0];
     }
     static GetState = function( stateName ) {
         var _stateCount = struct_names_count( __states );

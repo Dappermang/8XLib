@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "cPromptManager",
-  "isCompatibility": false,
-  "isDnD": false,
-  "parent": {
-    "name": "Prompts",
-    "path": "folders/Libraries/Prompts.yy",
+  "$GMScript":"",
+  "%Name":"cPromptManager",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"cPromptManager",
+  "parent":{
+    "name":"Prompts",
+    "path":"folders/Libraries/Prompts.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

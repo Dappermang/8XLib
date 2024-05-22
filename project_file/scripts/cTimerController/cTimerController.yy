@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "cTimerController",
-  "isCompatibility": false,
-  "isDnD": false,
-  "parent": {
-    "name": "Clock",
-    "path": "folders/Libraries/Clock.yy",
+  "$GMScript":"",
+  "%Name":"cTimerController",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"cTimerController",
+  "parent":{
+    "name":"Clock",
+    "path":"folders/Libraries/Clock.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

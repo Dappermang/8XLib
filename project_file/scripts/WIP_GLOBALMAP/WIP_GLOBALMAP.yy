@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "WIP_GLOBALMAP",
-  "isCompatibility": false,
-  "isDnD": false,
-  "parent": {
-    "name": "Libraries",
-    "path": "folders/Libraries.yy",
+  "$GMScript":"",
+  "%Name":"WIP_GLOBALMAP",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"WIP_GLOBALMAP",
+  "parent":{
+    "name":"Libraries",
+    "path":"folders/Libraries.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

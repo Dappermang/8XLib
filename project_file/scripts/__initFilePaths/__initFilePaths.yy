@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "__initFilePaths",
-  "isCompatibility": false,
-  "isDnD": false,
-  "parent": {
-    "name": "Libraries",
-    "path": "folders/Libraries.yy",
+  "$GMScript":"",
+  "%Name":"__initFilePaths",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"__initFilePaths",
+  "parent":{
+    "name":"Libraries",
+    "path":"folders/Libraries.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

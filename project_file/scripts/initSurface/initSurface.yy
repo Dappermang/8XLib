@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "initSurface",
-  "isCompatibility": false,
-  "isDnD": false,
-  "parent": {
-    "name": "Objects",
-    "path": "folders/Objects.yy",
+  "$GMScript":"",
+  "%Name":"initSurface",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"initSurface",
+  "parent":{
+    "name":"Objects",
+    "path":"folders/Objects.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

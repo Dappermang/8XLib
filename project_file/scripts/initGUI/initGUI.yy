@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "initGUI",
-  "isCompatibility": false,
-  "isDnD": false,
-  "parent": {
-    "name": "Objects",
-    "path": "folders/Objects.yy",
+  "$GMScript":"",
+  "%Name":"initGUI",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"initGUI",
+  "parent":{
+    "name":"Objects",
+    "path":"folders/Objects.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

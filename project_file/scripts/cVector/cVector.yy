@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "cVector",
-  "isCompatibility": false,
-  "isDnD": false,
-  "parent": {
-    "name": "Vectors",
-    "path": "folders/Libraries/Vectors.yy",
+  "$GMScript":"",
+  "%Name":"cVector",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"cVector",
+  "parent":{
+    "name":"Vectors",
+    "path":"folders/Libraries/Vectors.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }
