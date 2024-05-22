@@ -9,6 +9,5 @@
     "path":"folders/Libraries/Misc Functions.yy",
   },
   "resourceType":"GMScript",
-  "resourceVersion":"1.0",
-  "tags":[],
+  "resourceVersion":"2.0",
 }
