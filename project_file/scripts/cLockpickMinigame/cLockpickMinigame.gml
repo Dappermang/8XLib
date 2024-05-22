@@ -10,8 +10,8 @@
 // the GUI layer/controller object w/o overloading it.
 function cLockpickMinigame() class {
     pinAmount = 5; /// @is {number} The amount of pins in the lock.
-    pinOrder = [1, 2, 3, 4, 5]; /// @is {array[number]} The unlock order of the pins. This should match the amount of pins preferably.
-    currentPin = 1; /// @is {number} The currently selected pin.
+    pinOrder = [0, 1, 2, 3, 4]; /// @is {array[number]} The unlock order of the pins. This should match the amount of pins preferably.
+    currentPin = 0; /// @is {number} The currently selected pin.
     
     attemptOrder = [];
     attemptTimeout = 15;
@@ -34,7 +34,7 @@ function cLockpickMinigame() class {
         // Success State, reset lock.
         audio_play_sound( sndUnlock, -1, false, 0.2 );
         attemptOrder = []; // empty attempts
-        currentPin = 1; // Reset selected pin back to 0, try again !
+        currentPin = 0; // Reset selected pin back to 0, try again !
         attemptSucceeded = true;
         evaluating = false;
         attemptTimeout = attemptTimeoutMax;
@@ -43,7 +43,7 @@ function cLockpickMinigame() class {
         // Fail State, reset lock.
         audio_play_sound( sndFail, -1, false, 0.2 );
         attemptOrder = []; // empty attempts
-        currentPin = 1; // Reset selected pin back to 0, try again !
+        currentPin = 0; // Reset selected pin back to 0, try again !
         //audio_play_sound( audTest, -1, false, 0.1 );
         attemptSucceeded = false;
         evaluating = false;
@@ -55,7 +55,7 @@ function cLockpickMinigame() class {
         var _inputDirection = ( keyboard_check_pressed( vk_right ) - keyboard_check_pressed( vk_left ) );
         var _inputConfirm = ( mouse_check_button_pressed( mb_left ) );
         
-        currentPin = eucMod( currentPin + sign( _inputDirection ), pinAmount + 1 );
+        currentPin = eucMod( currentPin + sign( _inputDirection ), pinAmount );
         currentPin = ( currentPin > pinAmount || currentPin < 0 ) ? 1 : currentPin;
         
         if ( array_length( attemptOrder ) >= pinAmount ) {
@@ -87,8 +87,8 @@ function cLockpickMinigame() class {
         var _offset = ( 6 * _pinSize ) / 2;
         
         for( var i = 0; i < pinAmount; ++i ) {
-            draw_set_color( array_contains( attemptOrder, i + 1 ) ? c_lime : c_white );
-            draw_circle( 128 + ( _offset * i ), 128, _pinSize, currentPin == i + 1 ? true : false );
+            draw_set_color( array_contains( attemptOrder, i ) ? c_lime : c_white );
+            draw_circle( 128 + ( _offset * i ), 128, _pinSize, currentPin == i ? true : false );
             draw_set_color( c_white );
         }
         
