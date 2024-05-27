@@ -3,6 +3,11 @@ function cCamera() class {
 	__camID = 0;
 	__camera = -1;
 	
+	enum __PROJECTION_TYPE {
+		ORTHOGRAPHIC,
+		PERSPECTIVE
+	}
+	
 	view_camera[__camID] = camera_create();
 	__Init();
 		
@@ -18,7 +23,6 @@ function cCamera() class {
 	// The camera resolution ( what the game is rendered at before being upscaled )
 	camWidth = __GAME_RES_WIDTH;
 	camHeight = __GAME_RES_HEIGHT;
-	camAspectRatio = GetAspectRatio();
 	camRenderSurface = -1;
 	camBBox = new Vector2( room_width, room_height );
 	camBBoxSize = 32;// __camera bound box size used for movement
@@ -34,8 +38,18 @@ function cCamera() class {
 	transform = new cTransform3D();
 	position = new Vector3( 0, 0, -512 );
 	
-	projMatrix = undefined;
-	viewMatrix = undefined;
+	projMatrix = matrix_build_projection_ortho( 
+		__GAME_RES_WIDTH, __GAME_RES_HEIGHT, 
+		camClipDistanceNear, camClipDistanceFar 
+	);
+	viewMatrix = matrix_build_lookat( 
+		position.x, position.y, position.z, 
+		position.x + dsin( camAngle ), position.y + dcos( camAngle ), 0, 
+		0, 0, 1
+	);
+	SetProjectionMatrix( __PROJECTION_TYPE.ORTHOGRAPHIC );//temp
+	SetViewMatrix();
+	
     mousePosition = new Vector2(
         mouse_x - camera_get_view_x( __camera ),
         mouse_y - camera_get_view_y( __camera ) 
@@ -44,7 +58,6 @@ function cCamera() class {
 	zoomCurve = undefined;
 	shakeCurve = undefined;
 	#endregion
-	SetOrthographicProjection();//temp
 	#region Get
 	static GetCamera = function() {
 		return __camera;
@@ -152,20 +165,30 @@ function cCamera() class {
 			camRenderSurface = GetRenderSurface();
 		}
 	}
-	static SetOrthographicProjection = function() {
-		// TODO: Add options for different projection types.
-		projMatrix = matrix_build_projection_ortho( 
-			__GAME_RES_WIDTH, __GAME_RES_HEIGHT, 
-			-camClipDistanceNear, camClipDistanceFar 
-		);
-		
+	static SetProjectionMatrix = function( _type = __PROJECTION_TYPE.ORTHOGRAPHIC ) {
+		switch( _type ) {
+			case __PROJECTION_TYPE.ORTHOGRAPHIC :
+				projMatrix = matrix_build_projection_ortho( 
+					__GAME_RES_WIDTH, __GAME_RES_HEIGHT, 
+					camClipDistanceNear, camClipDistanceFar 
+				);
+				break;			
+			case __PROJECTION_TYPE.PERSPECTIVE :
+				projMatrix = matrix_build_projection_perspective_fov( 
+					camFov, GetAspectRatio(),
+					camClipDistanceNear, camClipDistanceFar 
+				);
+				break;
+		}
+	}
+	static SetViewMatrix = function( _xUp = 0, _yUp = 0, _zUp = 1 ) {
 		var _targetX = position.x + dsin( camAngle );
 		var _targetY = position.y + dcos( camAngle );
 	
 		viewMatrix = matrix_build_lookat( 
 			position.x, position.y, position.z, 
 			_targetX, _targetY, 0, 
-			0, 0, 1
+			_xUp, _yUp, _zUp
 		);
 	}
 	/// @static
@@ -187,7 +210,6 @@ function cCamera() class {
 	static SetFocusPosition = function( _x, _y, _z = 0 ) {
 		focusPosition = new Vector3( _x, _y, _z );
 	}
-	
 	static SetFocusPositionAligned = function( _x, _y, _z = 0, align = CAM_ALIGN.MIDDLE ) {
 		switch( align ) {
 			case CAM_ALIGN.MIDDLE :// Middle
@@ -294,7 +316,6 @@ function cCamera() class {
 		camHeight = clamp( camHeight, __GAME_RES_HEIGHT / 2, __GAME_RES_HEIGHT );
 		camAngle = clamp( camAngle, -360, 360 );
 		camResolutionScale = clamp( camResolutionScale, 1, camMaxScale );
-		
 		camera_set_view_angle( __camera, camAngle );
 		camera_apply( __camera );
 		
@@ -308,7 +329,7 @@ function cCamera() class {
 		if ( __CAM_DEBUG ) {
 			draw_set_color( c_lime );
 			draw_text_transformed( position.x + 1, position.y, string( "__camera Resolution:{0} x {1}", _res.x, _res.y ), camResolutionScale, camResolutionScale, 0 );
-			draw_text_transformed( position.x + 1 * camResolutionScale, position.y + 20 * camResolutionScale, string( "__camera Aspect:{0}", camAspectRatio ), camResolutionScale, camResolutionScale, 0 );
+			draw_text_transformed( position.x + 1 * camResolutionScale, position.y + 20 * camResolutionScale, string( "__camera Aspect:{0}", GetAspectRatio() ), camResolutionScale, camResolutionScale, 0 );
 			
 			draw_text_transformed( position.x + 1 * camResolutionScale, position.y + 40 * camResolutionScale, string( "Display Resolution:{0} x {1}", resolution_manager().displayWidth, resolution_manager().displayHeight ), camResolutionScale, camResolutionScale, 0 );
 			draw_text_transformed( position.x + 1 * camResolutionScale, position.y + 60 * camResolutionScale, string( "Display Aspect:{0}", resolution_manager().aspectRatio ), camResolutionScale, camResolutionScale, 0 );
