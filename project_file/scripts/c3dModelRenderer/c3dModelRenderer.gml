@@ -12,8 +12,8 @@ function c3dModelRenderer() constructor {
     __currentModel = 0;
     __renderSurface = -1;
     __renderProperties = {
-        width : __GAME_WIDTH,
-        height : __GAME_HEIGHT,
+        width : __GAME_RES_WIDTH,
+        height : __GAME_RES_HEIGHT,
         renderType : RENDER_TYPE.VIEWPORT,
         resolution : 1,
         modelScale : 1,
@@ -112,8 +112,8 @@ function c3dModelRenderer() constructor {
         __renderSurface = GetRenderSurface();
         
         var _camera = global.camera;
-        var _cameraPosition = _camera.GetCameraViewPosition();
-        var _cameraViewSize = _camera.GetCameraSize();
+        var _cameraPosition = _camera.GetViewPosition();
+        var _cameraViewSize = _camera.GetSize();
         
         __renderProperties.position.x = _cameraPosition.x;
         __renderProperties.position.y = _cameraPosition.y;

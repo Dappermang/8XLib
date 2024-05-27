@@ -13,8 +13,8 @@ enum CAM_ALIGN {
 }
 
 #macro __MAX_CAMS 8
-#macro __GAME_WIDTH 480
-#macro __GAME_HEIGHT 270
+#macro __GAME_RES_WIDTH 480
+#macro __GAME_RES_HEIGHT 270
 #macro __CAM_DEBUG false
 
 globalvar __WINDOW_MODE;

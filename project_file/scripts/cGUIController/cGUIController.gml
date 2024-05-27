@@ -27,7 +27,7 @@ function cGUI() constructor {
     static DrawDebug = function() {
         var _offset = new Vector2( 0, 8 );
         
-        guiCamera( __GAME_WIDTH, __GAME_HEIGHT );
+        guiCamera( __GAME_RES_WIDTH, __GAME_RES_HEIGHT );
         
         for( var i = 0; i < array_length( containers ); ++i ) {
             for( var j = 0; j < array_length( containers[i].children ); ++j ) {
@@ -365,8 +365,8 @@ function cGUIElementSlider() : cGUIElement() constructor {
 
 // Potentially will just be a camera? ( think gmod rtCameras where you can display what a camera is viewing onto a screen )
 function cGUIViewport() constructor {
-    width = __GAME_WIDTH;
-    height = __GAME_HEIGHT;
+    width = __GAME_RES_WIDTH;
+    height = __GAME_RES_HEIGHT;
     aspectRatio = width / height;
     
     static SetViewportSize = function( _width = camera_get_view_width( 0 ), _height = camera_get_view_height( 0 ) ) {

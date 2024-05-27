@@ -7,8 +7,8 @@ function cResolutionManager() constructor {
 	totalCameras = 0;
 	currentCamera = undefined;
 	
-	gameResWidth = __GAME_WIDTH;
-	gameResHeight = __GAME_HEIGHT;
+	gameResWidth = __GAME_RES_WIDTH;
+	gameResHeight = __GAME_RES_HEIGHT;
 	
 	windowWidth = window_get_width();
 	windowHeight = window_get_height();

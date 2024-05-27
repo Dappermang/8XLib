@@ -354,7 +354,7 @@ function cConsole() constructor {
     
     // For use in DRAW_GUI event
     static Draw = function() {
-        display_set_gui_size( __GAME_WIDTH, __GAME_HEIGHT );
+        display_set_gui_size( __GAME_RES_WIDTH, __GAME_RES_HEIGHT );
         //draw_set_color( consoleBGColour );
         //draw_rectangle_color( consoleX, consoleY, consoleX + consoleWidth, consoleY + consoleHeight, false );
         

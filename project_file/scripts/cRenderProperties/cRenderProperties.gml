@@ -1,6 +1,6 @@
 function cRenderProperties() class {
-    width = __GAME_WIDTH;
-    height = __GAME_HEIGHT;
+    width = __GAME_RES_WIDTH;
+    height = __GAME_RES_HEIGHT;
     renderType = RENDER_TYPE.VIEWPORT;
     resolution = 1;
     modelScale = 32;
