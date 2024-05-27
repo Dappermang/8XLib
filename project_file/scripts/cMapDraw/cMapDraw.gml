@@ -92,12 +92,22 @@ function cMapDraw() class {
         var _scaleX = ( __renderProperties.width / 2 ) / ( sprite_get_width( brushProperties.sprite ) );
         var _scaleY = ( __renderProperties.height / 2 ) / ( sprite_get_height( brushProperties.sprite ) );
         
+        var _viewMatrix = global.camera.GetViewMatrix();
+        var _projMatrix = global.camera.GetProjectionMatrix();
+        
         // Paint to surface.
         surface_set_target( GetDrawSurface() ); {
             camera_apply( _cameraID );
             if ( mouse_check_button( mb_left ) ) {
                 isDrawing = true;
                 
+                var _modelMatrix = __renderer.GetCurrentModel().GetFinalMatrix();
+                var _viewMatrix = global.camera.GetViewMatrix();
+                var _projMatrix = global.camera.GetProjectionMatrix();
+                
+                matrix_set( matrix_world, _modelMatrix );
+                matrix_set( matrix_view, _viewMatrix );
+                matrix_set( matrix_projection, _projMatrix );
                 draw_line_width_color(
                     _cameraMousePosition.x,
                     _cameraMousePosition.y,
@@ -107,6 +117,9 @@ function cMapDraw() class {
                     brushProperties.colours[brushProperties.currentColour],
                     brushProperties.colours[brushProperties.currentColour]
                 );
+                matrix_set( matrix_world, MATRIX_IDENTITY );
+                matrix_set( matrix_view, MATRIX_IDENTITY );
+                matrix_set( matrix_projection, MATRIX_IDENTITY );
             }
             if ( mouse_check_button( mb_right )
             && !isDrawing ) {
@@ -149,6 +162,7 @@ function cMapDraw() class {
             _cameraViewPosition.y + __renderProperties.height * _cameraViewSize.y,
             true
         );
+        
         // draw_surface_stretched( 
         //     GetDrawSurface(),
         //      _cameraViewPosition.x, 
@@ -158,15 +172,26 @@ function cMapDraw() class {
         // );
         #endregion
         
+        // var _modelMatrix = __renderer.GetCurrentModel().GetFinalMatrix();
+        // var _viewMatrix = global.camera.GetViewMatrix();
+        // var _projMatrix = global.camera.GetProjectionMatrix();
+        
+        // matrix_set( matrix_world, _modelMatrix );
+        // matrix_set( matrix_view, _viewMatrix );
+        // matrix_set( matrix_projection, _projMatrix );
+        // draw_circle( mouse_x, mouse_y, 1, false );
+        // matrix_set( matrix_world, MATRIX_IDENTITY );
+        
         // Drawing the brush outlines
-        draw_circle_colour(
-            _cameraMousePosition.x,
-            _cameraMousePosition.y,
-            brushProperties.size,
-            c_black,
-            c_black,
-            true
-        );
+        // draw_circle_colour(
+        //     _cameraMousePosition.x,
+        //     _cameraMousePosition.y,
+        //     brushProperties.size,
+        //     c_black,
+        //     c_black,
+        //     true
+        // );
+        //
         
         var _cameraMousePositionNormalized = global.camera.GetMousePositionNormalized();
         

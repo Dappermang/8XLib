@@ -117,8 +117,8 @@ function c3dModelRenderer() constructor {
         
         __renderProperties.position.x = _cameraPosition.x;
         __renderProperties.position.y = _cameraPosition.y;
-        __renderProperties.width = _cameraViewSize.x;
-        __renderProperties.height = _cameraViewSize.y;
+        // __renderProperties.width = _cameraViewSize.x;
+        // __renderProperties.height = _cameraViewSize.y;
         
         // var _aspectRatio = __renderProperties.width / __renderProperties.height;
         
@@ -210,7 +210,7 @@ function c3dModelRenderer() constructor {
         */
         if ( !is_undefined( _modelToDraw.overlayTexture ) ) {
         	shader_set( shdBakeTex );
-        	// Vector2D targetScale = Vector2D(width() / (float)PAINT_FBO_WIDTH, height() / (float)PAINT_FBO_WIDTH);
+        	
         	var _mouseCoordinatesNormalized = global.camera.GetMousePositionNormalized();
         	var _u_Matrix = shader_get_uniform( shdBakeTex, "u_mMatrix" );
         	var _u_TargetScale = shader_get_uniform( shdBakeTex, "u_vTargetScale" );

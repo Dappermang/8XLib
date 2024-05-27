@@ -46,7 +46,8 @@ function cCamera() class {
 		position.x, position.y, position.z, 
 		position.x + dsin( camAngle ), position.y + dcos( camAngle ), 0, 
 		0, 0, 1
-	);
+	);	
+	
 	SetProjectionMatrix( __PROJECTION_TYPE.ORTHOGRAPHIC );//temp
 	SetViewMatrix();
 	
