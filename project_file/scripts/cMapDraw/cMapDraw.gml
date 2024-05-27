@@ -85,7 +85,7 @@ function cMapDraw() class {
         var _camera = global.camera;
         var _cameraID = _camera.GetCamera();
         var _cameraPosition = _camera.GetPosition2D();
-        var _cameraViewPosition = _camera.GetCameraViewPosition();
+        var _cameraViewPosition = _camera.GetViewPosition();
         var _cameraMousePosition = _camera.GetMousePosition();
         var _cameraMousePositionNormalized = _camera.GetMousePositionNormalized();
         
@@ -136,8 +136,8 @@ function cMapDraw() class {
         var _camera = global.camera;
         var _cameraID = _camera.GetCamera();
         var _cameraPosition = _camera.GetPosition2D();
-        var _cameraViewPosition = _camera.GetCameraViewPosition();
-        var _cameraViewSize = _camera.GetCameraSize();
+        var _cameraViewPosition = _camera.GetViewPosition();
+        var _cameraViewSize = _camera.GetSize();
         var _cameraMousePosition = _camera.GetMousePosition();
         var _cameraMousePositionPrevious = _cameraMousePosition;
         
