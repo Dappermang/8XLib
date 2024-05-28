@@ -50,6 +50,7 @@ function cCamera() class {
 	
 	SetProjectionMatrix( __PROJECTION_TYPE.ORTHOGRAPHIC );//temp
 	SetViewMatrix();
+	camera_apply( __camera );
 	
     mousePosition = new Vector2(
         mouse_x - camera_get_view_x( __camera ),

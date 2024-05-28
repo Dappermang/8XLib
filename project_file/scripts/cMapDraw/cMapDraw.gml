@@ -105,9 +105,9 @@ function cMapDraw() class {
                 var _viewMatrix = global.camera.GetViewMatrix();
                 var _projMatrix = global.camera.GetProjectionMatrix();
                 
-                matrix_set( matrix_world, _modelMatrix );
-                matrix_set( matrix_view, _viewMatrix );
-                matrix_set( matrix_projection, _projMatrix );
+                // matrix_set( matrix_world, _modelMatrix );
+                // matrix_set( matrix_view, _viewMatrix );
+                // matrix_set( matrix_projection, _projMatrix );
                 draw_line_width_color(
                     _cameraMousePosition.x,
                     _cameraMousePosition.y,
@@ -117,9 +117,9 @@ function cMapDraw() class {
                     brushProperties.colours[brushProperties.currentColour],
                     brushProperties.colours[brushProperties.currentColour]
                 );
-                matrix_set( matrix_world, MATRIX_IDENTITY );
-                matrix_set( matrix_view, MATRIX_IDENTITY );
-                matrix_set( matrix_projection, MATRIX_IDENTITY );
+                // matrix_set( matrix_world, MATRIX_IDENTITY );
+                // matrix_set( matrix_view, MATRIX_IDENTITY );
+                // matrix_set( matrix_projection, MATRIX_IDENTITY );
             }
             if ( mouse_check_button( mb_right )
             && !isDrawing ) {
