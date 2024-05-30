@@ -41,6 +41,7 @@ function cCamera() class {
 	camClipDistanceFar = 3072;
 	camShake = 0;
 	camPath = undefined;
+	camMovePosition = new Vector2( 0, 0 );
 	
 	focusPosition = undefined;
 	transform = new cTransform3D();
@@ -207,6 +208,11 @@ function cCamera() class {
 		camera_apply( self.__camera );
 		return self;
 	}
+	static SetBoundaries = function( width, height ) {
+		camBBox.x = width;
+		camBBox.y = height;
+		return self;
+	}
 	static SetPath = function( path ) {
 		if ( !path_exists( path ) ) {
 			print( $"Could not set path." );
@@ -281,18 +287,20 @@ function cCamera() class {
 	static TickBegin = function() {};
 	static Tick = function() {
     	mousePosition = GetMousePosition();
+		// camMovePosition = position;
+		
+		var _camSize = GetSize();
 		
 		if ( !is_undefined( focusPosition ) ) {
-			var _camSize = GetSize();
 			var _focusDir = GetFocusDirection();
 			var _focusDis = GetFocusDistance();
 			
 			position.x += dcos( _focusDir ) * ( camApproachFactor * _focusDis );
 			position.y -= dsin( _focusDir ) * ( camApproachFactor * _focusDis );
-			
-			position.x = median( _camSize.x / 2, position.x, camBBox.x - _camSize.x / 2 );
-			position.y = median( _camSize.y / 2, position.y, camBBox.y - _camSize.y / 2 );
 		}
+		
+		position.x = median( _camSize.x / 2, position.x, camBBox.x - _camSize.x / 2 );
+		position.y = median( _camSize.y / 2, position.y, camBBox.y - _camSize.y / 2 );
 		
 		if ( !is_undefined( camPath ) ) {
 			var _pathLength = path_get_length( camPath );
@@ -313,7 +321,7 @@ function cCamera() class {
 		
 		if ( __CAM_DEBUG ) {
 			if ( mouse_check_button_pressed( mb_middle ) ) {
-				SetFocusPosition( objAnimationTest.x, objAnimationTest.y, 0, true );
+				SetFocusPosition( objAnimationTest, 0, 0, false );
 			}
 			if ( !is_undefined( focusPosition )
 			&& mouse_check_button_pressed( mb_right ) ) {
@@ -339,7 +347,7 @@ function cCamera() class {
 			var _rollSpeed = _inputLeftRight * 2;
 			
 			position.x += _yawSpeed;
-			position.y += _pitchSpeed;
+			position.y += _pitchSpeed;	
 		}
 	}
 	static TickEnd = function() {
@@ -408,6 +416,9 @@ function cCamera() class {
 			
 			draw_set_color( make_color_rgb( 90, 90, 90 ) );
 			draw_rectangle( 0, 0, room_width, room_height, true );
+			draw_set_color( c_aqua );
+			draw_circle( camMovePosition.x, camMovePosition.y, 2, true );
+			draw_rectangle( position.x - camBBox.x, position.y - camBBox.y, position.x + camBBox.x, position.y + camBBox.y, true );
 			draw_set_color( c_white );
 			
 			draw_text( room_width / 2, room_height / 2, "Room Center" );
