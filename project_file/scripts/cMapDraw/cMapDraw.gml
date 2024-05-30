@@ -117,9 +117,6 @@ function cMapDraw() class {
                     brushProperties.colours[brushProperties.currentColour],
                     brushProperties.colours[brushProperties.currentColour]
                 );
-                // matrix_set( matrix_world, MATRIX_IDENTITY );
-                // matrix_set( matrix_view, MATRIX_IDENTITY );
-                // matrix_set( matrix_projection, MATRIX_IDENTITY );
             }
             if ( mouse_check_button( mb_right )
             && !isDrawing ) {
@@ -163,6 +160,17 @@ function cMapDraw() class {
             true
         );
         
+        // draw_sprite_ext(
+        //     texMap,
+        //     -1,
+        //     0,
+        //     0,
+        //     1,
+        //     1, 
+        //     0,
+        //     c_white,
+        //     1
+        // );
         // draw_surface_stretched( 
         //     GetDrawSurface(),
         //      _cameraViewPosition.x, 

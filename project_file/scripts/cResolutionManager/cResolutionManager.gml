@@ -29,8 +29,30 @@ function cResolutionManager() constructor {
 	
 	static Update = function() {
 		if ( updateResolution ) {
-			call_later( 10, time_source_units_frames, initWindow, false );
+			call_later( 10, time_source_units_frames, InitWindow, false );
 		}
+	}
+	
+	static InitWindow = function() {
+		switch( __WINDOW_MODE ) {
+			case RES_MODE.FULLSCREEN:
+				window_set_fullscreen( true );
+				window_set_size( display_get_width(), display_get_height() );
+				window_set_showborder( false );
+				break;
+			case RES_MODE.WINDOWED:
+				window_set_fullscreen( false );
+				window_set_size( display_get_width(), display_get_height() );
+				window_set_position( 0, 0 );
+				window_set_showborder( false );
+				break;
+			case RES_MODE.BORDERLESS:
+				window_set_fullscreen( true );
+				window_set_showborder( false );
+				break;
+		}
+		
+		updateResolution = false;
 	}
 	
 	/// @static

@@ -179,7 +179,6 @@
     {"id":{"name":"initGUI","path":"scripts/initGUI/initGUI.yy",},},
     {"id":{"name":"initSurface","path":"scripts/initSurface/initSurface.yy",},},
     {"id":{"name":"initSystem","path":"scripts/initSystem/initSystem.yy",},},
-    {"id":{"name":"initWindow","path":"scripts/initWindow/initWindow.yy",},},
     {"id":{"name":"macros","path":"scripts/macros/macros.yy",},},
     {"id":{"name":"notes","path":"scripts/notes/notes.yy",},},
     {"id":{"name":"print","path":"scripts/print/print.yy",},},

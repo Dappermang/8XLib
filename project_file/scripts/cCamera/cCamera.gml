@@ -1,3 +1,7 @@
+function cCameraOrthographic() extends cCamera() class {
+	SetProjectionMatrix( __PROJECTION_TYPE.ORTHOGRAPHIC );
+	SetViewMatrix();
+}
 function cCamera() class {
 	#region Private
 	__camID = 0;
@@ -27,12 +31,16 @@ function cCamera() class {
 	camBBox = new Vector2( room_width, room_height );
 	camBBoxSize = 32;// __camera bound box size used for movement
 	camAngle = 0;
+	camAlignment = 0;
 	camResolutionScale = 1;
+	camZoomLevel = 1;
 	camMaxScale = 8;
 	camFov = 90;
 	camApproachFactor = 0.0075;// The speed at which the camera will move towards its focus position
 	camClipDistanceNear = -3072;
 	camClipDistanceFar = 3072;
+	camShake = 0;
+	camPath = undefined;
 	
 	focusPosition = undefined;
 	transform = new cTransform3D();
@@ -47,10 +55,6 @@ function cCamera() class {
 		position.x + dsin( camAngle ), position.y + dcos( camAngle ), 0, 
 		0, 0, 1
 	);	
-	
-	SetProjectionMatrix( __PROJECTION_TYPE.ORTHOGRAPHIC );//temp
-	SetViewMatrix();
-	camera_apply( __camera );
 	
     mousePosition = new Vector2(
         mouse_x - camera_get_view_x( __camera ),
@@ -81,24 +85,24 @@ function cCamera() class {
 		return viewMatrix;
 	}
 	static GetMouseDirFromCenter = function() {
-		return point_direction( position.x + ( camWidth / 2 ) * camResolutionScale, position.y + ( camHeight / 2 ) * camResolutionScale, mouse_x, mouse_y );
+		return point_direction( position.x, position.y, mouse_x, mouse_y );
 	}
 	
 	static GetMouseDisFromCenter = function() {
-		return point_distance( position.x + ( camWidth / 2 ) * camResolutionScale, position.y + ( camHeight / 2 ) * camResolutionScale, mouse_x, mouse_y );
+		return point_distance( position.x, position.y, mouse_x, mouse_y );
 	}
 	
-	static GetFocusDirFromCenter = function() {
+	static GetFocusDirection = function() {
 		if ( !is_undefined( focusPosition ) ) {
-			return point_direction( position.x + ( camWidth / 2 ) * camResolutionScale, position.y + ( camHeight / 2 ) * camResolutionScale, focusPosition.x, focusPosition.y );
+			return point_direction( position.x, position.y, focusPosition.x, focusPosition.y );
 		}
 		else {
 			show_debug_message( "No focus position defined." );
 		}
 	}
-	static GetFocusDisFromCenter = function() {
+	static GetFocusDistance = function() {
 		if ( !is_undefined( focusPosition ) ) {
-			return point_distance( position.x + ( camWidth / 2 ) * camResolutionScale, position.y + ( camHeight / 2 ) * camResolutionScale, focusPosition.x, focusPosition.y );
+			return point_distance( position.x, position.y, focusPosition.x, focusPosition.y );
 		}
 		else {
 			show_debug_message( "No focus position defined." );
@@ -132,8 +136,8 @@ function cCamera() class {
 	/// @static
 	/// @returns {struct} Vector2( center_x, center_y )
 	static GetCenter = function() {
-		var _center_x = ( camWidth / 2 ) * camResolutionScale;
-		var _center_y = ( camHeight / 2 ) * camResolutionScale;
+		var _center_x = position.x - ( camWidth / 2 ) * camZoomLevel;
+		var _center_y = position.y - ( camHeight / 2 ) * camZoomLevel;
 		
 		return new Vector2( _center_x, _center_y );
 	}	
@@ -193,6 +197,24 @@ function cCamera() class {
 			_xUp, _yUp, _zUp
 		);
 	}
+	static SetWidth = function( width ) {
+		camWidth = width;
+		camera_apply( self.__camera );
+		return self;
+	}	
+	static SetHeight = function( height ) {
+		camHeight = height;
+		camera_apply( self.__camera );
+		return self;
+	}
+	static SetPath = function( path ) {
+		if ( !path_exists( path ) ) {
+			print( $"Could not set path." );
+		}
+		
+		camPath = path;
+		return self;
+	}
 	/// @static
 	static ClearFocus = function() {
 		focusPosition = undefined;
@@ -207,40 +229,64 @@ function cCamera() class {
 	}
 	/// @static
 	/// @desc Sets a new focus position using a Vec2
-	/// @param {number} x
-	/// @param {number} y
-	static SetFocusPosition = function( _x, _y, _z = 0 ) {
-		focusPosition = new Vector3( _x, _y, _z );
+	/// @param {number|instance} x
+	/// @param {number} ?y
+	/// @param {number} ?z
+	/// @param {bool} ?instant
+	static SetFocusPosition = function( _x, _y = _x, _z = 0, _instant = false ) {
+		if ( instance_exists( _x ) ) {
+			focusPosition = new Vector3( _x.x, _x.y, _z );
+		}
+		else {
+			focusPosition = new Vector3( _x, _y, _z );
+		}
+		
+		if ( _instant ) {
+			position = focusPosition;
+		}
+		return self;
 	}
 	static SetFocusPositionAligned = function( _x, _y, _z = 0, align = CAM_ALIGN.MIDDLE ) {
-		switch( align ) {
-			case CAM_ALIGN.MIDDLE :// Middle
-				focusPosition = new Vector3( _x, _y, _z );
-				break;			
-			case CAM_ALIGN.LEFT :// Left
-				focusPosition = new Vector3( _x - ( camWidth / 2 ), _y, _z );
-				break;			
-			case CAM_ALIGN.RIGHT : // Right
-				focusPosition = new Vector3( _x + ( camWidth / 2 ), _y, _z );
-				break;			
-			case CAM_ALIGN.TOP : // Top
-				focusPosition = new Vector3( _x, _y - ( camHeight / 2 ), _z );
-				break;			
-			case CAM_ALIGN.BOTTOM : // Bottom
-				focusPosition = new Vector3( _x, _y + ( camHeight / 2 ), _z );
-				break;
-		}
+		// focusPosition = new Vector3( _x, _y, _z );
+		
+		// switch( align ) {
+		// 	case CAM_ALIGN.MIDDLE :// Middle
+		// 		// camAlignment = 0;
+		// 		break;			
+		// 	case CAM_ALIGN.LEFT :// Left
+		// 		// camAlignment = point_direction( _x - ( camWidth / 2 ), _y,  _x - ( camWidth / 2 ), _y );
+		// 		focusPosition = new Vector3( _x - ( camWidth / 2 ), _y, _z );
+		// 		break;			
+		// 	case CAM_ALIGN.RIGHT : // Right
+		// 		focusPosition = new Vector3( _x + ( camWidth / 2 ), _y, _z );
+		// 		break;			
+		// 	case CAM_ALIGN.TOP : // Top
+		// 		focusPosition = new Vector3( _x, _y - ( camHeight / 2 ), _z );
+		// 		break;			
+		// 	case CAM_ALIGN.BOTTOM : // Bottom
+		// 		focusPosition = new Vector3( _x, _y + ( camHeight / 2 ), _z );
+		// 		break;
+		// }
+		// return self;
 	}
 	#endregion
-
+	// add functionality for putting a camera on a track
+	/* 
+	     camera.SetPath( path )
+	     
+	     > iterate through path points ?
+	     camera.SetPathSpeed( speed ) <- This would ideally be tied to player speed
+	     
+	*/
+	static TickBegin = function() {};
 	static Tick = function() {
     	mousePosition = GetMousePosition();
 		
 		if ( !is_undefined( focusPosition ) ) {
 			var _camSize = GetSize();
-			var _focusDir = GetFocusDirFromCenter();
-			var _focusDis = GetFocusDisFromCenter();
-
+			var _focusDir = GetFocusDirection();
+			var _focusDis = GetFocusDistance();
+			
 			position.x += dcos( _focusDir ) * ( camApproachFactor * _focusDis );
 			position.y -= dsin( _focusDir ) * ( camApproachFactor * _focusDis );
 			
@@ -248,23 +294,40 @@ function cCamera() class {
 			position.y = median( _camSize.y / 2, position.y, camBBox.y - _camSize.y / 2 );
 		}
 		
-		camApproachFactor *= camResolutionScale;
+		if ( !is_undefined( camPath ) ) {
+			var _pathLength = path_get_length( camPath );
+			var _pathStartPoint = new Vector2( path_get_point_x( camPath, 0 ), path_get_point_y( camPath, 0 ) );
+			var _pathEndPoint = new Vector2( path_get_point_x( camPath, _pathLength - 1 ), path_get_point_y( camPath, _pathLength - 1 ) );
+			var _currentPoint = 0;
+			var _pathCurrentPoint = new Vector2( path_get_point_x( camPath, _currentPoint ), path_get_point_y( camPath, _currentPoint ) );
+			var _pointDirection = point_direction( position.x, position.y, _pathCurrentPoint.x, _pathCurrentPoint.y );
+			
+			if ( _currentPoint < _pathLength ) {
+				position.x += dcos( _pointDirection ) * ( camApproachFactor );
+				position.y -= dsin( _pointDirection ) * ( camApproachFactor );
+				++_currentPoint;
+			}
+		}
+		
+		// camApproachFactor *= camZoomLevel;
 		
 		if ( __CAM_DEBUG ) {
+			if ( mouse_check_button_pressed( mb_middle ) ) {
+				SetFocusPosition( objAnimationTest.x, objAnimationTest.y, 0, true );
+			}
+			if ( !is_undefined( focusPosition )
+			&& mouse_check_button_pressed( mb_right ) ) {
+				ClearFocus();
+			}
+			
+			var _mouseWheel = keyboard_check( vk_down ) - keyboard_check( vk_up );
+			
 			if ( keyboard_check( vk_shift )
 			&& mouse_check_button( mb_left ) ) {
 				var _mouse_dir = GetMouseDirFromCenter();
 	
 				position.x += dcos( _mouse_dir ) * max( 3, GetMouseDisFromCenter() * 0.05 );
 				position.y -= dsin( _mouse_dir ) * max( 3, GetMouseDisFromCenter() * 0.05 );
-			}
-			
-			if ( keyboard_check( vk_up ) ) {
-				camResolutionScale += 0.1;
-			}			
-			
-			if ( keyboard_check( vk_down ) ) {
-				camResolutionScale -= 0.1;
 			}
 			
 			var _inputLeftRight = ( keyboard_check( ord( "D" ) ) - keyboard_check( ord( "A" ) ) );
@@ -279,6 +342,10 @@ function cCamera() class {
 			position.y += _pitchSpeed;
 		}
 	}
+	static TickEnd = function() {
+		camera_set_view_pos( __camera, position.x - ( camWidth * camZoomLevel ) / 2, position.y - ( camHeight * camZoomLevel ) / 2 );
+		camera_set_view_size( __camera, camWidth * camZoomLevel, camHeight * camZoomLevel );
+	}
 	// Draw END
 	static DrawOverlay = function() {
 		var _center_pos = GetCenter();
@@ -291,7 +358,7 @@ function cCamera() class {
 		draw_set_color( c_white );
 		
 		draw_set_color( c_lime );
-		draw_rectangle( _x, _y, _x + ( camWidth * camResolutionScale ), _y + ( camHeight * camResolutionScale ), true );
+		draw_rectangle( _x, _y, _x + ( camWidth * camZoomLevel ), _y + ( camHeight * camZoomLevel ), true );
 		draw_set_color( c_white );
 	}
 	
@@ -307,9 +374,6 @@ function cCamera() class {
 		draw_set_halign( fa_center );
 		
 		var _center_pos = GetCenter();
-		
-		camera_set_view_size( __camera, ( camWidth * camResolutionScale ), ( camHeight * camResolutionScale ) );
-		camera_set_view_pos( __camera, position.x, position.y );
 		
 		gpu_set_zwriteenable( true );
 		gpu_set_ztestenable( false );
@@ -330,21 +394,25 @@ function cCamera() class {
 		
 		if ( __CAM_DEBUG ) {
 			draw_set_color( c_lime );
-			draw_text_transformed( position.x + 1, position.y, string( "__camera Resolution:{0} x {1}", _res.x, _res.y ), camResolutionScale, camResolutionScale, 0 );
-			draw_text_transformed( position.x + 1 * camResolutionScale, position.y + 20 * camResolutionScale, string( "__camera Aspect:{0}", GetAspectRatio() ), camResolutionScale, camResolutionScale, 0 );
+			if ( !is_undefined( focusPosition ) ) {
+				draw_sprite( __spr_animo_fallback, -1, focusPosition.x, focusPosition.y );
+				
+				var _focusDir = GetFocusDirection();
 			
-			draw_text_transformed( position.x + 1 * camResolutionScale, position.y + 40 * camResolutionScale, string( "Display Resolution:{0} x {1}", resolution_manager().displayWidth, resolution_manager().displayHeight ), camResolutionScale, camResolutionScale, 0 );
-			draw_text_transformed( position.x + 1 * camResolutionScale, position.y + 60 * camResolutionScale, string( "Display Aspect:{0}", resolution_manager().aspectRatio ), camResolutionScale, camResolutionScale, 0 );
+				draw_arrow( position.x, position.y, position.x + lengthdir_x( 16, _focusDir ), position.y + lengthdir_y( 16, _focusDir ), 8 );
+			}
 			draw_set_color( c_white );
 			
-			draw_arrow( mouse_x, mouse_y, mouse_x + lengthdir_x( 16, GetMouseDirFromCenter() ), mouse_y + lengthdir_y( 16, GetMouseDirFromCenter() ), 32 );
+			draw_circle( mouse_x, mouse_y, 1, true );
+			draw_circle( position.x, position.y, 2, true );
 			
 			draw_set_color( make_color_rgb( 90, 90, 90 ) );
-			draw_rectangle( 0, 0, room_width, room_height, false );
+			draw_rectangle( 0, 0, room_width, room_height, true );
 			draw_set_color( c_white );
 			
 			draw_text( room_width / 2, room_height / 2, "Room Center" );
-			draw_circle( room_width / 2, room_height / 2, 2, false );
+			draw_circle( room_width / 2, room_height / 2, 2, true );
 		}
 	}
+	return self;
 }
