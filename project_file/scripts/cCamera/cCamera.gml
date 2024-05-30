@@ -29,7 +29,6 @@ function cCamera() class {
 	camHeight = __GAME_RES_HEIGHT;
 	camRenderSurface = -1;
 	camBBox = new Vector2( room_width, room_height );
-	camBBoxSize = 32;// __camera bound box size used for movement
 	camAngle = 0;
 	camAlignment = 0;
 	camResolutionScale = 1;
@@ -41,8 +40,10 @@ function cCamera() class {
 	camClipDistanceFar = 3072;
 	camShake = 0;
 	camPath = undefined;
-	camMovePosition = new Vector2( 0, 0 );
 	
+	keepInsideRoom = true;
+	
+	target = undefined;
 	focusPosition = undefined;
 	transform = new cTransform3D();
 	position = new Vector3( 0, 0, -512 );
@@ -299,8 +300,10 @@ function cCamera() class {
 			position.y -= dsin( _focusDir ) * ( camApproachFactor * _focusDis );
 		}
 		
-		position.x = median( _camSize.x / 2, position.x, camBBox.x - _camSize.x / 2 );
-		position.y = median( _camSize.y / 2, position.y, camBBox.y - _camSize.y / 2 );
+		if ( keepInsideRoom ) {
+			position.x = median( _camSize.x / 2, position.x, camBBox.x - _camSize.x / 2 );
+			position.y = median( _camSize.y / 2, position.y, camBBox.y - _camSize.y / 2 );
+		}
 		
 		if ( !is_undefined( camPath ) ) {
 			var _pathLength = path_get_length( camPath );
@@ -350,10 +353,7 @@ function cCamera() class {
 			position.y += _pitchSpeed;	
 		}
 	}
-	static TickEnd = function() {
-		camera_set_view_pos( __camera, position.x - ( camWidth * camZoomLevel ) / 2, position.y - ( camHeight * camZoomLevel ) / 2 );
-		camera_set_view_size( __camera, camWidth * camZoomLevel, camHeight * camZoomLevel );
-	}
+	static TickEnd = function() {};
 	// Draw END
 	static DrawOverlay = function() {
 		var _center_pos = GetCenter();
@@ -391,6 +391,8 @@ function cCamera() class {
 		camAngle = clamp( camAngle, -360, 360 );
 		camResolutionScale = clamp( camResolutionScale, 1, camMaxScale );
 		camera_set_view_angle( __camera, camAngle );
+		camera_set_view_pos( __camera, position.x - ( camWidth * camZoomLevel ) / 2, position.y - ( camHeight * camZoomLevel ) / 2 );
+		camera_set_view_size( __camera, camWidth * camZoomLevel, camHeight * camZoomLevel );
 		camera_apply( __camera );
 		
 		draw_set_valign( fa_top );
@@ -417,7 +419,6 @@ function cCamera() class {
 			draw_set_color( make_color_rgb( 90, 90, 90 ) );
 			draw_rectangle( 0, 0, room_width, room_height, true );
 			draw_set_color( c_aqua );
-			draw_circle( camMovePosition.x, camMovePosition.y, 2, true );
 			draw_rectangle( position.x - camBBox.x, position.y - camBBox.y, position.x + camBBox.x, position.y + camBBox.y, true );
 			draw_set_color( c_white );
 			
