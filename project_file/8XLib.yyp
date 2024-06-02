@@ -113,6 +113,7 @@
     {"id":{"name":"__globalFlags","path":"scripts/__globalFlags/__globalFlags.yy",},},
     {"id":{"name":"__initFilePaths","path":"scripts/__initFilePaths/__initFilePaths.yy",},},
     {"id":{"name":"__initGlobalFlags","path":"scripts/__initGlobalFlags/__initGlobalFlags.yy",},},
+    {"id":{"name":"object_in_view","path":"scripts/object_in_view/object_in_view.yy",},"order":0,},
     {"id":{"name":"animo_animation_exists","path":"scripts/animo_animation_exists/animo_animation_exists.yy",},},
     {"id":{"name":"animo_draw_sprite_ext","path":"scripts/animo_draw_sprite_ext/animo_draw_sprite_ext.yy",},},
     {"id":{"name":"animo_draw_sprite","path":"scripts/animo_draw_sprite/animo_draw_sprite.yy",},},

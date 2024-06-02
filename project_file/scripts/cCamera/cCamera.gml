@@ -66,6 +66,26 @@ function cCamera() class {
 	zoomCurve = undefined;
 	shakeCurve = undefined;
 	#endregion
+	#region Methods
+	static ObjectInView = function( target, _padding = 8, _useSpriteDimensions = false ) {
+		if ( instance_exists( target ) ) {
+			if ( _useSpriteDimensions ) {
+				var _targetSpriteDimensions = new Vector2( sprite_get_width( target.sprite_index ) / 2, sprite_get_height( target.sprite_index ) / 2 );
+			
+                if ( target.x + _targetSpriteDimensions.x >= position.x - ( camWidth / 2 ) - _padding && target.x - _targetSpriteDimensions.x <= position.x + ( camWidth / 2 ) + _padding
+                    && target.y + _targetSpriteDimensions.x >= position.y - ( camHeight / 2 ) - _padding && target.y - _targetSpriteDimensions.y <= position.y + ( camHeight / 2 ) + _padding ) {
+                        return true;
+                }
+			}
+			else {
+               if ( target.x >= position.x - ( camWidth / 2 ) - _padding && target.x <= position.x + ( camWidth / 2 ) + _padding
+                    && target.y >= position.y - ( camHeight / 2 ) - _padding && target.y <= position.y + ( camHeight / 2 ) + _padding ) {
+                        return true;
+                }
+			}
+		}
+	}
+	#endregion
 	#region Get
 	static GetCamera = function() {
 		return __camera;
@@ -415,6 +435,28 @@ function cCamera() class {
 			
 			draw_circle( mouse_x, mouse_y, 1, true );
 			draw_circle( position.x, position.y, 2, true );
+			
+			var _pad = 8;
+			
+			draw_rectangle( position.x - camWidth/2 + _pad, position.y - camHeight/2 + _pad, position.x + camWidth/2 - _pad, position.y + camHeight/2 - _pad, true );
+			
+			draw_line( 
+				position.x - camWidth, position.y, 
+				position.x - camWidth, position.y - camHeight 
+			);
+			draw_line( 
+				position.x, position.y - camHeight, 
+				position.x - camWidth, position.y - camHeight 
+			);
+			
+			draw_line( 
+				position.x + camWidth, position.y, 
+				position.x + camWidth, position.y + camHeight 
+			);
+			draw_line(
+				position.x, position.y + camHeight, 
+				position.x + camWidth, position.y + camHeight 
+			);
 			
 			draw_set_color( make_color_rgb( 90, 90, 90 ) );
 			draw_rectangle( 0, 0, room_width, room_height, true );
